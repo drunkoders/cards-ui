@@ -17,12 +17,22 @@
     "react-scripts": "3.4.1",
     "typescript": "~3.7.2"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": ["yarn lint"]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -t v -s"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -t v -s",
+    "lint": "eslint . --ext .ts --ext .tsx --fix"
   },
   "browserslist": {
     "production": [
@@ -37,11 +47,22 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.5",
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
     "@types/react-router-dom": "^5.1.5",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
     "conventional-changelog-cli": "^2.0.34",
-    "husky": "^4.2.5"
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.5",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5"
   }
 }

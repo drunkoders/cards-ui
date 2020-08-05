@@ -1,7 +1,11 @@
-## Cards - UI
+# Cards - UI
 
 This repository contains the UI for the Cards project.
-It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+It was bootstrapped using [Create React App](https://github.com/facebook/create-react-app).
+
+## Prerequisites
+
+- Create a `.env` file by copying the `.env.example` file and setting the values you need.
 
 ## Available Scripts
 
@@ -11,7 +15,6 @@ In the project directory, you can run:
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
 
 ### `yarn test`
 
