@@ -9,8 +9,10 @@ const useStyles = createUseStyles({
   },
 });
 
-export const HomePage = () => {
+const HomePage: React.FC = () => {
   const classes = useStyles();
 
   return <div className={classes.homePage}>I am on homepage</div>;
 };
+
+export default HomePage;
