@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { HomePage } from './HomePage';
-
+import HomePage from './HomePage';
 
 describe('HomePage', () => {
   it('should render home page', () => {
@@ -10,4 +9,3 @@ describe('HomePage', () => {
     expect(divElement).toBeInTheDocument();
   });
 });
-
