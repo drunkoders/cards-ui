@@ -1,6 +1,6 @@
 {
   "name": "cards-ui",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -21,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -t v -s"
   },
   "browserslist": {
     "production": [
@@ -36,6 +37,11 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.5"
+    "@types/react-router-dom": "^5.1.5",
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "@types/react-router-dom": "^5.1.5",
+    "conventional-changelog-cli": "^2.0.34",
+    "husky": "^4.2.5"
   }
 }
