@@ -1,7 +1,10 @@
 index.tsx : renders the app
 App.tsx: initializes the router
 
-components:
+assets:
+    - Contains every asset used in the app
+
+components
     - Contains every component
 
     - Children:
@@ -12,7 +15,7 @@ components:
        - atoms:
             - No-logic components
             - Examples: input, label
-            - Constraint: 
+            - Constraints:
                 - Cannot contain another atoms nor higher hierarchy
 
        - molecules:
