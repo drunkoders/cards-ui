@@ -1,6 +1,6 @@
 # Cards - UI
 
-![Build status](https://github.com/drunkoders/cards-ui/workflows/main/badge.svg)
+![Build status](https://github.com/drunkoders/cards-ui/workflows/CI/badge.svg)
 
 This repository contains the UI for the Cards project.
 It was bootstrapped using [Create React App](https://github.com/facebook/create-react-app).
