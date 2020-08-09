@@ -5,7 +5,7 @@ import HomePage from './HomePage';
 describe('HomePage', () => {
   it('should render home page', () => {
     const { getByText } = render(<HomePage />);
-    const divElement = getByText(/I am on homepage/i);
+    const divElement = getByText(/Card UI/i);
     expect(divElement).toBeInTheDocument();
   });
 });

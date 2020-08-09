@@ -1,5 +1,6 @@
 import React, { useState, KeyboardEvent } from 'react';
 import { createUseStyles } from 'react-jss';
+import classnames from 'classnames';
 
 /**
  * Properties for BaseCard component
@@ -22,29 +23,20 @@ const useStyles = createUseStyles({
     position: 'absolute',
     top: 0,
     left: 0,
-    color: 'cornSilk',
-    textAlign: 'center',
-    font: `3em/240px 'Helvetica Neue', Helvetica, sans-serif`,
-    boxShadow: '-5px 5px 5px #aaa',
     transition: '0.6s',
   },
-  // Modal classes
-  backVisible: {},
-  frontVisible: {},
   // Style classes
   card: ({ width, height }) => ({
     width: width || 600,
     height: height || 400,
     perspective: 1000,
     cursor: 'pointer',
-    '&$backVisible $cardFlipper': { transform: 'rotateY(180deg)' },
-    '&$backVisible $cardFront': { opacity: 0 },
-    '&$backVisible $cardBack': { opacity: 1 },
-    '&$frontVisible $cardFront': { opacity: 1 },
-    '&$frontVisible $cardBack': { opacity: 0 },
     outline: 'none',
     overflow: 'hidden',
   }),
+  faceVisible: { opacity: 1 },
+  faceHidden: { opacity: 0 },
+  flipped: { transform: 'rotateY(180deg)' },
   cardFlipper: {
     transition: '0.6s',
     transformStyle: 'preserve-3d',
@@ -62,7 +54,7 @@ const useStyles = createUseStyles({
 });
 
 /**
- * Base card molecule
+ * Base card
  * @param props Card props
  */
 export const BaseCard: React.FC<BaseCardProps> = ({
@@ -71,24 +63,24 @@ export const BaseCard: React.FC<BaseCardProps> = ({
   width = undefined,
   height = undefined,
 } = {}) => {
-  const { backVisible, frontVisible, card, cardFlipper, cardFront, cardBack } = useStyles({ width, height });
-  const [visibleFace, setVisibleFace] = useState<'front' | 'back'>('front');
+  const { card, faceVisible, faceHidden, flipped, cardFlipper, cardFront, cardBack } = useStyles({
+    width,
+    height,
+  });
+  const [isBackVisible, setIsBackVisible] = useState<boolean>(false);
 
-  const turnCard = (): void => setVisibleFace(visibleFace === 'front' ? 'back' : 'front');
+  const turnCard = (): void => setIsBackVisible(!isBackVisible);
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => event.keyCode === 32 && turnCard();
 
   return (
-    <div
-      data-testid="BaseCard"
-      role="button"
-      onClick={turnCard}
-      onKeyDown={onKeyDown}
-      className={`${card} ${visibleFace === 'back' ? backVisible : frontVisible}`}
-      tabIndex={0}
-    >
-      <div className={cardFlipper}>
-        <div className={cardFront}>{frontFace}</div>
-        <div className={cardBack}>{backFace}</div>
+    <div data-testid="BaseCard" role="button" onClick={turnCard} onKeyDown={onKeyDown} className={card} tabIndex={0}>
+      <div className={classnames(cardFlipper, { [flipped]: isBackVisible })}>
+        <div className={classnames(cardFront, { [faceHidden]: isBackVisible, [faceVisible]: !isBackVisible })}>
+          {frontFace}
+        </div>
+        <div className={classnames(cardBack, { [faceHidden]: !isBackVisible, [faceVisible]: isBackVisible })}>
+          {backFace}
+        </div>
       </div>
     </div>
   );
