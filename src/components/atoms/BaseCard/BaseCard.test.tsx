@@ -18,7 +18,7 @@ describe('BaseCard', () => {
         <BaseCard
           frontFace={<div data-testid="front-face">MY FRONT</div>}
           backFace={<div data-testid="back-face">MY BACK</div>}
-        />,
+        />
       );
       cardContainer = getByRole('button');
       frontFace = getByTestId('front-face');
