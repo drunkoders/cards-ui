@@ -34,6 +34,13 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -t v -s",
     "lint": "eslint . --ext .ts --ext .tsx --fix"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageReporters": ["text", "lcov"]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
