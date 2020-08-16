@@ -1,61 +1,95 @@
+/* eslint-disable max-lines */
+import type { Handle } from '@models/Handle';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { getFaceUse } from '@utils/testing-utils';
 import React from 'react';
-import { render } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import { PlayingCard } from './PlayingCard';
 
-const testCardSvg = (el: HTMLElement, pattern: string | RegExp) =>
-  expect(el).toHaveAttribute('xlink:href', expect.stringMatching(pattern));
-
 describe('PlayingCard', () => {
+  let cardFlipper: HTMLElement;
+
   it('should render correctly', () => {
     const { getByTestId } = render(<PlayingCard />);
     expect(getByTestId('BaseCard')).toBeInTheDocument();
   });
 
   describe('on default rendering', () => {
-    let frontFace: HTMLElement;
-    let backFace: HTMLElement;
     beforeEach(() => {
-      const { getByTestId } = render(<PlayingCard />);
-      frontFace = getByTestId('PlayingCard_front_use');
-      backFace = getByTestId('PlayingCard_back_use');
+      render(<PlayingCard />);
     });
 
     it('should default front to joker_black', () => {
-      testCardSvg(frontFace, /#joker_black$/i);
-    });
-
-    it('should default front to no fill', () => {
-      expect(frontFace).toHaveAttribute('fill', '');
+      expect(getFaceUse(true)).toHaveAttribute('xlink:href', expect.stringMatching(/#joker_black$/i));
     });
 
     it('should default back to back', () => {
-      testCardSvg(backFace, /#back$/i);
+      expect(getFaceUse()).toHaveAttribute('xlink:href', expect.stringMatching(/#back$/i));
     });
 
-    it('should default back to black color', () => {
-      expect(backFace).toHaveAttribute('fill', 'black');
+    it('should be flipped by default', () => {
+      expect(screen.getByTestId('BaseCard-flipper')).toHaveStyle('transform: rotateY(180deg)');
     });
   });
 
   describe('on rendering', () => {
-    let frontFace: HTMLElement;
-    let backFace: HTMLElement;
     beforeEach(() => {
-      const { getByTestId } = render(<PlayingCard card="spade_4" backColor="red" />);
-      frontFace = getByTestId('PlayingCard_front_use');
-      backFace = getByTestId('PlayingCard_back_use');
+      render(<PlayingCard card="spade_4" backColor="red" />);
     });
 
     it('should render the correct card', () => {
-      testCardSvg(frontFace, /#spade_4$/i);
+      expect(getFaceUse(true)).toHaveAttribute('xlink:href', expect.stringMatching(/#spade_4$/i));
     });
 
     it('should always show back as back', () => {
-      testCardSvg(backFace, /#back$/i);
+      expect(getFaceUse()).toHaveAttribute('xlink:href', expect.stringMatching(/#back$/i));
     });
 
     it('should render back as backColor property', () => {
-      expect(backFace).toHaveAttribute('fill', 'red');
+      expect(getFaceUse()).toHaveAttribute('xlink:href', expect.stringMatching(/#back$/i));
     });
+  });
+
+  describe('on forwarding props', () => {
+    beforeEach(() => {
+      const { getByTestId } = render(<PlayingCard faceUp disableNativeEvents />);
+      cardFlipper = getByTestId('BaseCard-flipper');
+    });
+
+    it('should forward the faceUp', () => {
+      expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
+    });
+
+    it('should forward disableNativeEvents', () => {
+      fireEvent.click(cardFlipper);
+      expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
+    });
+  });
+
+  describe('when working with refs', () => {
+    let cardHandle: Handle<typeof PlayingCard> | null;
+    beforeEach(() => {
+      const { getByTestId } = render(
+        <PlayingCard
+          ref={(c) => {
+            cardHandle = c;
+          }}
+        />
+      );
+      cardFlipper = getByTestId('BaseCard-flipper');
+    });
+
+    it('should forward the correct ref', () => {
+      expect(cardHandle).not.toBeNull();
+    });
+
+    it('should flip the card via ref call', () => {
+      act(() => cardHandle?.flip());
+      expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
+    });
+  });
+
+  afterEach(() => {
+    cleanup();
   });
 });
