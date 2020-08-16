@@ -1,8 +1,8 @@
+import type { PlayingCardProps } from '@atoms/PlayingCard';
+import type { PlayingCardType } from '@models/PlayingCardType';
+import { CardPile } from '@molecules/CardPile';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-
-import { PlayingCard } from '@atoms/PlayingCard/PlayingCard';
-import type { PlayingCardType } from '@models/PlayingCardType';
 
 const useStyles = createUseStyles({
   homePage: {
@@ -10,14 +10,11 @@ const useStyles = createUseStyles({
     height: '100%',
     color: 'white',
     overflow: 'auto',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(5, 1fr)',
   },
 });
 
 export const HomePage: React.FC = () => {
   const classes = useStyles();
-
   const allCards: PlayingCardType[] = [
     'club_1',
     'club_2',
@@ -74,16 +71,11 @@ export const HomePage: React.FC = () => {
     'joker_black',
     'joker_red',
   ];
-  const backColors = ['black', 'red', 'blue', '#048b9a'];
-
+  const cards: PlayingCardProps[] = allCards.map((card) => ({ card }));
   return (
     <div className={classes.homePage}>
       <h1>Card UI</h1>
-      {allCards.map((card, index) => (
-        <div key={card}>
-          <PlayingCard card={card} backColor={backColors[index % backColors.length]} />
-        </div>
-      ))}
+      <CardPile cards={cards} />
     </div>
   );
 };

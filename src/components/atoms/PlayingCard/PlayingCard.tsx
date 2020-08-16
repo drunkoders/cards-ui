@@ -1,41 +1,38 @@
-import React from 'react';
-import { createUseStyles } from 'react-jss';
 import { BaseCard } from '@atoms/BaseCard';
-
-import svgCards from '@assets/svg-cards-optimized.svg';
+import { PlayingCardFace } from '@atoms/PlayingCardFace';
+import type { CardHandle } from '@models/CardHandle';
+import type { CardProps } from '@models/CardProps';
 import type { PlayingCardType } from '@models/PlayingCardType';
+import React, { forwardRef, useMemo } from 'react';
 
 /**
  * Properties for PlayingCard
  */
-export interface PlayingCardProps {
+export interface PlayingCardProps extends CardProps {
   /** Card to be rendered */
   card?: PlayingCardType;
   /** Color to be applied to back face */
   backColor?: string;
 }
 
-const useStyles = createUseStyles({
-  svgStyle: {
-    width: '100%',
-  },
+export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function PlayingCard(
+  { card = 'joker_black', backColor = 'black', width = 169.075, height = 244.64, faceUp, disableNativeEvents },
+  ref
+) {
+  const baseCard = useMemo(
+    () => (
+      <BaseCard
+        height={height}
+        width={width}
+        frontFace={<PlayingCardFace card={card} />}
+        backFace={<PlayingCardFace backColor={backColor} />}
+        faceUp={faceUp}
+        disableNativeEvents={disableNativeEvents}
+        ref={ref}
+      />
+    ),
+    [height, width, faceUp, disableNativeEvents, ref, card, backColor]
+  );
+
+  return baseCard;
 });
-
-export const PlayingCard: React.FC<PlayingCardProps> = ({ card = 'joker_black', backColor = 'black' }) => {
-  const classes = useStyles();
-
-  const generateSvg = (isFront: boolean) => {
-    const testId = `PlayingCard_${isFront ? 'front' : 'back'}`;
-    return (
-      <svg data-testid={testId} viewBox="0 0 171 251" className={classes.svgStyle}>
-        <use
-          data-testid={`${testId}_use`}
-          xlinkHref={`${svgCards}#${isFront ? card : 'back'}`}
-          fill={isFront ? '' : backColor}
-        />
-      </svg>
-    );
-  };
-
-  return <BaseCard height={251} width={171} frontFace={generateSvg(true)} backFace={generateSvg(false)} />;
-};

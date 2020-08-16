@@ -1,19 +1,17 @@
-import React, { useState, KeyboardEvent } from 'react';
-import { createUseStyles } from 'react-jss';
+import type { CardHandle } from '@models/CardHandle';
+import type { CardProps } from '@models/CardProps';
 import classnames from 'classnames';
+import React, { forwardRef, KeyboardEvent, useImperativeHandle, useState } from 'react';
+import { createUseStyles } from 'react-jss';
 
 /**
  * Properties for BaseCard component
  */
-export interface BaseCardProps {
+export interface BaseCardProps extends CardProps {
   /** Element to show at card front face */
   frontFace?: JSX.Element;
   /** Element to show at card back face */
   backFace?: JSX.Element;
-  /** Defines the card height */
-  height?: number;
-  /** Defines the card width */
-  width?: number;
 }
 
 const useStyles = createUseStyles({
@@ -34,8 +32,6 @@ const useStyles = createUseStyles({
     outline: 'none',
     overflow: 'hidden',
   }),
-  faceVisible: { opacity: 1 },
-  faceHidden: { opacity: 0 },
   flipped: { transform: 'rotateY(180deg)' },
   cardFlipper: {
     transition: '0.6s',
@@ -57,31 +53,35 @@ const useStyles = createUseStyles({
  * Base card
  * @param props Card props
  */
-export const BaseCard: React.FC<BaseCardProps> = ({
-  frontFace,
-  backFace,
-  width = undefined,
-  height = undefined,
-} = {}) => {
-  const { card, faceVisible, faceHidden, flipped, cardFlipper, cardFront, cardBack } = useStyles({
-    width,
-    height,
-  });
-  const [isBackVisible, setIsBackVisible] = useState<boolean>(false);
+export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
+  ({ frontFace, backFace, faceUp, width, height, disableNativeEvents }, ref) => {
+    const { card, flipped, cardFlipper, cardFront, cardBack } = useStyles({
+      width,
+      height,
+    });
+    const [isFrontVisible, setIsFrontVisible] = useState<boolean>(!!faceUp);
+    const turnCard = (forceFaceUp?: boolean): void =>
+      setIsFrontVisible(forceFaceUp !== undefined ? forceFaceUp : !isFrontVisible);
 
-  const turnCard = (): void => setIsBackVisible(!isBackVisible);
-  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => event.keyCode === 32 && turnCard();
+    useImperativeHandle(ref, () => ({
+      flip: (forceFaceUp?: boolean) => turnCard(forceFaceUp),
+    }));
 
-  return (
-    <div data-testid="BaseCard" role="button" onClick={turnCard} onKeyDown={onKeyDown} className={card} tabIndex={0}>
-      <div className={classnames(cardFlipper, { [flipped]: isBackVisible })}>
-        <div className={classnames(cardFront, { [faceHidden]: isBackVisible, [faceVisible]: !isBackVisible })}>
-          {frontFace}
-        </div>
-        <div className={classnames(cardBack, { [faceHidden]: !isBackVisible, [faceVisible]: isBackVisible })}>
-          {backFace}
+    const onClick = () => !disableNativeEvents && turnCard();
+    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) =>
+      !disableNativeEvents && event.keyCode === 32 && turnCard();
+
+    return (
+      <div data-testid="BaseCard" role="button" onClick={onClick} onKeyDown={onKeyDown} className={card} tabIndex={0}>
+        <div data-testid="BaseCard-flipper" className={classnames(cardFlipper, { [flipped]: !isFrontVisible })}>
+          <div data-testid="BaseCard-front" className={classnames(cardFront)}>
+            {frontFace}
+          </div>
+          <div data-testid="BaseCard-back" className={classnames(cardBack)}>
+            {backFace}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
