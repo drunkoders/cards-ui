@@ -4,11 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/drunkoders/cards-ui/badge.svg?branch=master)](https://coveralls.io/github/drunkoders/cards-ui?branch=master)
 
 This repository contains the UI for the Cards project.
-It was bootstrapped using [Create React App](https://github.com/facebook/create-react-app).
-
-## Prerequisites
-
-- Create a `.env` file by copying the `.env.example` file and setting the values you need.
+It was bootstrapped using [Create Snowpack App](https://www.snowpack.dev/#create-snowpack-app-(csa)).
 
 ## Available Scripts
 
@@ -17,7 +13,7 @@ In the project directory, you can run:
 ### `yarn start`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 ### `yarn test`
 
@@ -27,5 +23,3 @@ Launches the test runner in the interactive watch mode.<br />
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />

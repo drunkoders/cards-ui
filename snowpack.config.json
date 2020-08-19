@@ -1,0 +1,9 @@
+{
+  "extends": "@snowpack/app-scripts-react",
+  "alias": {
+    "@atoms": "./src/components/atoms",
+    "@pages": "./src/components/pages",
+    "@models": "./src/models",
+    "@assets": "./src/assets"
+  }
+}
