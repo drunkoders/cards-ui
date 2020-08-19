@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /* eslint-disable no-console */
 /* eslint-disable max-lines */
 const isLocalhost = Boolean(

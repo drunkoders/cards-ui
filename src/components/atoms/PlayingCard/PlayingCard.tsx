@@ -1,8 +1,9 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import svgCards from '../../../assets/svg-cards-optimized.svg';
-import { BaseCard } from '../BaseCard/BaseCard';
-import { PlayingCardType } from '../../../models/PlayingCardType';
+import { BaseCard } from '@atoms/BaseCard';
+
+import svgCards from '@assets/svg-cards-optimized.svg';
+import type { PlayingCardType } from '@models/PlayingCardType';
 
 /**
  * Properties for PlayingCard

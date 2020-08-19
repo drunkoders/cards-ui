@@ -1,7 +1,8 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { PlayingCard } from '../../atoms/PlayingCard/PlayingCard';
-import { PlayingCardType } from '../../../models/PlayingCardType';
+
+import { PlayingCard } from '@atoms/PlayingCard/PlayingCard';
+import type { PlayingCardType } from '@models/PlayingCardType';
 
 const useStyles = createUseStyles({
   homePage: {
@@ -14,7 +15,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const HomePage: React.FC = () => {
+export const HomePage: React.FC = () => {
   const classes = useStyles();
 
   const allCards: PlayingCardType[] = [
