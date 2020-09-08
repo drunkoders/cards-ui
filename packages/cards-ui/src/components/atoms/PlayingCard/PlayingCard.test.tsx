@@ -34,11 +34,11 @@ describe('PlayingCard', () => {
 
   describe('on rendering', () => {
     beforeEach(() => {
-      render(<PlayingCard card="spade_4" backColor="red" />);
+      render(<PlayingCard card="spades_4" backColor="red" />);
     });
 
     it('should render the correct card', () => {
-      expect(getFaceUse(true)).toHaveAttribute('xlink:href', expect.stringMatching(/#spade_4$/i));
+      expect(getFaceUse(true)).toHaveAttribute('xlink:href', expect.stringMatching(/#spades_4$/i));
     });
 
     it('should always show back as back', () => {

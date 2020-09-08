@@ -5,7 +5,7 @@ import type { PlayingCardType } from '@models/PlayingCardType';
 /** Represents the state of the cards */
 type CardSliceState = {
   /** contains the positions of every card */
-  positions: Record<PlayingCardType, Position>;
+  positions: { [key in PlayingCardType]?: Position };
 };
 
 const initialState = {
