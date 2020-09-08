@@ -46,8 +46,8 @@ describe('PlayingCardFace', () => {
     });
 
     it('should have a card displayed', () => {
-      render(<PlayingCardFace card="heart_5" />);
-      expect(getUseEl()).toHaveAttribute('xlink:href', expect.stringMatching(/#heart_5$/));
+      render(<PlayingCardFace card="hearts_5" />);
+      expect(getUseEl()).toHaveAttribute('xlink:href', expect.stringMatching(/#hearts_5$/));
     });
   });
 

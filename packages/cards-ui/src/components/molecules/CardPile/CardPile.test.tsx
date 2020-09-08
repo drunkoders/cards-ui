@@ -41,7 +41,7 @@ describe('CardPile', () => {
   describe('when rendering one card', () => {
     let cardPile: HTMLElement;
     beforeEach(() => {
-      const cardProp: PlayingCardProps = { card: 'heart_king' };
+      const cardProp: PlayingCardProps = { card: 'hearts_king' };
       const { getByTestId } = render(<CardPile cards={[cardProp]} />);
       cardPile = getByTestId('CardPile');
     });
@@ -51,7 +51,7 @@ describe('CardPile', () => {
     });
 
     it('should pass down the props to card', () => {
-      expect(getFaceUse(true)).toHaveAttribute('xlink:href', expect.stringMatching(/#heart_king$/i));
+      expect(getFaceUse(true)).toHaveAttribute('xlink:href', expect.stringMatching(/#hearts_king$/i));
     });
 
     it('pile should not have multi-item', () => {

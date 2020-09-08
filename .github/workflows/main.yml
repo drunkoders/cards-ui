@@ -8,15 +8,9 @@ on:
   pull_request:
     branches: [master]
 
-# Setting this because the react-scripts is shitty
-env:
-  SKIP_PREFLIGHT_CHECK: true
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  cards_ui:
     runs-on: ubuntu-latest
 
     strategy:
@@ -49,13 +43,30 @@ jobs:
       - name: install packages
         run: yarn install
       - name: check linting
-        run: yarn lint
+        run: yarn workspace cards-ui lint
       - name: build
         run: yarn build
       - name: test
-        run: yarn test --coverage
-      - name: Coveralls GitHub Action
-        uses: coverallsapp/github-action@v1.1.1
+        run: yarn test:cov
+      - name: Coveralls - Frontend
+        uses: coverallsapp/github-action@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./packages/cards-ui/coverage/lcov.info
+          base-path: ./packages/cards-ui/
+          flag-name: "Frontend"
+          parallel: true
+      - name: Coveralls - Backend
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./packages/cards-server/coverage/lcov.info
+          base-path: ./packages/cards-server/
+          flag-name: "Backend"
+          parallel: true
+      - name: Coveralls - Finished
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
 

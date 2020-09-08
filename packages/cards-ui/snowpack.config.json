@@ -1,5 +1,6 @@
 {
   "extends": "@snowpack/app-scripts-react",
+  "exclude": ["__tests__/**/*", "**/*.@(spec|test).*", "**/utils/testing-utils.tsx"],
   "alias": {
     "@atoms": "./src/components/atoms",
     "@molecules": "./src/components/molecules",
