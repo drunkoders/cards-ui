@@ -132,4 +132,39 @@ describe('BaseCard', () => {
       expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
     });
   });
+
+  describe('when dragged', () => {
+    it('should set the card position on drag end', () => {
+      const { getByTestId } = render(<BaseCard faceUp position={{ x: 10, y: 15 }} />);
+      const baseCard = getByTestId('BaseCard');
+      fireEvent.mouseDown(baseCard, { clientX: 34, clientY: 55 });
+      fireEvent.mouseMove(baseCard, { clientX: 54, clientY: 66 });
+      fireEvent.mouseUp(baseCard);
+
+      expect(baseCard).toHaveStyle('transform: translate(30px, 26px)');
+    });
+
+    it('should call onDragEnd with the position of the card', () => {
+      const onDragEndSpy = jest.fn();
+      const { getByTestId } = render(<BaseCard faceUp onDragEnd={onDragEndSpy} position={{ x: 10, y: 15 }} />);
+      const baseCard = getByTestId('BaseCard');
+
+      fireEvent.mouseDown(baseCard, { clientX: 34, clientY: 55 });
+      fireEvent.mouseMove(baseCard, { clientX: 54, clientY: 66 });
+      fireEvent.mouseUp(baseCard);
+
+      expect(onDragEndSpy).toHaveBeenCalledWith({ x: 30, y: 26 });
+    });
+
+    it('should not drag card if disableNativeEvents is true', () => {
+      const { getByTestId } = render(<BaseCard faceUp disableNativeEvents position={{ x: 10, y: 15 }} />);
+      const baseCard = getByTestId('BaseCard');
+
+      fireEvent.mouseDown(baseCard, { clientX: 34, clientY: 55 });
+      fireEvent.mouseMove(baseCard, { clientX: 54, clientY: 66 });
+      fireEvent.mouseUp(baseCard);
+
+      expect(baseCard).toHaveStyle('transform: translate(10px, 15px)');
+    });
+  });
 });

@@ -399,7 +399,7 @@
       <path d="M508.992 779.917c-2.054-1.516-2.26-4.512-.747-6.48 1.827-2.375 5.344-2.595 7.638-.777 2.696 2.137 2.93 6.176.807 8.795-2.447 3.018-7.009 3.265-9.953.837-3.34-2.755-3.601-7.842-.866-11.11 2.394-2.862 6.495-3.76 9.915-2.335" transform="matrix(.7518 .3005 -.3107 .7774 372.862 20.834)" id="path653"/>
       <path d="M507.265 776.876c-.309-2.765 1.915-5.165 4.616-5.421 3.211-.304 5.98 2.289 6.239 5.435.3 3.658-2.663 6.796-6.255 7.057-4.104.297-7.612-3.037-7.874-7.075-.296-4.55 3.41-8.429 7.894-8.692 3.474-.203 6.793 1.741 8.422 4.797" transform="matrix(.7518 .3005 .3107 -.7774 -109.566 1234.952)" id="path655"/>
     </g>
-    <g id="club_1" transform="translate(1.25 236.52)">
+    <g id="clubs_1" transform="translate(1.25 236.52)">
       <use xlink:href="#base" width="100%" height="100%"/>
       <use xlink:href="#ace" x="4" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#ace" x="163.575" y="-30.28" transform="rotate(180 163.575 -30.28)" width="100%" height="100%"/>
@@ -408,7 +408,7 @@
       <use xlink:href="#club" x="34.911" y="-50.654" transform="rotate(180 83.788 -121.569) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#laurel" transform="translate(44.623 -159.8) scale(.0875)" width="100%" height="100%"/>
     </g>
-    <g id="club_2" transform="translate(-166.325 236.52)">
+    <g id="clubs_2" transform="translate(-166.325 236.52)">
       <use xlink:href="#base" x="167.575" width="100%" height="100%"/>
       <use xlink:href="#n_2" x="171.575" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_2" x="331.15" y="-30.28" transform="rotate(180 331.15 -30.28)" width="100%" height="100%"/>
@@ -417,7 +417,7 @@
       <use xlink:href="#club" x="104.734" y="-14.599" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#club" x="104.734" y="-82.713" transform="matrix(-2.4 0 0 -2.4 502.723 -397.02)" width="100%" height="100%"/>
     </g>
-    <g id="club_3" transform="translate(-333.9 236.52)">
+    <g id="clubs_3" transform="translate(-333.9 236.52)">
       <use xlink:href="#base" x="335.15" width="100%" height="100%"/>
       <use xlink:href="#n_3" x="339.15" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_3" x="498.725" y="-30.28" transform="rotate(180 498.725 -30.28)" width="100%" height="100%"/>
@@ -427,7 +427,7 @@
       <use xlink:href="#club" x="174.557" y="-50.654" transform="matrix(-2.4 0 0 -2.4 837.874 -243.137)" width="100%" height="100%"/>
       <use xlink:href="#club" x="174.557" y="-82.713" transform="matrix(-2.4 0 0 -2.4 837.874 -397.02)" width="100%" height="100%"/>
     </g>
-    <g id="club_4" transform="translate(-501.475 236.52)">
+    <g id="clubs_4" transform="translate(-501.475 236.52)">
       <use xlink:href="#base" x="502.725" width="100%" height="100%"/>
       <use xlink:href="#n_4" x="506.725" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_4" x="666.3" y="-30.28" transform="rotate(180 666.3 -30.28)" width="100%" height="100%"/>
@@ -438,7 +438,7 @@
       <use xlink:href="#club" x="261.017" y="-82.713" transform="rotate(180 626.44 -198.51) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#club" x="261.017" y="-14.599" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="club_5" transform="translate(-669.05 236.52)">
+    <g id="clubs_5" transform="translate(-669.05 236.52)">
       <use xlink:href="#base" x="670.3" width="100%" height="100%"/>
       <use xlink:href="#n_5" x="674.3" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_5" x="833.875" y="-30.28" transform="rotate(180 833.875 -30.28)" width="100%" height="100%"/>
@@ -450,7 +450,7 @@
       <use xlink:href="#club" x="330.84" y="-14.599" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#club" x="314.203" y="-50.654" transform="rotate(180 754.087 -121.569) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="club_6" transform="translate(-836.625 236.52)">
+    <g id="clubs_6" transform="translate(-836.625 236.52)">
       <use xlink:href="#base" x="837.875" width="100%" height="100%"/>
       <use xlink:href="#n_6" x="841.875" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_6" x="1001.45" y="-30.28" transform="rotate(180 1001.45 -30.28)" width="100%" height="100%"/>
@@ -463,7 +463,7 @@
       <use xlink:href="#club" x="400.663" y="-50.654" transform="rotate(180 961.591 -121.569) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#club" x="400.663" y="-14.599" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="club_7" transform="translate(-1004.2 236.52)">
+    <g id="clubs_7" transform="translate(-1004.2 236.52)">
       <use xlink:href="#base" x="1005.45" width="100%" height="100%"/>
       <use xlink:href="#n_7" x="1009.45" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_7" x="1169.02" y="-30.28" transform="rotate(180 1169.02 -30.28)" width="100%" height="100%"/>
@@ -477,7 +477,7 @@
       <use xlink:href="#club" x="470.486" y="-14.599" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#club" x="453.849" y="-60.147" transform="matrix(-2.4 0 0 -2.4 2178.475 -288.708)" width="100%" height="100%"/>
     </g>
-    <g id="club_8" transform="translate(-1171.77 236.52)">
+    <g id="clubs_8" transform="translate(-1171.77 236.52)">
       <use xlink:href="#base" x="1173.02" width="100%" height="100%"/>
       <use xlink:href="#n_8" x="1177.02" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_8" x="1336.6" y="-30.28" transform="rotate(180 1336.6 -30.28)" width="100%" height="100%"/>
@@ -492,7 +492,7 @@
       <use xlink:href="#club" x="540.309" y="-37.164" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#club" x="540.309" y="-14.599" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="club_9" transform="translate(-1339.35 236.52)">
+    <g id="clubs_9" transform="translate(-1339.35 236.52)">
       <use xlink:href="#base" x="1340.6" width="100%" height="100%"/>
       <use xlink:href="#n_9" x="1344.6" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_9" x="1504.17" y="-30.28" transform="rotate(180 1504.17 -30.28)" width="100%" height="100%"/>
@@ -508,7 +508,7 @@
       <use xlink:href="#club" x="610.132" y="-14.599" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#club" x="593.495" y="-71.43" transform="matrix(-2.4 0 0 -2.4 2848.776 -342.864)" width="100%" height="100%"/>
     </g>
-    <g id="club_10" transform="translate(-1506.92 236.52)">
+    <g id="clubs_10" transform="translate(-1506.92 236.52)">
       <use xlink:href="#base" x="1508.17" width="100%" height="100%"/>
       <use xlink:href="#n_10" x="1512.17" y="-199.117" width="100%" height="100%"/>
       <use xlink:href="#n_10" x="1671.75" y="-30.28" transform="rotate(180 1671.75 -30.28)" width="100%" height="100%"/>
@@ -525,7 +525,7 @@
       <use xlink:href="#club" x="663.318" y="-71.43" transform="matrix(-2.4 0 0 -2.4 3183.926 -342.864)" width="100%" height="100%"/>
       <use xlink:href="#club" x="663.318" y="-25.881" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="club_jack" transform="translate(-1674.5 236.52)">
+    <g id="clubs_jack" transform="translate(-1674.5 236.52)">
       <use xlink:href="#base" x="1675.75" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M1685.25-175.117V2.27M1685.25 2.27h130.78M1833.83-54.03v-177.637M1833.83-231.667h-130.78"/>
@@ -592,7 +592,7 @@
       <use xlink:href="#jack_4" transform="matrix(.99 0 0 .99 1330.845 -204.534)" width="2178.475" height="1215.688"/>
       <use xlink:href="#jack_4" transform="matrix(-.99 0 0 -.99 2188.317 -24.846)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="club_queen" transform="translate(-1842.07 236.52)">
+    <g id="clubs_queen" transform="translate(-1842.07 236.52)">
       <use xlink:href="#base" x="1843.32" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M1851.32-175.117V2.27M1851.32 2.27h132.28M2002.9-54.03v-177.637M2002.9-231.667h-132.28"/>
@@ -665,7 +665,7 @@
       <use xlink:href="#queen_3" transform="matrix(.99 0 0 .99 1604.55 -403.058)" width="2178.475" height="1215.688"/>
       <use xlink:href="#queen_3" transform="rotate(180 1124.797 86.858) scale(.99)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="club_king" transform="translate(-2009.65 236.52)">
+    <g id="clubs_king" transform="translate(-2009.65 236.52)">
       <use xlink:href="#base" x="2010.9" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M2020.77-175.117V2.27M2020.77 2.27h130.4M2168.6-54.03v-177.637M2168.6-231.667h-130.4"/>
@@ -734,7 +734,7 @@
       <use xlink:href="#king_3" transform="matrix(.99 0 0 .99 2058.172 -647.272)" width="2178.475" height="1215.688"/>
       <use xlink:href="#king_3" transform="matrix(-.99 0 0 -.99 2131.263 417.746)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="diamond_1" transform="translate(1.25 -6.617)">
+    <g id="diamonds_1" transform="translate(1.25 -6.617)">
       <use xlink:href="#base" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#ace" x="4" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#ace" x="163.575" y="212.857" transform="rotate(180 163.575 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -742,7 +742,7 @@
       <use xlink:href="#diamond" x="153.925" y="198.857" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="34.911" y="50.654" transform="rotate(180 83.788 121.569) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_2" transform="translate(-166.325 -6.617)">
+    <g id="diamonds_2" transform="translate(-166.325 -6.617)">
       <use xlink:href="#base" x="167.575" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_2" x="171.575" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_2" x="331.15" y="212.857" transform="rotate(180 331.15 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -751,7 +751,7 @@
       <use xlink:href="#diamond" x="104.734" y="86.708" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="104.734" y="18.595" transform="matrix(-2.4 0 0 -2.4 502.723 89.255)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_3" transform="translate(-333.9 -6.617)">
+    <g id="diamonds_3" transform="translate(-333.9 -6.617)">
       <use xlink:href="#base" x="335.15" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_3" x="339.15" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_3" x="498.725" y="212.857" transform="rotate(180 498.725 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -761,7 +761,7 @@
       <use xlink:href="#diamond" x="174.557" y="50.654" transform="matrix(-2.4 0 0 -2.4 837.874 243.137)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="174.557" y="18.595" transform="matrix(-2.4 0 0 -2.4 837.874 89.255)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_4" transform="translate(-501.475 -6.617)">
+    <g id="diamonds_4" transform="translate(-501.475 -6.617)">
       <use xlink:href="#base" x="502.725" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_4" x="506.725" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_4" x="666.3" y="212.857" transform="rotate(180 666.3 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -772,7 +772,7 @@
       <use xlink:href="#diamond" x="261.017" y="18.595" transform="rotate(180 626.44 44.628) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="261.017" y="86.708" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_5" transform="translate(-669.05 -6.617)">
+    <g id="diamonds_5" transform="translate(-669.05 -6.617)">
       <use xlink:href="#base" x="670.3" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_5" x="674.3" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_5" x="833.875" y="212.857" transform="rotate(180 833.875 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -784,7 +784,7 @@
       <use xlink:href="#diamond" x="330.84" y="86.708" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="314.203" y="50.654" transform="rotate(180 754.087 121.569) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_6" transform="translate(-836.625 -6.617)">
+    <g id="diamonds_6" transform="translate(-836.625 -6.617)">
       <use xlink:href="#base" x="837.875" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_6" x="841.875" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_6" x="1001.45" y="212.857" transform="rotate(180 1001.45 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -797,7 +797,7 @@
       <use xlink:href="#diamond" x="400.663" y="50.654" transform="rotate(180 961.591 121.569) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="400.663" y="86.708" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_7" transform="translate(-1004.2 -6.617)">
+    <g id="diamonds_7" transform="translate(-1004.2 -6.617)">
       <use xlink:href="#base" x="1005.45" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_7" x="1009.45" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_7" x="1169.02" y="212.857" transform="rotate(180 1169.02 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -811,7 +811,7 @@
       <use xlink:href="#diamond" x="470.486" y="86.708" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="453.849" y="41.16" transform="rotate(180 1089.238 98.784) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_8" transform="translate(-1171.77 -6.617)">
+    <g id="diamonds_8" transform="translate(-1171.77 -6.617)">
       <use xlink:href="#base" x="1173.02" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_8" x="1177.02" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_8" x="1336.6" y="212.857" transform="rotate(180 1336.6 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -826,7 +826,7 @@
       <use xlink:href="#diamond" x="540.309" y="64.143" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="540.309" y="86.708" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_9" transform="translate(-1339.35 -6.617)">
+    <g id="diamonds_9" transform="translate(-1339.35 -6.617)">
       <use xlink:href="#base" x="1340.6" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_9" x="1344.6" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_9" x="1504.17" y="212.857" transform="rotate(180 1504.17 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -842,7 +842,7 @@
       <use xlink:href="#diamond" x="610.132" y="86.708" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="593.495" y="29.877" transform="rotate(180 1424.388 71.706) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_10" transform="translate(-1506.92 -6.617)">
+    <g id="diamonds_10" transform="translate(-1506.92 -6.617)">
       <use xlink:href="#base" x="1508.17" y="243.137" width="100%" height="100%"/>
       <use xlink:href="#n_10" x="1512.17" y="44.02" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_10" x="1671.75" y="212.857" transform="rotate(180 1671.75 212.857)" width="100%" height="100%" fill="#e6180a"/>
@@ -859,7 +859,7 @@
       <use xlink:href="#diamond" x="663.318" y="29.877" transform="rotate(180 1591.963 71.706) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#diamond" x="663.318" y="75.426" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="diamond_jack" transform="translate(-1674.5 -6.617)">
+    <g id="diamonds_jack" transform="translate(-1674.5 -6.617)">
       <use xlink:href="#base" x="1675.75" y="243.137" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M1683.75 68.02v177.387M1683.75 245.407h132.28M1835.33 189.107V11.47M1835.33 11.47h-132.28"/>
@@ -920,7 +920,7 @@
       <use xlink:href="#jack_1" transform="rotate(-179.919 914.096 90.767) scale(.99)" width="2178.475" height="1215.688"/>
       <use xlink:href="#jack_1" transform="rotate(.163 -24702.967 586040.809) scale(.99)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="diamond_queen" transform="translate(-1842.07 -6.617)">
+    <g id="diamonds_queen" transform="translate(-1842.07 -6.617)">
       <use xlink:href="#base" x="1843.32" y="243.137" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M1851.32 68.02v177.387M1851.32 245.407h132.28M2002.9 189.107V11.47M2002.9 11.47h-132.28"/>
@@ -985,7 +985,7 @@
       <use xlink:href="#queen_4" transform="matrix(.99 0 0 .99 1862.402 -132.843)" width="2178.475" height="1215.688"/>
       <use xlink:href="#queen_4" transform="rotate(180 995.999 194.816) scale(.99)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="diamond_king" transform="translate(-2009.65 -6.617)">
+    <g id="diamonds_king" transform="translate(-2009.65 -6.617)">
       <use xlink:href="#base" x="2010.9" y="243.137" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M2020.27 68.02v177.387M2020.27 245.407h130.9M2169.1 189.107V11.47M2169.1 11.47h-130.9"/>
@@ -1060,7 +1060,7 @@
       <use xlink:href="#king_4" transform="translate(1769.457 -416.07)" width="2178.475" height="1215.688"/>
       <use xlink:href="#king_4" transform="rotate(180 1209.938 336.482)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="heart_1" transform="translate(1.25 -249.755)">
+    <g id="hearts_1" transform="translate(1.25 -249.755)">
       <use xlink:href="#base" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#ace" x="4" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#ace" x="163.575" y="455.995" transform="rotate(180 163.575 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1068,7 +1068,7 @@
       <use xlink:href="#heart" x="153.925" y="441.995" width="100%" height="100%"/>
       <use xlink:href="#heart" x="34.911" y="151.961" transform="rotate(180 83.788 364.706) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="heart_2" transform="translate(-166.325 -249.755)">
+    <g id="hearts_2" transform="translate(-166.325 -249.755)">
       <use xlink:href="#base" x="167.575" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_2" x="171.575" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_2" x="331.15" y="455.995" transform="rotate(180 331.15 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1077,7 +1077,7 @@
       <use xlink:href="#heart" x="104.734" y="188.016" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="104.734" y="119.902" transform="matrix(-2.4 0 0 -2.4 502.723 575.53)" width="100%" height="100%"/>
     </g>
-    <g id="heart_3" transform="translate(-333.9 -249.755)">
+    <g id="hearts_3" transform="translate(-333.9 -249.755)">
       <use xlink:href="#base" x="335.15" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_3" x="339.15" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_3" x="498.725" y="455.995" transform="rotate(180 498.725 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1087,7 +1087,7 @@
       <use xlink:href="#heart" x="174.557" y="151.961" transform="matrix(-2.4 0 0 -2.4 837.874 729.413)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="174.557" y="119.902" transform="matrix(-2.4 0 0 -2.4 837.874 575.53)" width="100%" height="100%"/>
     </g>
-    <g id="heart_4" transform="translate(-501.475 -249.755)">
+    <g id="hearts_4" transform="translate(-501.475 -249.755)">
       <use xlink:href="#base" x="502.725" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_4" x="506.725" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_4" x="666.3" y="455.995" transform="rotate(180 666.3 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1098,7 +1098,7 @@
       <use xlink:href="#heart" x="261.017" y="119.902" transform="rotate(180 626.44 287.765) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="261.017" y="188.016" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="heart_5" transform="translate(-669.05 -249.755)">
+    <g id="hearts_5" transform="translate(-669.05 -249.755)">
       <use xlink:href="#base" x="670.3" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_5" x="674.3" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_5" x="833.875" y="455.995" transform="rotate(180 833.875 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1110,7 +1110,7 @@
       <use xlink:href="#heart" x="330.84" y="188.016" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="314.203" y="151.961" transform="rotate(180 754.087 364.706) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="heart_6" transform="translate(-836.625 -249.755)">
+    <g id="hearts_6" transform="translate(-836.625 -249.755)">
       <use xlink:href="#base" x="837.875" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_6" x="841.875" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_6" x="1001.45" y="455.995" transform="rotate(180 1001.45 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1123,7 +1123,7 @@
       <use xlink:href="#heart" x="400.663" y="151.961" transform="rotate(180 961.591 364.706) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="400.663" y="188.016" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="heart_7" transform="translate(-1004.2 -249.755)">
+    <g id="hearts_7" transform="translate(-1004.2 -249.755)">
       <use xlink:href="#base" x="1005.45" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_7" x="1009.45" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_7" x="1169.02" y="455.995" transform="rotate(180 1169.02 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1137,7 +1137,7 @@
       <use xlink:href="#heart" x="470.486" y="188.016" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="453.849" y="142.467" transform="rotate(180 1089.238 341.92) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="heart_8" transform="translate(-1171.77 -249.755)">
+    <g id="hearts_8" transform="translate(-1171.77 -249.755)">
       <use xlink:href="#base" x="1173.02" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_8" x="1177.02" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_8" x="1336.6" y="455.995" transform="rotate(180 1336.6 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1152,7 +1152,7 @@
       <use xlink:href="#heart" x="540.309" y="165.451" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="540.309" y="188.016" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="heart_9" transform="translate(-1339.35 -249.755)">
+    <g id="hearts_9" transform="translate(-1339.35 -249.755)">
       <use xlink:href="#base" x="1340.6" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_9" x="1344.6" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_9" x="1504.17" y="455.995" transform="rotate(180 1504.17 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1168,7 +1168,7 @@
       <use xlink:href="#heart" x="610.132" y="188.016" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="593.495" y="131.185" transform="matrix(-2.4 0 0 -2.4 2848.776 629.688)" width="100%" height="100%"/>
     </g>
-    <g id="heart_10" transform="translate(-1506.92 -249.755)">
+    <g id="hearts_10" transform="translate(-1506.92 -249.755)">
       <use xlink:href="#base" x="1508.17" y="486.275" width="100%" height="100%"/>
       <use xlink:href="#n_10" x="1512.17" y="287.157" width="100%" height="100%" fill="#e6180a"/>
       <use xlink:href="#n_10" x="1671.75" y="455.995" transform="rotate(180 1671.75 455.995)" width="100%" height="100%" fill="#e6180a"/>
@@ -1185,7 +1185,7 @@
       <use xlink:href="#heart" x="663.318" y="131.185" transform="matrix(-2.4 0 0 -2.4 3183.926 629.688)" width="100%" height="100%"/>
       <use xlink:href="#heart" x="663.318" y="176.733" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="heart_jack" transform="translate(-1674.5 -249.755)">
+    <g id="hearts_jack" transform="translate(-1674.5 -249.755)">
       <use xlink:href="#base" x="1675.75" y="486.275" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M1684.88 311.157v177.388M1684.88 488.545h131.15M1834.2 432.245V254.607M1834.2 254.607h-131.15"/>
@@ -1252,7 +1252,7 @@
       <use xlink:href="#jack_2" transform="matrix(.99 0 0 .99 1451.738 301.831)" width="2178.475" height="1215.688"/>
       <use xlink:href="#jack_2" transform="rotate(-180 1033.694 220.605) scale(.99)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="heart_queen" transform="translate(-1842.07 -249.755)">
+    <g id="hearts_queen" transform="translate(-1842.07 -249.755)">
       <use xlink:href="#base" x="1843.32" y="486.275" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M1853.07 311.157v177.388M1853.07 488.545h130.53M2001.15 432.245V254.607M2001.15 254.607h-130.53"/>
@@ -1327,7 +1327,7 @@
       <use xlink:href="#queen_1" transform="matrix(1 0 0 1 1472.202 77.374)" width="2178.475" height="1215.688"/>
       <use xlink:href="#queen_1" transform="rotate(180 1191.093 332.902)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="heart_king" transform="translate(-2009.65 -249.755)">
+    <g id="hearts_king" transform="translate(-2009.65 -249.755)">
       <use xlink:href="#base" x="2010.9" y="486.275" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M2018.9 311.157v177.388M2018.9 488.545h132.27M2170.47 432.245V254.607M2170.47 254.607H2038.2"/>
@@ -1396,7 +1396,7 @@
       <use xlink:href="#king_2" transform="matrix(.99 0 0 .99 1638.359 -170.928)" width="2178.475" height="1215.688"/>
       <use xlink:href="#king_2" transform="rotate(180 1275.537 457.07) scale(.99)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="spade_1" transform="translate(1.25 -492.892)">
+    <g id="spades_1" transform="translate(1.25 -492.892)">
       <use xlink:href="#base" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#ace" x="4" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#ace" x="163.575" y="699.132" transform="rotate(180 163.575 699.132)" width="100%" height="100%"/>
@@ -1404,7 +1404,7 @@
       <use xlink:href="#spade" x="153.925" y="685.132" width="100%" height="100%"/>
       <use xlink:href="#spade" x="34.911" y="253.268" transform="rotate(180 83.788 607.843) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_2" transform="translate(-166.325 -492.892)">
+    <g id="spades_2" transform="translate(-166.325 -492.892)">
       <use xlink:href="#base" x="167.575" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_2" x="171.575" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_2" x="331.15" y="699.132" transform="rotate(180 331.15 699.132)" width="100%" height="100%"/>
@@ -1413,7 +1413,7 @@
       <use xlink:href="#spade" x="104.734" y="289.323" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="104.734" y="221.209" transform="rotate(180 251.362 530.902) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_3" transform="translate(-333.9 -492.892)">
+    <g id="spades_3" transform="translate(-333.9 -492.892)">
       <use xlink:href="#base" x="335.15" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_3" x="339.15" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_3" x="498.725" y="699.132" transform="rotate(180 498.725 699.132)" width="100%" height="100%"/>
@@ -1423,7 +1423,7 @@
       <use xlink:href="#spade" x="174.557" y="253.268" transform="rotate(180 418.937 607.843) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="174.557" y="221.209" transform="rotate(180 418.937 530.902) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_4" transform="translate(-501.475 -492.892)">
+    <g id="spades_4" transform="translate(-501.475 -492.892)">
       <use xlink:href="#base" x="502.725" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_4" x="506.725" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_4" x="666.3" y="699.132" transform="rotate(180 666.3 699.132)" width="100%" height="100%"/>
@@ -1434,7 +1434,7 @@
       <use xlink:href="#spade" x="261.017" y="221.209" transform="rotate(180 626.44 530.902) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="261.017" y="289.323" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_5" transform="translate(-669.05 -492.892)">
+    <g id="spades_5" transform="translate(-669.05 -492.892)">
       <use xlink:href="#base" x="670.3" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_5" x="674.3" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_5" x="833.875" y="699.132" transform="rotate(180 833.875 699.132)" width="100%" height="100%"/>
@@ -1446,7 +1446,7 @@
       <use xlink:href="#spade" x="330.84" y="289.323" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="314.203" y="253.268" transform="rotate(180 754.087 607.843) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_6" transform="translate(-836.625 -492.892)">
+    <g id="spades_6" transform="translate(-836.625 -492.892)">
       <use xlink:href="#base" x="837.875" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_6" x="841.875" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_6" x="1001.45" y="699.132" transform="rotate(180 1001.45 699.132)" width="100%" height="100%"/>
@@ -1459,7 +1459,7 @@
       <use xlink:href="#spade" x="400.663" y="253.268" transform="rotate(180 961.591 607.843) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="400.663" y="289.323" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_7" transform="translate(-1004.2 -492.892)">
+    <g id="spades_7" transform="translate(-1004.2 -492.892)">
       <use xlink:href="#base" x="1005.45" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_7" x="1009.45" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_7" x="1169.02" y="699.132" transform="rotate(180 1169.02 699.132)" width="100%" height="100%"/>
@@ -1473,7 +1473,7 @@
       <use xlink:href="#spade" x="470.486" y="289.323" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="453.849" y="243.774" transform="rotate(180 1089.238 585.058) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_8" transform="translate(-1171.77 -492.892)">
+    <g id="spades_8" transform="translate(-1171.77 -492.892)">
       <use xlink:href="#base" x="1173.02" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_8" x="1177.02" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_8" x="1336.6" y="699.132" transform="rotate(180 1336.6 699.132)" width="100%" height="100%"/>
@@ -1488,7 +1488,7 @@
       <use xlink:href="#spade" x="540.309" y="266.758" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="540.309" y="289.323" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_9" transform="translate(-1339.35 -492.892)">
+    <g id="spades_9" transform="translate(-1339.35 -492.892)">
       <use xlink:href="#base" x="1340.6" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_9" x="1344.6" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_9" x="1504.17" y="699.132" transform="rotate(180 1504.17 699.132)" width="100%" height="100%"/>
@@ -1504,7 +1504,7 @@
       <use xlink:href="#spade" x="610.132" y="289.323" transform="scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="593.495" y="232.492" transform="rotate(180 1424.388 557.98) scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_10" transform="translate(-1506.92 -492.892)">
+    <g id="spades_10" transform="translate(-1506.92 -492.892)">
       <use xlink:href="#base" x="1508.17" y="729.412" width="100%" height="100%"/>
       <use xlink:href="#n_10" x="1512.17" y="530.295" width="100%" height="100%"/>
       <use xlink:href="#n_10" x="1671.75" y="699.132" transform="rotate(180 1671.75 699.132)" width="100%" height="100%"/>
@@ -1521,7 +1521,7 @@
       <use xlink:href="#spade" x="663.318" y="232.492" transform="rotate(180 1591.963 557.98) scale(2.4)" width="100%" height="100%"/>
       <use xlink:href="#spade" x="663.318" y="278.04" transform="scale(2.4)" width="100%" height="100%"/>
     </g>
-    <g id="spade_jack" transform="translate(-1674.5 -492.892)">
+    <g id="spades_jack" transform="translate(-1674.5 -492.892)">
       <use xlink:href="#base" x="1675.75" y="729.412" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M1684.5 554.295v177.387M1684.5 731.682h131.53M1834.58 675.382V497.745M1834.58 497.745h-131.53"/>
@@ -1584,7 +1584,7 @@
       <use xlink:href="#jack_3" transform="matrix(.99 0 0 .99 1572.692 562.204)" width="2178.475" height="1215.688"/>
       <use xlink:href="#jack_3" transform="matrix(-.99 0 0 -.99 1946.599 666.613)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="spade_queen" transform="translate(-1842.07 -492.892)">
+    <g id="spades_queen" transform="translate(-1842.07 -492.892)">
       <use xlink:href="#base" x="1843.32" y="729.412" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M1851.32 554.295v177.387M1851.32 731.682h132.28M2002.9 675.382V497.745M2002.9 497.745h-132.28"/>
@@ -1657,7 +1657,7 @@
       <use xlink:href="#queen_2" transform="matrix(.99 0 0 .99 1731.085 347.656)" width="2178.475" height="1215.688"/>
       <use xlink:href="#queen_2" transform="rotate(180 1061.57 440.85) scale(.99)" width="2178.475" height="1215.688"/>
     </g>
-    <g id="spade_king" transform="translate(-2009.65 -492.892)">
+    <g id="spades_king" transform="translate(-2009.65 -492.892)">
       <use xlink:href="#base" x="2010.9" y="729.412" width="100%" height="100%"/>
       <g fill="none" stroke="#000">
         <path d="M2018.9 554.295v177.387M2018.9 731.682h132.27M2170.47 675.382V497.745M2170.47 497.745H2038.2"/>

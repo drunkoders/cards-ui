@@ -3,8 +3,10 @@
   "alias": {
     "@atoms": "./src/components/atoms",
     "@molecules": "./src/components/molecules",
+    "@organisms": "./src/components/organisms",
     "@pages": "./src/components/pages",
     "@models": "./src/models",
+    "@store": "./src/store",
     "@utils": "./src/utils",
     "@assets": "./src/assets"
   }

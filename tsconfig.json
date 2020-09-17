@@ -5,11 +5,13 @@
   "compilerOptions": {
     "baseUrl": "./",
     "isolatedModules": true,
-    "paths": { 
+    "paths": {
       "@atoms/*": ["src/components/atoms/*"],
       "@molecules/*": ["src/components/molecules/*"],
+      "@organisms/*": ["src/components/organisms/*"],
       "@pages/*": ["src/components/pages/*"],
       "@models/*": ["src/models/*"],
+      "@store/*": ["src/store/*"],
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
       "src/*": ["src/*"],

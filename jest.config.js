@@ -3,9 +3,11 @@ module.exports = {
   moduleNameMapper: {
     "^@atoms/(.*)$": "<rootDir>/src/components/atoms/$1",
     "^@molecules/(.*)$": "<rootDir>/src/components/molecules/$1",
+    "^@organisms/(.*)$": "<rootDir>/src/components/organisms/$1",
     "^@pages/(.*)$": "<rootDir>/src/components/pages/$1",
     "^@utils/(.*)$": "<rootDir>/src/utils/$1",
     "^@models/(.*)$": "<rootDir>/src/models/$1",
+    "^@store/(.*)$": "<rootDir>/src/store/$1",
     "^@assets/(.*)$": "<rootDir>/src/assets/$1"
   },
   collectCoverageFrom: [
