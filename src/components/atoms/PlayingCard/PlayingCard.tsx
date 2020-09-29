@@ -2,7 +2,6 @@ import { BaseCard } from '@atoms/BaseCard';
 import { PlayingCardFace } from '@atoms/PlayingCardFace';
 import type { CardHandle } from '@models/CardHandle';
 import type { CardProps } from '@models/CardProps';
-import type { Position } from '@models/Position';
 import React, { forwardRef } from 'react';
 import type { PlayingCardType } from '@models/PlayingCardType';
 
@@ -14,8 +13,6 @@ export interface PlayingCardProps extends CardProps {
   card?: PlayingCardType;
   /** Color to be applied to back face */
   backColor?: string;
-  onDragEnd?: (position: Position, cardId: string) => void;
-  position?: Position;
 }
 
 export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function PlayingCard(
@@ -26,7 +23,7 @@ export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function Pla
     height = 244.64,
     faceUp,
     disableNativeEvents,
-    onDragEnd,
+    onPositionChanged,
     position,
   },
   ref
@@ -40,7 +37,7 @@ export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function Pla
       faceUp={faceUp}
       disableNativeEvents={disableNativeEvents}
       ref={ref}
-      onDragEnd={(p: Position) => onDragEnd && onDragEnd(p, card)}
+      onPositionChanged={onPositionChanged}
       position={position}
     />
   );

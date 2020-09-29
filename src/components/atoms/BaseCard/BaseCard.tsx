@@ -14,8 +14,6 @@ export interface BaseCardProps extends CardProps {
   frontFace?: JSX.Element;
   /** Element to show at card back face */
   backFace?: JSX.Element;
-  onDragEnd?: (p: Position) => void;
-  position?: Position;
 }
 
 const useStyles = createUseStyles({
@@ -73,14 +71,14 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
       height,
       disableNativeEvents,
       position = { x: 0, y: 0 },
-      onDragEnd = () => {},
+      onPositionChanged = () => {},
     },
     ref
   ) => {
     const [isDragging, setIsDraging] = useState<boolean>(false);
     const [cardPosition, setCardPosition] = useState<Position>(position);
+    const [previousCardPosition, setPreviousCardPosition] = useState<Position>(position);
     const [startPosition, setStartPosition] = useState<Position>(position);
-    const [startDate, setStartDate] = useState<number>(Date.now());
 
     const classes = useStyles({
       width,
@@ -89,14 +87,27 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
     });
 
     const [isFrontVisible, setIsFrontVisible] = useState<boolean>(!!faceUp);
-    const turnCard = (forceFaceUp?: boolean): void =>
-      setIsFrontVisible(forceFaceUp !== undefined ? forceFaceUp : !isFrontVisible);
+
+    const turnCard = useCallback(
+      (forceFaceUp?: boolean): void => {
+        setIsFrontVisible(forceFaceUp !== undefined ? forceFaceUp : !isFrontVisible);
+      },
+      [isFrontVisible]
+    );
 
     useImperativeHandle(ref, () => ({
       flip: (forceFaceUp?: boolean) => turnCard(forceFaceUp),
     }));
 
-    const onClick = () => !disableNativeEvents && !isDragging && Date.now() - startDate < 200 && turnCard();
+    const onClick = useCallback(() => {
+      if (
+        !disableNativeEvents &&
+        cardPosition.x === previousCardPosition.x &&
+        cardPosition.y === previousCardPosition.y
+      ) {
+        turnCard();
+      }
+    }, [cardPosition.x, cardPosition.y, disableNativeEvents, previousCardPosition.x, previousCardPosition.y, turnCard]);
 
     const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) =>
       !disableNativeEvents && event.keyCode === 32 && turnCard();
@@ -104,12 +115,12 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
     const handleMouseDown = useCallback(
       ({ clientX, clientY }) => {
         if (!disableNativeEvents) {
-          setStartDate(Date.now());
           setStartPosition({ x: clientX, y: clientY });
+          setPreviousCardPosition(cardPosition);
           setIsDraging(true);
         }
       },
-      [disableNativeEvents]
+      [disableNativeEvents, cardPosition]
     );
 
     const handleMouseMove = useCallback(
@@ -118,8 +129,10 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
           x: Math.round(cardPosition.x + clientX - startPosition.x),
           y: Math.round(cardPosition.y + clientY - startPosition.y),
         };
+        setPreviousCardPosition(cardPosition);
         setCardPosition(newCardPosition);
       },
+      // ⚠️ TODO: figure out why by putting cardPosition in dependencies it behaves weirdly
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [startPosition]
     );
@@ -136,9 +149,9 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('mouseup', handleMouseUp);
 
-        onDragEnd(cardPosition);
+        onPositionChanged(cardPosition);
       }
-    }, [isDragging, handleMouseMove, handleMouseUp, cardPosition, onDragEnd]);
+    }, [isDragging, handleMouseMove, cardPosition, onPositionChanged, handleMouseUp]);
 
     return (
       <div

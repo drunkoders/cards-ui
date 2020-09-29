@@ -1,5 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { ReactElement } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { RenderResult, screen, render as reactTestingLibraryRender, RenderOptions } from '@testing-library/react';
 
 import createStore, { RootState } from '@store/index';
