@@ -1,27 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { Position } from '@models/Position';
+import type { PlayingCardType } from '@models/PlayingCardType';
 
+/** Represents the state of the cards */
 type CardSliceState = {
-  positions: Record<string, Position>;
+  /** contains the positions of every card */
+  positions: Record<PlayingCardType, Position>;
 };
 
-const initialState: CardSliceState = {
+const initialState = {
   positions: {},
-};
+} as CardSliceState;
 
 const cardsSlice = createSlice({
   name: 'cards',
   initialState,
   reducers: {
-    initCardPositions: (state, action: PayloadAction<{ cards: string[] }>) => {
+    initCardPositions: (state, action: PayloadAction<{ cards: PlayingCardType[] }>) => {
       const { cards } = action.payload;
 
-      cards.forEach((cardId: string) => {
+      cards.forEach((cardId) => {
         // eslint-disable-next-line no-param-reassign
         state.positions[cardId] = { x: 0, y: 0 };
       });
     },
-    updateCardPosition: (state, action: PayloadAction<{ cardId: string; position: Position }>) => {
+    updateCardPosition: (state, action: PayloadAction<{ cardId: PlayingCardType; position: Position }>) => {
       const { cardId, position } = action.payload;
 
       // eslint-disable-next-line no-param-reassign

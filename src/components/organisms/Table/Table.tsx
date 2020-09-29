@@ -6,10 +6,12 @@ import { PlayingCard as PlayingCardComponent } from '@atoms/PlayingCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { initCardPositions, updateCardPosition } from '@store/slices/cards';
 import type { RootState } from '@store/index';
-import type { PlayingCardType } from '../../../models/PlayingCardType';
+import type { PlayingCardType } from '@models/PlayingCardType';
 
 interface TableProps {
+  /** height of the table */
   height: number;
+  /** width of the table */
   width: number;
 }
 
@@ -33,7 +35,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
     dispatch(initCardPositions({ cards }));
   }, [dispatch]);
 
-  const handleDraggedCard = (position: Position, cardId: string) => {
+  const handleDraggedCard = (position: Position, cardId: PlayingCardType) => {
     dispatch(updateCardPosition({ position, cardId }));
   };
 
@@ -42,7 +44,12 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
   return (
     <div className={classes.table} data-testid="Table">
       {cards.map((card) => (
-        <PlayingCardComponent key={card} position={positions[card]} card={card} onDragEnd={handleDraggedCard} />
+        <PlayingCardComponent
+          key={card}
+          position={positions[card]}
+          card={card}
+          onPositionChanged={(e) => handleDraggedCard(e, card)}
+        />
       ))}
     </div>
   );
