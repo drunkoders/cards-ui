@@ -1,0 +1,2 @@
+[build]
+    publish = "packages/cards-ui/build"

@@ -43,7 +43,7 @@ jobs:
       - name: install packages
         run: yarn install
       - name: check linting
-        run: yarn workspace cards-ui lint
+        run: yarn lint
       - name: build
         run: yarn build
       - name: test
