@@ -48,21 +48,29 @@ jobs:
         run: yarn build
       - name: test
         run: yarn test:cov
-      - name: Coveralls - Frontend
+      - name: Coveralls - @cardz/components
         uses: coverallsapp/github-action@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./packages/cards-ui/coverage/lcov.info
-          base-path: ./packages/cards-ui/
-          flag-name: "Frontend"
+          path-to-lcov: ./packages/components/coverage/lcov.info
+          base-path: ./packages/components/
+          flag-name: "@cardz/components"
           parallel: true
-      - name: Coveralls - Backend
+      - name: Coveralls - @cardz/server
         uses: coverallsapp/github-action@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./packages/cards-server/coverage/lcov.info
-          base-path: ./packages/cards-server/
-          flag-name: "Backend"
+          path-to-lcov: ./packages/server/coverage/lcov.info
+          base-path: ./packages/server/
+          flag-name: "@cardz/server"
+          parallel: true
+      - name: Coveralls - @cardz/app
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./packages/app/coverage/lcov.info
+          base-path: ./packages/app/
+          flag-name: "@cardz/app"
           parallel: true
       - name: Coveralls - Finished
         uses: coverallsapp/github-action@v1.1.2
