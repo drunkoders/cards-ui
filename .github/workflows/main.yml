@@ -64,14 +64,6 @@ jobs:
           base-path: ./packages/server/
           flag-name: "@cardz/server"
           parallel: true
-      - name: Coveralls - @cardz/app
-        uses: coverallsapp/github-action@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./packages/app/coverage/lcov.info
-          base-path: ./packages/app/
-          flag-name: "@cardz/app"
-          parallel: true
       - name: Coveralls - Finished
         uses: coverallsapp/github-action@v1.1.2
         with:
