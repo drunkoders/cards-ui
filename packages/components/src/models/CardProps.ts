@@ -1,4 +1,5 @@
 import { Position } from '@models/Position';
+import { Dimensions } from '@models/Dimensions';
 
 /** Common card props */
 export interface CardProps {
@@ -14,4 +15,6 @@ export interface CardProps {
   onPositionChanged?: (position: Position) => void;
   /** Indicates the position of the card */
   position?: Position;
+  /** Indicates the boundaries for the card position  */
+  boundaries?: Dimensions;
 }

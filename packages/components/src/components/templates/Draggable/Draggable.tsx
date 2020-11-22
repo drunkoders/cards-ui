@@ -3,6 +3,8 @@ import React, { KeyboardEvent, FunctionComponent, useCallback, useEffect, useSta
 import { createUseStyles } from 'react-jss';
 import { Position } from '@models/Position';
 import classNames from 'classnames';
+import { Dimensions } from '@models/Dimensions';
+import { calculatePositionWithinBoundaries } from '@utils/position-utils';
 
 interface DraggableProps {
   /** Additionnal class to apply to the item */
@@ -15,6 +17,12 @@ interface DraggableProps {
   onClick?: () => void;
   /** Disabled the dragging mechanism */
   disabled?: boolean;
+  /** Height of the item */
+  height: number;
+  /** Width of the item */
+  width: number;
+  /** Indicates the boundaries for the item position  */
+  boundaries?: Dimensions;
 }
 
 const useStyles = createUseStyles({
@@ -34,6 +42,9 @@ const useStyles = createUseStyles({
 export const Draggable: FunctionComponent<DraggableProps> = ({
   className,
   position,
+  width,
+  height,
+  boundaries,
   onDragged = () => {},
   onClick = () => {},
   children,
@@ -66,8 +77,11 @@ export const Draggable: FunctionComponent<DraggableProps> = ({
         y: Math.round(itemPosition.y + clientY - startPosition.y),
       };
 
+      const dimensions = { width, height };
+      const newPositionWithinBoundaries = calculatePositionWithinBoundaries(newPosition, dimensions, boundaries);
+
       setPreviousItemPosition(itemPosition);
-      setItemPosition(newPosition);
+      setItemPosition(newPositionWithinBoundaries);
     },
     // ⚠️ TODO: figure out why by putting itemPosition in dependencies it behaves weirdly
     // eslint-disable-next-line react-hooks/exhaustive-deps

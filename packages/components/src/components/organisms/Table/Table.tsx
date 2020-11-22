@@ -20,6 +20,9 @@ const useStyles = createUseStyles({
     height,
     width,
     background: 'green',
+    display: 'flex',
+    position: 'relative',
+    overflow: 'hidden',
   }),
 });
 
@@ -47,6 +50,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
         <PlayingCardComponent
           key={card}
           position={positions[card]}
+          boundaries={{ width, height }}
           card={card}
           onPositionChanged={(e) => handleDraggedCard(e, card)}
         />

@@ -61,6 +61,7 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
       faceUp,
       width,
       height,
+      boundaries,
       disableNativeEvents,
       position = { x: 0, y: 0 },
       onPositionChanged = () => {},
@@ -90,6 +91,9 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
         <Draggable
           className={classes.card}
           position={position}
+          height={height}
+          width={width}
+          boundaries={boundaries}
           onDragged={onPositionChanged}
           onClick={turnCard}
           disabled={disableNativeEvents}

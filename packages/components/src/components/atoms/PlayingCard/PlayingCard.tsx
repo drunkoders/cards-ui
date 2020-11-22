@@ -21,6 +21,7 @@ export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function Pla
     backColor = 'black',
     width = 169.075,
     height = 244.64,
+    boundaries,
     faceUp,
     disableNativeEvents,
     onPositionChanged,
@@ -32,6 +33,7 @@ export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function Pla
     <BaseCard
       height={height}
       width={width}
+      boundaries={boundaries}
       frontFace={<PlayingCardFace card={card} />}
       backFace={<PlayingCardFace backColor={backColor} />}
       faceUp={faceUp}
