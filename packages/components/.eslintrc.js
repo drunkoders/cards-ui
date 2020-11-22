@@ -17,9 +17,10 @@ module.exports = {
     'react/prop-types': 0,
     'prettier/prettier': 'error',
     'max-lines': ['error', 100],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["warn"],
-    'eol-last': 'error'
+    'eol-last': 'error',
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['warn'],
+    'import/prefer-default-export': 0,
   },
   settings: {
     react: {
