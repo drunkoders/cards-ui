@@ -48,7 +48,7 @@ describe('BaseCard', () => {
     });
 
     it('should unflip when spacebar pressed', async () => {
-      fireEvent.keyDown(cardContainer, { key: 'Space', code: 'Space', keyCode: 32, charCode: 32 });
+      fireEvent.keyDown(cardContainer, { key: ' ', code: 'Space', keyCode: 32, charCode: 32 });
       expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
     });
 
@@ -88,7 +88,7 @@ describe('BaseCard', () => {
     });
 
     it('should NOT unflip when spacebar pressed', async () => {
-      fireEvent.keyDown(cardContainer, { key: 'Space', code: 'Space', keyCode: 32, charCode: 32 });
+      fireEvent.keyDown(cardContainer, { key: ' ', code: 'Space', keyCode: 32, charCode: 32 });
       expect(cardFlipper).toHaveStyle('transform: rotateY(180deg)');
     });
   });
@@ -129,43 +129,6 @@ describe('BaseCard', () => {
     it('should force faceUp via ref call with param true', () => {
       act(() => cardHandle?.flip(true));
       expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
-    });
-  });
-
-  describe('when dragged', () => {
-    it('should set the card position on drag end', () => {
-      const { getByTestId } = render(<BaseCard faceUp position={{ x: 10, y: 15 }} />);
-      const baseCard = getByTestId('BaseCard');
-      fireEvent.mouseDown(baseCard, { clientX: 34, clientY: 55 });
-      fireEvent.mouseMove(baseCard, { clientX: 54, clientY: 66 });
-      fireEvent.mouseUp(baseCard);
-
-      expect(baseCard).toHaveStyle('transform: translate(30px, 26px)');
-    });
-
-    it('should call onPositionChanged with the position of the card', () => {
-      const onPositionChangedSpy = jest.fn();
-      const { getByTestId } = render(
-        <BaseCard faceUp onPositionChanged={onPositionChangedSpy} position={{ x: 10, y: 15 }} />
-      );
-      const baseCard = getByTestId('BaseCard');
-
-      fireEvent.mouseDown(baseCard, { clientX: 34, clientY: 55 });
-      fireEvent.mouseMove(baseCard, { clientX: 54, clientY: 66 });
-      fireEvent.mouseUp(baseCard);
-
-      expect(onPositionChangedSpy).toHaveBeenCalledWith({ x: 30, y: 26 });
-    });
-
-    it('should not drag card if disableNativeEvents is true', () => {
-      const { getByTestId } = render(<BaseCard faceUp disableNativeEvents position={{ x: 10, y: 15 }} />);
-      const baseCard = getByTestId('BaseCard');
-
-      fireEvent.mouseDown(baseCard, { clientX: 34, clientY: 55 });
-      fireEvent.mouseMove(baseCard, { clientX: 54, clientY: 66 });
-      fireEvent.mouseUp(baseCard);
-
-      expect(baseCard).toHaveStyle('transform: translate(10px, 15px)');
     });
   });
 });

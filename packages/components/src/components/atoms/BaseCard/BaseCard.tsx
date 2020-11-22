@@ -1,9 +1,9 @@
 /* eslint-disable max-lines */
+import React, { forwardRef, useImperativeHandle, useState, useCallback } from 'react';
 import { CardHandle } from '@models/CardHandle';
 import { CardProps } from '@models/CardProps';
-import { Position } from '@models/Position';
+import { Draggable } from '@templates/Draggable';
 import classnames from 'classnames';
-import React, { forwardRef, KeyboardEvent, useImperativeHandle, useState, useEffect, useCallback } from 'react';
 import { createUseStyles } from 'react-jss';
 
 /**
@@ -26,13 +26,11 @@ const useStyles = createUseStyles({
     transition: '0.6s',
   },
   // Style classes
-  card: ({ width, height, cardPosition }) => ({
+  card: ({ width, height }) => ({
     width: width || 600,
     height: height || 400,
     perspective: 1000,
-    outline: 'none',
     overflow: 'hidden',
-    transform: `translate(${cardPosition.x}px, ${cardPosition.y}px)`,
   }),
   flipped: { transform: 'rotateY(180deg)' },
   cardFlipper: {
@@ -48,12 +46,6 @@ const useStyles = createUseStyles({
   cardBack: {
     extend: 'cardFace',
     transform: 'rotateY(180deg)',
-  },
-  cardGrabbing: {
-    cursor: 'grabbing',
-  },
-  cardGrab: {
-    cursor: 'grab',
   },
 });
 
@@ -75,15 +67,9 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
     },
     ref
   ) => {
-    const [isDragging, setIsDraging] = useState<boolean>(false);
-    const [cardPosition, setCardPosition] = useState<Position>(position);
-    const [previousCardPosition, setPreviousCardPosition] = useState<Position>(position);
-    const [startPosition, setStartPosition] = useState<Position>(position);
-
     const classes = useStyles({
       width,
       height,
-      cardPosition,
     });
 
     const [isFrontVisible, setIsFrontVisible] = useState<boolean>(!!faceUp);
@@ -99,81 +85,27 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
       flip: (forceFaceUp?: boolean) => turnCard(forceFaceUp),
     }));
 
-    const onClick = useCallback(() => {
-      if (
-        !disableNativeEvents &&
-        cardPosition.x === previousCardPosition.x &&
-        cardPosition.y === previousCardPosition.y
-      ) {
-        turnCard();
-      }
-    }, [cardPosition.x, cardPosition.y, disableNativeEvents, previousCardPosition.x, previousCardPosition.y, turnCard]);
-
-    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) =>
-      !disableNativeEvents && event.keyCode === 32 && turnCard();
-
-    const handleMouseDown = useCallback(
-      ({ clientX, clientY }) => {
-        if (!disableNativeEvents) {
-          setStartPosition({ x: clientX, y: clientY });
-          setPreviousCardPosition(cardPosition);
-          setIsDraging(true);
-        }
-      },
-      [disableNativeEvents, cardPosition]
-    );
-
-    const handleMouseMove = useCallback(
-      ({ clientX, clientY }) => {
-        const newCardPosition: Position = {
-          x: Math.round(cardPosition.x + clientX - startPosition.x),
-          y: Math.round(cardPosition.y + clientY - startPosition.y),
-        };
-        setPreviousCardPosition(cardPosition);
-        setCardPosition(newCardPosition);
-      },
-      // ⚠️ TODO: figure out why by putting cardPosition in dependencies it behaves weirdly
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      [startPosition]
-    );
-
-    const handleMouseUp = useCallback(() => {
-      setIsDraging(false);
-    }, []);
-
-    useEffect(() => {
-      if (isDragging) {
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseup', handleMouseUp);
-      } else {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
-
-        onPositionChanged(cardPosition);
-      }
-    }, [isDragging, handleMouseMove, cardPosition, onPositionChanged, handleMouseUp]);
-
     return (
-      <div
-        data-testid="BaseCard"
-        role="button"
-        onClick={onClick}
-        onKeyDown={onKeyDown}
-        onMouseDown={handleMouseDown}
-        className={classnames(classes.card, { [classes.cardGrabbing]: isDragging, [classes.cardGrab]: !isDragging })}
-        tabIndex={0}
-      >
-        <div
-          data-testid="BaseCard-flipper"
-          className={classnames(classes.cardFlipper, { [classes.flipped]: !isFrontVisible })}
+      <div data-testid="BaseCard">
+        <Draggable
+          className={classes.card}
+          position={position}
+          onDragged={onPositionChanged}
+          onClick={turnCard}
+          disabled={disableNativeEvents}
         >
-          <div data-testid="BaseCard-front" className={classnames(classes.cardFront)}>
-            {frontFace}
+          <div
+            data-testid="BaseCard-flipper"
+            className={classnames(classes.cardFlipper, { [classes.flipped]: !isFrontVisible })}
+          >
+            <div data-testid="BaseCard-front" className={classnames(classes.cardFront)}>
+              {frontFace}
+            </div>
+            <div data-testid="BaseCard-back" className={classnames(classes.cardBack)}>
+              {backFace}
+            </div>
           </div>
-          <div data-testid="BaseCard-back" className={classnames(classes.cardBack)}>
-            {backFace}
-          </div>
-        </div>
+        </Draggable>
       </div>
     );
   }
