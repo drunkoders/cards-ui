@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { CardPileMenu } from '@atoms/CardPileMenu';
 import { Overlay } from '@atoms/Overlay';
-import { PlayingCard } from '@atoms/PlayingCard';
+import { BaseCard } from '@atoms/BaseCard';
 import { PlayingCardFace } from '@atoms/PlayingCardFace';
 import { CardProps } from '@models/CardProps';
 import { shuffleArray } from '@utils/array-utils';
@@ -11,7 +11,7 @@ import { createUseStyles } from 'react-jss';
 import { v4 as uuid } from 'uuid';
 
 /** Describes the properties for card pile */
-export interface CardPileProps<T extends CardProps> {
+export interface CardPileProps<T extends CardProps = CardProps> {
   /** The cards metadata */
   cards: T[];
   /** The component function to be used for rendering */
@@ -58,10 +58,10 @@ const useStyles = createUseStyles({
 });
 
 // eslint-disable-next-line import/prefer-default-export
-export const CardPile: FC<CardPileProps<CardProps>> = ({
+export const CardPile: FC<CardPileProps> = ({
   cards,
   isFaceUp = false,
-  component = PlayingCard,
+  component = BaseCard,
   backFace = PlayingCardFace,
   onCardFlipped = () => {},
 }) => {

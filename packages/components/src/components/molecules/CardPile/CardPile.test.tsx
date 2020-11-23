@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { BaseCard } from '@atoms/BaseCard';
-import { PlayingCardProps } from '@atoms/PlayingCard';
+import { PlayingCardFace } from '@atoms/PlayingCardFace';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { shuffleArray } from '@utils/array-utils';
 import { getFaceUse } from '@utils/testing-utils';
@@ -41,7 +41,13 @@ describe('CardPile', () => {
   describe('when rendering one card', () => {
     let cardPile: HTMLElement;
     beforeEach(() => {
-      const cardProp: PlayingCardProps = { card: 'hearts_king' };
+      const cardProp = {
+        height: 200,
+        width: 100,
+        frontFace: <PlayingCardFace card="hearts_king" />,
+        backFace: <PlayingCardFace />,
+        position: { x: 0, y: 0 },
+      };
       const { getByTestId } = render(<CardPile cards={[cardProp]} />);
       cardPile = getByTestId('CardPile');
     });

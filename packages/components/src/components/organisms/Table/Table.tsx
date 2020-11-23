@@ -1,13 +1,14 @@
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Position } from '@models/Position';
-import { PlayingCard as PlayingCardComponent } from '@atoms/PlayingCard';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { initCards, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
 import { RootState } from '@store/index';
 import { PlayingCardType } from '@models/PlayingCardType';
 import { calculateCardDimensions, defaultCardDimensions } from '@utils/card-dimensions';
+import { BaseCard } from '@atoms/BaseCard';
+import { PlayingCardFace } from '@atoms/PlayingCardFace';
 
 interface TableProps {
   /** height of the table */
@@ -60,14 +61,15 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
   return (
     <div className={classes.table} data-testid="Table">
       {Object.values(cards).map((cardState) => (
-        <PlayingCardComponent
+        <BaseCard
           key={cardState.card}
-          width={cardWidth}
           height={cardHeight}
-          position={cardState.position}
-          faceUp={cardState.isFaceUp}
+          width={cardWidth}
           boundaries={{ width, height }}
-          card={cardState.card}
+          frontFace={<PlayingCardFace card={cardState.card} />}
+          backFace={<PlayingCardFace />}
+          faceUp={cardState.isFaceUp}
+          position={cardState.position}
           onPositionChanged={(e) => handleDraggedCard(e, cardState.card)}
           onFlipped={(isFaceUp) => handleFlippedCard(isFaceUp, cardState.card)}
         />
