@@ -30,3 +30,6 @@ yarn-error.log*
 
 # meld
 *.orig
+
+# docker
+mongo-volume

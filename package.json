@@ -11,7 +11,10 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -t v -s",
     "test": "lerna run test --stream",
     "test:cov": "lerna run test --stream -- --coverage",
-    "build": "lerna run build --stream"
+    "build": "lerna run build --stream",
+    "start:db": "docker-compose up -d --build --force-recreate --renew-anon-volumes",
+    "stop:db": "docker-compose stop",
+    "clean:db": "docker-compose down && rm -rf ./mongo-volume"
   },
   "husky": {
     "hooks": {
