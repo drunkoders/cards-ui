@@ -4,7 +4,7 @@ import { Position } from '@models/Position';
 import { PlayingCard as PlayingCardComponent } from '@atoms/PlayingCard';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { initCardPositions, updateCardPosition } from '@store/slices/cards';
+import { initCards, updateCardPosition } from '@store/slices/table';
 import { RootState } from '@store/index';
 import { PlayingCardType } from '@models/PlayingCardType';
 
@@ -26,7 +26,7 @@ const useStyles = createUseStyles({
   }),
 });
 
-const cards: PlayingCardType[] = ['spades_1'];
+const initialCards: PlayingCardType[] = ['spades_1'];
 
 // eslint-disable-next-line import/prefer-default-export
 export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
@@ -35,24 +35,24 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initCardPositions({ cards }));
+    dispatch(initCards({ cards: initialCards }));
   }, [dispatch]);
 
   const handleDraggedCard = (position: Position, cardId: PlayingCardType) => {
     dispatch(updateCardPosition({ position, cardId }));
   };
 
-  const positions = useSelector((state: RootState) => state.cards.positions);
+  const cards = useSelector((state: RootState) => state.table.cards);
 
   return (
     <div className={classes.table} data-testid="Table">
-      {cards.map((card) => (
+      {Object.values(cards).map((cardState) => (
         <PlayingCardComponent
-          key={card}
-          position={positions[card]}
+          key={cardState.card}
+          position={cardState.position}
           boundaries={{ width, height }}
-          card={card}
-          onPositionChanged={(e) => handleDraggedCard(e, card)}
+          card={cardState.card}
+          onPositionChanged={(e) => handleDraggedCard(e, cardState.card)}
         />
       ))}
     </div>

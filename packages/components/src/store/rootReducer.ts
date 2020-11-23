@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import cardsReducer from './slices/cards';
+import tableReducer from '@store/slices/table';
 
 const rootReducer = combineReducers({
-  cards: cardsReducer,
+  table: tableReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
