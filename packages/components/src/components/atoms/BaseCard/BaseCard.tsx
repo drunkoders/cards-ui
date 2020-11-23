@@ -87,30 +87,28 @@ export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
     }));
 
     return (
-      <div data-testid="BaseCard">
-        <Draggable
-          className={classes.card}
-          position={position}
-          height={height}
-          width={width}
-          boundaries={boundaries}
-          onDragged={onPositionChanged}
-          onClick={turnCard}
-          disabled={disableNativeEvents}
+      <Draggable
+        className={classes.card}
+        position={position}
+        height={height}
+        width={width}
+        boundaries={boundaries}
+        onDragged={onPositionChanged}
+        onClick={turnCard}
+        disabled={disableNativeEvents}
+      >
+        <div
+          data-testid="BaseCard-flipper"
+          className={classnames(classes.cardFlipper, { [classes.flipped]: !isFrontVisible })}
         >
-          <div
-            data-testid="BaseCard-flipper"
-            className={classnames(classes.cardFlipper, { [classes.flipped]: !isFrontVisible })}
-          >
-            <div data-testid="BaseCard-front" className={classnames(classes.cardFront)}>
-              {frontFace}
-            </div>
-            <div data-testid="BaseCard-back" className={classnames(classes.cardBack)}>
-              {backFace}
-            </div>
+          <div data-testid="BaseCard-front" className={classnames(classes.cardFront)}>
+            {frontFace}
           </div>
-        </Draggable>
-      </div>
+          <div data-testid="BaseCard-back" className={classnames(classes.cardBack)}>
+            {backFace}
+          </div>
+        </div>
+      </Draggable>
     );
   }
 );

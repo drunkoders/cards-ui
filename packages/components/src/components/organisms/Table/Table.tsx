@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initCards, updateCardPosition } from '@store/slices/table';
 import { RootState } from '@store/index';
 import { PlayingCardType } from '@models/PlayingCardType';
+import { calculateCardDimensions, defaultCardDimensions } from '@utils/card-dimensions';
 
 interface TableProps {
   /** height of the table */
@@ -42,6 +43,8 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
     dispatch(updateCardPosition({ position, cardId }));
   };
 
+  const { width: cardWidth, height: cardHeight } = calculateCardDimensions(defaultCardDimensions, { width, height });
+
   const cards = useSelector((state: RootState) => state.table.cards);
 
   return (
@@ -49,6 +52,8 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
       {Object.values(cards).map((cardState) => (
         <PlayingCardComponent
           key={cardState.card}
+          width={cardWidth}
+          height={cardHeight}
           position={cardState.position}
           boundaries={{ width, height }}
           card={cardState.card}

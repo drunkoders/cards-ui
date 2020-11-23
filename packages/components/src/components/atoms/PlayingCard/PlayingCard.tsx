@@ -19,8 +19,8 @@ export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function Pla
   {
     card = 'joker_black',
     backColor = 'black',
-    width = 169.075,
-    height = 244.64,
+    width,
+    height,
     boundaries,
     faceUp,
     disableNativeEvents,
