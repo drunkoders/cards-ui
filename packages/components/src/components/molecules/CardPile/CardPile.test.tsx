@@ -34,7 +34,7 @@ describe('CardPile', () => {
     });
 
     it('should not have cards', () => {
-      expect(screen.queryAllByTestId('BaseCard')).toHaveLength(0);
+      expect(screen.queryAllByTestId('Draggable')).toHaveLength(0);
     });
   });
 
@@ -96,7 +96,7 @@ describe('CardPile', () => {
   describe('when rendering other cards', () => {
     it('should render the custom cards', () => {
       const { getByTestId } = render(<CardPile cards={[{}]} component={BaseCard} />);
-      expect(getByTestId('BaseCard')).toBeInTheDocument();
+      expect(getByTestId('Draggable')).toBeInTheDocument();
     });
   });
 
@@ -125,11 +125,21 @@ describe('CardPile', () => {
 
   describe('when working with the card pile menu', () => {
     let mockedShuffleArray: jest.Mock<typeof shuffleArray>;
+    let onCardFlippedSpy: jest.SpyInstance;
+
     beforeEach(() => {
       mockedShuffleArray = (shuffleArray as unknown) as jest.Mock<typeof shuffleArray>;
       mockedShuffleArray.mockImplementation((arr) => arr);
 
-      render(<CardPile cards={[{}]} />);
+      onCardFlippedSpy = jest.fn();
+
+      render(
+        <CardPile
+          cards={[{}]}
+          isFaceUp={false}
+          onCardFlipped={(onCardFlippedSpy as unknown) as (isFaceUp: boolean) => void}
+        />
+      );
       fireEvent.click(screen.getByTestId('CardPile'));
     });
 
@@ -137,9 +147,9 @@ describe('CardPile', () => {
       expect(screen.getByTestId('BaseCard-flipper')).toHaveStyle('transform: rotateY(180deg)');
     });
 
-    it('should turn the first card  when option is clicked', () => {
+    it('should call onCardFlipped when option is clicked', () => {
       fireEvent.click(screen.getByText('Turn first card'));
-      expect(screen.getByTestId('BaseCard-flipper')).not.toHaveStyle('transform: rotateY(180deg)');
+      expect(onCardFlippedSpy).toHaveBeenCalledWith(true);
       expect(screen.getByTestId('Overlay')).toBeInTheDocument();
     });
 

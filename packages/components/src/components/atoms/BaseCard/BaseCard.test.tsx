@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
-import { Handle } from '@models/Handle';
-import { act, fireEvent, render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
 import { BaseCard } from './BaseCard';
 
@@ -10,16 +9,24 @@ describe('BaseCard', () => {
   let frontFace: HTMLElement;
   let backFace: HTMLElement;
 
+  const onFlippedSpy = jest.fn();
+
+  afterEach(() => {
+    onFlippedSpy.mockRestore();
+  });
+
   it('should render the card', () => {
     const { getByTestId, getByRole } = render(<BaseCard />);
     expect(getByRole('button')).toBeInTheDocument();
-    expect(getByTestId('BaseCard')).toBeInTheDocument();
+    expect(getByTestId('Draggable')).toBeInTheDocument();
   });
 
   describe('when rendered', () => {
     beforeEach(() => {
       const { getByTestId, getByRole } = render(
         <BaseCard
+          onFlipped={onFlippedSpy}
+          faceUp={false}
           frontFace={<div data-testid="front-face">MY FRONT</div>}
           backFace={<div data-testid="back-face">MY BACK</div>}
         />
@@ -42,40 +49,51 @@ describe('BaseCard', () => {
       expect(cardFlipper).toHaveStyle('transform: rotateY(180deg)');
     });
 
-    it('should unflip when clicked', async () => {
+    it('should call onFlipped handler with true when clicked', () => {
       fireEvent.click(cardContainer);
-      expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
+
+      expect(onFlippedSpy).toHaveBeenCalledWith(true);
     });
 
-    it('should unflip when spacebar pressed', async () => {
+    it('should unflip when spacebar pressed', () => {
       fireEvent.keyDown(cardContainer, { key: ' ', code: 'Space', keyCode: 32, charCode: 32 });
-      expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
+
+      expect(onFlippedSpy).toHaveBeenCalledWith(true);
     });
 
-    it('should not unflip when something else is pressed', async () => {
+    it('should not unflip when something else is pressed', () => {
       fireEvent.keyDown(cardContainer, { key: 'Enter', code: 'Enter', keyCode: 13, charCode: 13 });
+
       expect(cardFlipper).toHaveStyle('transform: rotateY(180deg)');
     });
 
-    it('should flip again when clicked again', async () => {
+    it('should flip again when clicked again', () => {
       fireEvent.click(cardContainer);
       fireEvent.click(cardContainer);
+
       expect(cardFlipper).toHaveStyle('transform: rotateY(180deg)');
     });
   });
 
   describe('when rendered with faceUp', () => {
     beforeEach(() => {
-      const { getByTestId } = render(<BaseCard faceUp />);
+      const { getByTestId, getByRole } = render(<BaseCard faceUp onFlipped={onFlippedSpy} />);
       cardFlipper = getByTestId('BaseCard-flipper');
+      cardContainer = getByRole('button');
     });
 
     it('should not flip the card by default', () => {
       expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
     });
+
+    it('should call onFlipped handler with false when clicked', () => {
+      fireEvent.click(cardContainer);
+
+      expect(onFlippedSpy).toHaveBeenCalledWith(false);
+    });
   });
 
-  describe('when working with references and disableNativeEvents', () => {
+  describe('when working with disableNativeEvents', () => {
     beforeEach(() => {
       const { getByTestId, getByRole } = render(<BaseCard disableNativeEvents />);
       cardContainer = getByRole('button');
@@ -90,45 +108,6 @@ describe('BaseCard', () => {
     it('should NOT unflip when spacebar pressed', async () => {
       fireEvent.keyDown(cardContainer, { key: ' ', code: 'Space', keyCode: 32, charCode: 32 });
       expect(cardFlipper).toHaveStyle('transform: rotateY(180deg)');
-    });
-  });
-
-  describe('when working with refs', () => {
-    let cardHandle: Handle<typeof BaseCard> | null;
-    beforeEach(() => {
-      const { getByTestId } = render(
-        <BaseCard
-          ref={(c) => {
-            cardHandle = c;
-          }}
-        />
-      );
-      cardFlipper = getByTestId('BaseCard-flipper');
-    });
-
-    it('should forward the correct ref', () => {
-      expect(cardHandle).not.toBeNull();
-    });
-
-    it('should flip the card via ref call', () => {
-      act(() => cardHandle?.flip());
-      expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
-    });
-
-    it('should double flip the card after two ref calls', () => {
-      act(() => cardHandle?.flip());
-      act(() => cardHandle?.flip());
-      expect(cardFlipper).toHaveStyle('transform: rotateY(180deg)');
-    });
-
-    it('should force backface via ref call with param false', () => {
-      act(() => cardHandle?.flip(false));
-      expect(cardFlipper).toHaveStyle('transform: rotateY(180deg)');
-    });
-
-    it('should force faceUp via ref call with param true', () => {
-      act(() => cardHandle?.flip(true));
-      expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
     });
   });
 });

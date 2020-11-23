@@ -40,9 +40,15 @@ const tableSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.cards[cardId].position = position;
     },
+    updateCardFaceUp: (state, action: PayloadAction<{ cardId: PlayingCardType; isFaceUp: boolean }>) => {
+      const { cardId, isFaceUp } = action.payload;
+
+      // eslint-disable-next-line no-param-reassign
+      state.cards[cardId].isFaceUp = isFaceUp;
+    },
   },
 });
 
-export const { initCards, updateCardPosition } = tableSlice.actions;
+export const { initCards, updateCardPosition, updateCardFaceUp } = tableSlice.actions;
 
 export default tableSlice.reducer;

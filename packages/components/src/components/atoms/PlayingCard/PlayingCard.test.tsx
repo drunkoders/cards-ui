@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
-import { Handle } from '@models/Handle';
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { getFaceUse } from '@utils/testing-utils';
 import React from 'react';
 import { PlayingCard } from './PlayingCard';
@@ -8,9 +7,13 @@ import { PlayingCard } from './PlayingCard';
 describe('PlayingCard', () => {
   let cardFlipper: HTMLElement;
 
+  afterEach(() => {
+    cleanup();
+  });
+
   it('should render correctly', () => {
     const { getByTestId } = render(<PlayingCard />);
-    expect(getByTestId('BaseCard')).toBeInTheDocument();
+    expect(getByTestId('Draggable')).toBeInTheDocument();
   });
 
   describe('on default rendering', () => {
@@ -63,32 +66,5 @@ describe('PlayingCard', () => {
       fireEvent.click(cardFlipper);
       expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
     });
-  });
-
-  describe('when working with refs', () => {
-    let cardHandle: Handle<typeof PlayingCard> | null;
-    beforeEach(() => {
-      const { getByTestId } = render(
-        <PlayingCard
-          ref={(c) => {
-            cardHandle = c;
-          }}
-        />
-      );
-      cardFlipper = getByTestId('BaseCard-flipper');
-    });
-
-    it('should forward the correct ref', () => {
-      expect(cardHandle).not.toBeNull();
-    });
-
-    it('should flip the card via ref call', () => {
-      act(() => cardHandle?.flip());
-      expect(cardFlipper).not.toHaveStyle('transform: rotateY(180deg)');
-    });
-  });
-
-  afterEach(() => {
-    cleanup();
   });
 });

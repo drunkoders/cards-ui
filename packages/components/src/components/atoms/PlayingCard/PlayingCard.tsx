@@ -1,8 +1,7 @@
 import { BaseCard } from '@atoms/BaseCard';
 import { PlayingCardFace } from '@atoms/PlayingCardFace';
-import { CardHandle } from '@models/CardHandle';
 import { CardProps } from '@models/CardProps';
-import React, { forwardRef } from 'react';
+import React, { FunctionComponent } from 'react';
 import { PlayingCardType } from '@models/PlayingCardType';
 
 /**
@@ -15,20 +14,18 @@ export interface PlayingCardProps extends CardProps {
   backColor?: string;
 }
 
-export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function PlayingCard(
-  {
-    card = 'joker_black',
-    backColor = 'black',
-    width,
-    height,
-    boundaries,
-    faceUp,
-    disableNativeEvents,
-    onPositionChanged,
-    position,
-  },
-  ref
-) {
+export const PlayingCard: FunctionComponent<PlayingCardProps> = ({
+  card = 'joker_black',
+  backColor = 'black',
+  width,
+  height,
+  boundaries,
+  faceUp,
+  disableNativeEvents,
+  onPositionChanged,
+  onFlipped,
+  position,
+}) => {
   return (
     <BaseCard
       height={height}
@@ -38,9 +35,9 @@ export const PlayingCard = forwardRef<CardHandle, PlayingCardProps>(function Pla
       backFace={<PlayingCardFace backColor={backColor} />}
       faceUp={faceUp}
       disableNativeEvents={disableNativeEvents}
-      ref={ref}
       onPositionChanged={onPositionChanged}
+      onFlipped={onFlipped}
       position={position}
     />
   );
-});
+};

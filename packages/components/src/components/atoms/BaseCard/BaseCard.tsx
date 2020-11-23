@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
-import React, { forwardRef, useImperativeHandle, useState, useCallback } from 'react';
-import { CardHandle } from '@models/CardHandle';
+import React, { FunctionComponent } from 'react';
 import { CardProps } from '@models/CardProps';
 import { Draggable } from '@templates/Draggable';
 import classnames from 'classnames';
@@ -27,88 +26,75 @@ const useStyles = createUseStyles({
   },
   // Style classes
   card: ({ width, height }) => ({
-    width: width || 600,
-    height: height || 400,
+    width,
+    height,
+    position: 'absolute',
     perspective: 1000,
     overflow: 'hidden',
   }),
-  flipped: { transform: 'rotateY(180deg)' },
-  cardFlipper: {
+  flipped: ({ faceUp }) => ({ transform: `rotateY(${faceUp ? 0 : 180}deg)` }),
+  cardFlipper: ({ width, height }) => ({
+    width,
+    height,
     transition: '0.6s',
     transformStyle: 'preserve-3d',
     position: 'relative',
-  },
-  cardFront: {
+  }),
+  cardFront: ({ width, height }) => ({
+    width,
+    height,
     extend: 'cardFace',
-    zIndex: 2,
     transform: 'rotateY(0deg)',
-  },
-  cardBack: {
+  }),
+  cardBack: ({ width, height }) => ({
+    width,
+    height,
     extend: 'cardFace',
     transform: 'rotateY(180deg)',
-  },
+  }),
 });
 
 /**
  * Base card
  * @param props Card props
  */
-export const BaseCard = forwardRef<CardHandle, BaseCardProps>(
-  (
-    {
-      frontFace,
-      backFace,
-      faceUp,
-      width,
-      height,
-      boundaries,
-      disableNativeEvents,
-      position = { x: 0, y: 0 },
-      onPositionChanged = () => {},
-    },
-    ref
-  ) => {
-    const classes = useStyles({
-      width,
-      height,
-    });
+export const BaseCard: FunctionComponent<BaseCardProps> = ({
+  frontFace,
+  backFace,
+  faceUp,
+  width,
+  height,
+  boundaries,
+  disableNativeEvents,
+  position = { x: 0, y: 0 },
+  onPositionChanged = () => {},
+  onFlipped = () => {},
+}) => {
+  const classes = useStyles({
+    width,
+    height,
+    faceUp,
+  });
 
-    const [isFrontVisible, setIsFrontVisible] = useState<boolean>(!!faceUp);
-
-    const turnCard = useCallback(
-      (forceFaceUp?: boolean): void => {
-        setIsFrontVisible(forceFaceUp !== undefined ? forceFaceUp : !isFrontVisible);
-      },
-      [isFrontVisible]
-    );
-
-    useImperativeHandle(ref, () => ({
-      flip: (forceFaceUp?: boolean) => turnCard(forceFaceUp),
-    }));
-
-    return (
-      <Draggable
-        className={classes.card}
-        position={position}
-        height={height}
-        width={width}
-        boundaries={boundaries}
-        onDragged={onPositionChanged}
-        onClick={turnCard}
-        disabled={disableNativeEvents}
-      >
-        <div
-          data-testid="BaseCard-flipper"
-          className={classnames(classes.cardFlipper, { [classes.flipped]: !isFrontVisible })}
-        >
-          <div data-testid="BaseCard-front" className={classnames(classes.cardFront)}>
-            {frontFace}
-          </div>
-          <div data-testid="BaseCard-back" className={classnames(classes.cardBack)}>
-            {backFace}
-          </div>
+  return (
+    <Draggable
+      className={classes.card}
+      position={position}
+      height={height}
+      width={width}
+      boundaries={boundaries}
+      onDragged={onPositionChanged}
+      onClick={() => onFlipped(!faceUp)}
+      disabled={disableNativeEvents}
+    >
+      <div data-testid="BaseCard-flipper" className={classnames(classes.cardFlipper, { [classes.flipped]: !faceUp })}>
+        <div data-testid="BaseCard-front" className={classnames(classes.cardFront)}>
+          {frontFace}
         </div>
-      </Draggable>
-    );
-  }
-);
+        <div data-testid="BaseCard-back" className={classnames(classes.cardBack)}>
+          {backFace}
+        </div>
+      </div>
+    </Draggable>
+  );
+};

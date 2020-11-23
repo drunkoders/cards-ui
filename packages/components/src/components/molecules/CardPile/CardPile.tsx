@@ -3,22 +3,25 @@ import { CardPileMenu } from '@atoms/CardPileMenu';
 import { Overlay } from '@atoms/Overlay';
 import { PlayingCard } from '@atoms/PlayingCard';
 import { PlayingCardFace } from '@atoms/PlayingCardFace';
-import { CardHandle } from '@models/CardHandle';
 import { CardProps } from '@models/CardProps';
 import { shuffleArray } from '@utils/array-utils';
 import classnames from 'classnames';
-import React, { FC, KeyboardEvent, useMemo, useRef, useState } from 'react';
+import React, { FC, KeyboardEvent, useMemo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { v4 as uuid } from 'uuid';
 
 /** Describes the properties for card pile */
-export interface CardPileProps<T extends CardProps = CardProps> {
+export interface CardPileProps<T extends CardProps> {
   /** The cards metadata */
   cards: T[];
   /** The component function to be used for rendering */
   component?: FC<T>;
   /** The component function to be used for back face rendering */
   backFace?: FC;
+  /** Boolean indicating if first card of the pile is face up */
+  isFaceUp?: boolean;
+  /** Function called when first card of the pile flips */
+  onCardFlipped?: (isFaceUp: boolean) => void;
 }
 
 const useStyles = createUseStyles({
@@ -55,12 +58,16 @@ const useStyles = createUseStyles({
 });
 
 // eslint-disable-next-line import/prefer-default-export
-export const CardPile: FC<CardPileProps> = ({ cards, component = PlayingCard, backFace = PlayingCardFace }) => {
+export const CardPile: FC<CardPileProps<CardProps>> = ({
+  cards,
+  isFaceUp = false,
+  component = PlayingCard,
+  backFace = PlayingCardFace,
+  onCardFlipped = () => {},
+}) => {
   const classes = useStyles();
   const [pileCards, setPileCards] = useState(cards);
   const [isSelected, setSelect] = useState(false);
-
-  const firstCardRef = useRef<CardHandle>(null);
 
   const thisCard: CardProps | undefined = pileCards[0];
   const displayedCard = useMemo(() => {
@@ -72,7 +79,7 @@ export const CardPile: FC<CardPileProps> = ({ cards, component = PlayingCard, ba
     return !thisCard ? undefined : (
       <div data-testid="CardPile_card" key={uuid()} className={classnames(classes.card, classes.firstItem)}>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <TagName {...cardProps} ref={firstCardRef} />
+        <TagName {...cardProps} />
       </div>
     );
   }, [thisCard, classes, component]);
@@ -91,9 +98,7 @@ export const CardPile: FC<CardPileProps> = ({ cards, component = PlayingCard, ba
   };
   const onPileClick = () => toggleSelect();
   const onPileKeyDown = (event: KeyboardEvent<HTMLDivElement>) => event.keyCode === 32 && toggleSelect();
-  const onTurnFirstCard = () => firstCardRef.current?.flip();
   const onShuffle = () => {
-    firstCardRef.current?.flip(false);
     const newPile = shuffleArray(pileCards);
     setPileCards(newPile);
   };
@@ -111,7 +116,7 @@ export const CardPile: FC<CardPileProps> = ({ cards, component = PlayingCard, ba
         <>
           <Overlay />
           <div className={classes.cardPileMenu}>
-            <CardPileMenu onTurnFirstCard={onTurnFirstCard} onShufflePile={onShuffle} />
+            <CardPileMenu onTurnFirstCard={() => onCardFlipped(!isFaceUp)} onShufflePile={onShuffle} />
           </div>
         </>
       )}
