@@ -1,9 +1,8 @@
-import { PlayingCardType } from '@models/PlayingCardType';
 import React, { FC } from 'react';
 import { SvgPlayingCard } from '@atoms/SvgPlayingCard';
 
 export interface PlayingCardFrontFaceProps {
-  card: PlayingCardType;
+  card: string;
 }
 
 export const PlayingCardFrontFace: FC<PlayingCardFrontFaceProps> = ({ card }) => {

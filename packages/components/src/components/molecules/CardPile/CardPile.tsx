@@ -57,7 +57,6 @@ const useStyles = createUseStyles({
   },
 });
 
-// eslint-disable-next-line import/prefer-default-export
 export const CardPile: FC<CardPileProps> = ({
   cards,
   isFaceUp = false,

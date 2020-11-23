@@ -3,9 +3,8 @@ import { createUseStyles } from 'react-jss';
 import { Position } from '@models/Position';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { initCards, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
+import { setTableDimensions, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
 import { RootState } from '@store/index';
-import { PlayingCardType } from '@models/PlayingCardType';
 import { calculateCardDimensions, defaultCardDimensions } from '@utils/card-dimensions';
 import { BaseCard } from '@atoms/BaseCard';
 import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
@@ -29,27 +28,24 @@ const useStyles = createUseStyles({
   }),
 });
 
-const initialCards: PlayingCardType[] = ['spades_1'];
-
-// eslint-disable-next-line import/prefer-default-export
 export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
   const classes = useStyles({ height, width });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initCards({ cards: initialCards }));
-  }, [dispatch]);
+    dispatch(setTableDimensions({ width, height }));
+  }, [dispatch, height, width]);
 
   const handleDraggedCard = useCallback(
-    (position: Position, cardId: PlayingCardType) => {
+    (position: Position, cardId: string) => {
       dispatch(updateCardPosition({ position, cardId }));
     },
     [dispatch]
   );
 
   const handleFlippedCard = useCallback(
-    (isFaceUp: boolean, cardId: PlayingCardType) => {
+    (isFaceUp: boolean, cardId: string) => {
       dispatch(updateCardFaceUp({ isFaceUp, cardId }));
     },
     [dispatch]
@@ -57,24 +53,31 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
 
   const { width: cardWidth, height: cardHeight } = calculateCardDimensions(defaultCardDimensions, { width, height });
 
-  const cards = useSelector((state: RootState) => state.table.cards);
+  const { cards } = useSelector((state: RootState) => state.table);
+  const tableCards = Object.values(cards);
 
   return (
     <div className={classes.table} data-testid="Table">
-      {Object.values(cards).map((cardState) => (
-        <BaseCard
-          key={cardState.card}
-          height={cardHeight}
-          width={cardWidth}
-          boundaries={{ width, height }}
-          frontFace={<PlayingCardFrontFace card={cardState.card} />}
-          backFace={<PlayingCardBackFace />}
-          faceUp={cardState.isFaceUp}
-          position={cardState.position}
-          onPositionChanged={(e) => handleDraggedCard(e, cardState.card)}
-          onFlipped={(isFaceUp) => handleFlippedCard(isFaceUp, cardState.card)}
-        />
-      ))}
+      {tableCards.map((cardState) => {
+        return (
+          <BaseCard
+            key={cardState.card.id}
+            height={cardHeight}
+            width={cardWidth}
+            boundaries={{ width, height }}
+            frontFace={
+              <PlayingCardFrontFace
+                card={`${cardState.card.suit.toLowerCase()}_${cardState.card.name.toLowerCase()}`}
+              />
+            }
+            backFace={<PlayingCardBackFace />}
+            faceUp={cardState.isFaceUp}
+            position={cardState.position}
+            onPositionChanged={(e) => handleDraggedCard(e, cardState.card.id)}
+            onFlipped={(isFaceUp) => handleFlippedCard(isFaceUp, cardState.card.id)}
+          />
+        );
+      })}
     </div>
   );
 };

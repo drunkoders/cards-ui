@@ -21,6 +21,7 @@ module.exports = {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['warn'],
     'import/prefer-default-export': 0,
+    'no-param-reassign': 0
   },
   settings: {
     react: {

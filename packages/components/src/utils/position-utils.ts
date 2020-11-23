@@ -32,3 +32,17 @@ export const calculatePositionWithinBoundaries = (
 
   return { x, y };
 };
+
+/**
+ * Generate a random position within given boundaries
+ *
+ * @param boundaries the boundaries
+ *
+ * @returns a random position within boundaries
+ */
+export const generateRandomPositionWithinBoundaries = (boundaries: Dimensions): Position => {
+  const x = Math.round(Math.random() * boundaries.width);
+  const y = Math.round(Math.random() * boundaries.height);
+
+  return { x, y };
+};

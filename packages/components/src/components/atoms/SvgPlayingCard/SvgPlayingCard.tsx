@@ -2,11 +2,10 @@
 /* eslint-disable max-lines */
 import React, { SVGProps } from 'react';
 import { createUseStyles } from 'react-jss';
-import { PlayingCardType } from '@models/PlayingCardType';
 
 interface SvgPlayingCardProps extends SVGProps<SVGUseElement> {
   /** The url of the svg card to display */
-  card: PlayingCardType | 'back';
+  card: string;
   fill?: string;
 }
 

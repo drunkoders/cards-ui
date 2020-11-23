@@ -29,7 +29,6 @@ const useStyles = createUseStyles({
     width,
     height,
     position: 'absolute',
-    perspective: 1000,
     overflow: 'hidden',
   }),
   flipped: ({ faceUp }) => ({ transform: `rotateY(${faceUp ? 0 : 180}deg)` }),

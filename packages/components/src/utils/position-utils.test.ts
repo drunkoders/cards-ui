@@ -1,4 +1,4 @@
-import { calculatePositionWithinBoundaries } from './position-utils';
+import { calculatePositionWithinBoundaries, generateRandomPositionWithinBoundaries } from './position-utils';
 
 describe('Position utils', () => {
   describe('calculatePositionWithinBoundaries', () => {
@@ -64,6 +64,19 @@ describe('Position utils', () => {
       const newPosition = calculatePositionWithinBoundaries(position, dimensions, containerDimensions);
 
       expect(newPosition).toEqual({ x: -20, y: 200 });
+    });
+  });
+
+  describe('generateRandomPositionWithinBoundaries', () => {
+    it('should generate a random position within boundaries', () => {
+      const boundaries = { width: 400, height: 200 };
+
+      const randomPosition = generateRandomPositionWithinBoundaries(boundaries);
+
+      expect(randomPosition.x).toBeGreaterThanOrEqual(0);
+      expect(randomPosition.x).toBeLessThanOrEqual(400);
+      expect(randomPosition.y).toBeGreaterThanOrEqual(0);
+      expect(randomPosition.y).toBeLessThanOrEqual(200);
     });
   });
 });
