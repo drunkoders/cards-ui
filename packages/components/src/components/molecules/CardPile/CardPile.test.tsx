@@ -1,9 +1,9 @@
 /* eslint-disable max-lines */
 import { BaseCard } from '@atoms/BaseCard';
-import { PlayingCardFace } from '@atoms/PlayingCardFace';
+import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
+import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { shuffleArray } from '@utils/array-utils';
-import { getFaceUse } from '@utils/testing-utils';
 import React from 'react';
 import { CardPile } from './CardPile';
 
@@ -40,24 +40,28 @@ describe('CardPile', () => {
 
   describe('when rendering one card', () => {
     let cardPile: HTMLElement;
+    let faceElement: HTMLElement;
+
     beforeEach(() => {
       const cardProp = {
         height: 200,
         width: 100,
-        frontFace: <PlayingCardFace card="hearts_king" />,
-        backFace: <PlayingCardFace />,
+        frontFace: <PlayingCardFrontFace card="hearts_king" />,
+        backFace: <PlayingCardBackFace />,
         position: { x: 0, y: 0 },
       };
       const { getByTestId } = render(<CardPile cards={[cardProp]} />);
       cardPile = getByTestId('CardPile');
+      faceElement = getByTestId('SvgPlayingCard-front');
     });
 
     it('should have exactly one PlayingCard rendered', () => {
-      expect(getFaceUse()).toBeInTheDocument();
+      expect(faceElement).toBeInTheDocument();
     });
 
     it('should pass down the props to card', () => {
-      expect(getFaceUse(true)).toHaveAttribute('xlink:href', expect.stringMatching(/#hearts_king$/i));
+      const [, useElement] = Array.from(faceElement.children);
+      expect(useElement).toHaveAttribute('href', '#hearts_king');
     });
 
     it('pile should not have multi-item', () => {

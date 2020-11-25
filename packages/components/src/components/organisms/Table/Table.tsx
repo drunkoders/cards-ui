@@ -8,7 +8,8 @@ import { RootState } from '@store/index';
 import { PlayingCardType } from '@models/PlayingCardType';
 import { calculateCardDimensions, defaultCardDimensions } from '@utils/card-dimensions';
 import { BaseCard } from '@atoms/BaseCard';
-import { PlayingCardFace } from '@atoms/PlayingCardFace';
+import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
+import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
 
 interface TableProps {
   /** height of the table */
@@ -66,8 +67,8 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
           height={cardHeight}
           width={cardWidth}
           boundaries={{ width, height }}
-          frontFace={<PlayingCardFace card={cardState.card} />}
-          backFace={<PlayingCardFace />}
+          frontFace={<PlayingCardFrontFace card={cardState.card} />}
+          backFace={<PlayingCardBackFace />}
           faceUp={cardState.isFaceUp}
           position={cardState.position}
           onPositionChanged={(e) => handleDraggedCard(e, cardState.card)}

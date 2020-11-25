@@ -1,15 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { ReactElement } from 'react';
-import { RenderResult, screen, render as reactTestingLibraryRender, RenderOptions } from '@testing-library/react';
+import { RenderResult, render as reactTestingLibraryRender, RenderOptions } from '@testing-library/react';
 
 import createStore, { RootState } from '@store/index';
 import { Provider } from 'react-redux';
 import { Store } from '@reduxjs/toolkit';
-
-export const getFaceUse = (front?: boolean): SVGUseElement | null => {
-  const face = front ? 'front' : 'back';
-  return screen.getByTestId(`BaseCard-${face}`).querySelector('use');
-};
 
 interface CustomRenderOptions extends RenderOptions {
   initialState?: RootState;

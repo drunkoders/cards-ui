@@ -2,7 +2,7 @@
 import { CardPileMenu } from '@atoms/CardPileMenu';
 import { Overlay } from '@atoms/Overlay';
 import { BaseCard } from '@atoms/BaseCard';
-import { PlayingCardFace } from '@atoms/PlayingCardFace';
+import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
 import { CardProps } from '@models/CardProps';
 import { shuffleArray } from '@utils/array-utils';
 import classnames from 'classnames';
@@ -62,7 +62,7 @@ export const CardPile: FC<CardPileProps> = ({
   cards,
   isFaceUp = false,
   component = BaseCard,
-  backFace = PlayingCardFace,
+  backFace = PlayingCardBackFace,
   onCardFlipped = () => {},
 }) => {
   const classes = useStyles();
