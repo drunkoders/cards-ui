@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GameModule } from './models/game/game.module';
+import { GameGatewayModule } from './gateways/game/game.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { GameModule } from './models/game/game.module';
       debug: true,
       playground: true
     }),
-    GameModule
+    GameModule,
+    GameGatewayModule
   ],
   controllers: [AppController],
   providers: [AppService],
