@@ -19,6 +19,7 @@ module.exports = {
     'max-lines': ['error', 100],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["warn"],
+    'eol-last': 'error'
   },
   settings: {
     react: {
