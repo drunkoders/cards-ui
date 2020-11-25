@@ -18,6 +18,9 @@ $ yarn start:dev
 $ yarn start:prod
 ```
 
+You can access the server at [http://localhost:3000](http://localhost:3000)
+You can access the graphQL at [http://localhost:3000/graphql](http://localhost:3000/graphql)
+
 ## Test
 
 ```bash
