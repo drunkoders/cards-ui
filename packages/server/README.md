@@ -4,7 +4,6 @@
 
 Created from [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-
 ## Running the app
 
 ```bash
@@ -33,3 +32,11 @@ $ yarn test:e2e
 # test coverage
 $ yarn test:cov
 ```
+
+## Environment variables
+
+By default, the root project `.env file` will be used. You can override that by manually setting ``ENV_FILE`` variable.
+
+You can, for example, configure the mongodb database url in it.
+
+The environment variables full documentation can be seen in [../../.env-template](../../.env-template).

@@ -2,8 +2,13 @@
   "name": "@cardz/mono",
   "private": true,
   "workspaces": {
-    "packages": ["packages/*"],
-    "nohoist": ["**/@types/jest", "**/@types/mocha"]
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@types/jest",
+      "**/@types/mocha"
+    ]
   },
   "scripts": {
     "lint": "yarn lerna run lint",
