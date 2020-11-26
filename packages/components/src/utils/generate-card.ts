@@ -1,7 +1,9 @@
 import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
 import { v4 as uuid } from 'uuid';
 
-export const generateRandomCard = (): PlayingCard => {
+type RandomCard = PlayingCard & { id: string };
+
+export const generateRandomCard = (): RandomCard => {
   const names = Object.values(PlayingCardName);
   const randomNameIndex = Math.round(Math.random() * 100) % names.length;
 

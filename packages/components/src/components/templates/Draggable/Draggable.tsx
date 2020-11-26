@@ -49,6 +49,7 @@ export const Draggable: FunctionComponent<DraggableProps> = ({
   onClick = () => {},
   children,
   disabled = false,
+  ...props
 }) => {
   const [isDragging, setIsDraging] = useState<boolean>(false);
   const [itemPosition, setItemPosition] = useState<Position>(position);
@@ -132,7 +133,8 @@ export const Draggable: FunctionComponent<DraggableProps> = ({
         [classes.grabbing]: isDragging,
         [classes.grab]: !isDragging,
       })}
-      data-testid="Draggable"
+      // eslint-disable-next-line react/destructuring-assignment
+      data-testid={props['data-testid'] || 'Draggable'}
       onMouseDown={handleMouseDown}
       onKeyDown={onKeyDown}
       role="button"

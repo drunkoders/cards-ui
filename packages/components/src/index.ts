@@ -2,7 +2,7 @@ import createStore from '@store/index';
 
 export { createStore };
 
-export { addRandomCardToTable } from '@store/slices/table';
+export { addRandomCardToTable, addRandomCardDeckToTable } from '@store/slices/table';
 
 export { BaseCard } from '@atoms/BaseCard';
 export { CardPile } from '@molecules/CardPile';

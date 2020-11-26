@@ -2,104 +2,90 @@
 import { CardPileMenu } from '@atoms/CardPileMenu';
 import { Overlay } from '@atoms/Overlay';
 import { BaseCard } from '@atoms/BaseCard';
-import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
-import { CardProps } from '@models/CardProps';
-import { shuffleArray } from '@utils/array-utils';
-import classnames from 'classnames';
-import React, { FC, KeyboardEvent, useMemo, useState } from 'react';
+import React, { FunctionComponent, KeyboardEvent, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { v4 as uuid } from 'uuid';
+import { Card } from '@models/Card';
+import { Dimensions } from '@models/Dimensions';
+import { Position } from '@models/Position';
+import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
+import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
+import { PlayingCard } from '@models/PlayingCard';
 
 /** Describes the properties for card pile */
-export interface CardPileProps<T extends CardProps = CardProps> {
-  /** The cards metadata */
-  cards: T[];
-  /** The component function to be used for rendering */
-  component?: FC<T>;
-  /** The component function to be used for back face rendering */
-  backFace?: FC;
+export interface CardPileProps {
+  /** The deck of cards */
+  cards: Card[];
   /** Boolean indicating if first card of the pile is face up */
   isFaceUp?: boolean;
+  /** Position of the card deck */
+  position: Position;
+  /** Width of the cards of the card deck */
+  width: number;
+  /** Height of the cards of the card deck */
+  height: number;
+  /** Boundaries for the card deck position  */
+  boundaries?: Dimensions;
   /** Function called when first card of the pile flips */
   onCardFlipped?: (isFaceUp: boolean) => void;
+  /** Function called when deck is shuffled */
+  onShuffle?: () => void;
 }
 
 const useStyles = createUseStyles({
-  cardPile: {
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    gridTemplateRows: '1fr',
-    width: 171,
+  cardPile: ({ width, height, position }) => ({
+    outline: 'none',
+    width,
+    height,
     margin: '0 auto',
-    position: 'relative',
+    position: 'absolute',
     cursor: 'pointer',
-  },
-  multiItem: {
-    '&:before': {
-      width: 90,
-      height: '97%',
-      content: '""',
-      position: 'absolute',
-      background: 'repeating-linear-gradient( to right, #a2a2a2, #808080 2px, #c5c5c5 4px, #c5c5c5 0px)',
-      right: -8,
-      border: 'solid 1px black',
-      borderRadius: '12px',
-    },
-  },
+    transform: `translate(${position.x}px, ${position.y}px)`,
+  }),
   firstItem: { zIndex: 2 },
-  lastItem: { zIndex: 1 },
-  card: {
-    gridArea: '1 / 1 / 1 / 1',
-  },
+  secondItem: { zIndex: 1 },
   cardPileMenu: {
     position: 'absolute',
     left: '-100%',
+    zIndex: 3,
   },
+  otherCard: ({ width, height }) => ({
+    width,
+    height,
+    position: 'absolute',
+    background: 'white',
+    borderRadius: 5,
+    boxShadow: 'rgba(0, 0, 0, 0.05) 1px 2px 2px',
+  }),
 });
 
-export const CardPile: FC<CardPileProps> = ({
+export const CardPile: FunctionComponent<CardPileProps> = ({
   cards,
   isFaceUp = false,
-  component = BaseCard,
-  backFace = PlayingCardBackFace,
+  width,
+  height,
+  position,
   onCardFlipped = () => {},
+  onShuffle = () => {},
 }) => {
-  const classes = useStyles();
-  const [pileCards, setPileCards] = useState(cards);
+  const classes = useStyles({ width, height, position });
+
   const [isSelected, setSelect] = useState(false);
-
-  const thisCard: CardProps | undefined = pileCards[0];
-  const displayedCard = useMemo(() => {
-    const TagName = component;
-    const cardProps: CardProps = {
-      ...thisCard,
-      disableNativeEvents: true,
-    };
-    return !thisCard ? undefined : (
-      <div data-testid="CardPile_card" key={uuid()} className={classnames(classes.card, classes.firstItem)}>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <TagName {...cardProps} />
-      </div>
-    );
-  }, [thisCard, classes, component]);
-
-  const backFaceComponent = useMemo(() => {
-    const BackFaceTagName = backFace;
-    return pileCards.length <= 1 ? undefined : (
-      <div data-testid="CardPile-backface" className={classnames(classes.card, classes.lastItem)}>
-        <BackFaceTagName />
-      </div>
-    );
-  }, [pileCards.length, classes, backFace]);
+  const [firstCard, secondCard, ...otherCards] = cards;
 
   const toggleSelect = () => {
     setSelect(!isSelected);
   };
-  const onPileClick = () => toggleSelect();
-  const onPileKeyDown = (event: KeyboardEvent<HTMLDivElement>) => event.keyCode === 32 && toggleSelect();
-  const onShuffle = () => {
-    const newPile = shuffleArray(pileCards);
-    setPileCards(newPile);
+
+  const onPileKeyDown = (event: KeyboardEvent<HTMLDivElement>) => event.key === ' ' && toggleSelect();
+
+  const onTurnFirstCard = () => {
+    onCardFlipped(!isFaceUp);
+    setSelect(false);
+  };
+
+  const onShufflePile = () => {
+    onShuffle();
+    setSelect(false);
   };
 
   return (
@@ -107,20 +93,54 @@ export const CardPile: FC<CardPileProps> = ({
       data-testid="CardPile"
       role="button"
       tabIndex={0}
-      onClick={onPileClick}
+      onClick={toggleSelect}
       onKeyDown={onPileKeyDown}
-      className={classnames(classes.cardPile, { [classes.multiItem]: pileCards.length > 1 })}
+      className={classes.cardPile}
     >
       {isSelected && (
         <>
           <Overlay />
           <div className={classes.cardPileMenu}>
-            <CardPileMenu onTurnFirstCard={() => onCardFlipped(!isFaceUp)} onShufflePile={onShuffle} />
+            <CardPileMenu onTurnFirstCard={onTurnFirstCard} onShufflePile={onShufflePile} />
           </div>
         </>
       )}
-      {displayedCard}
-      {backFaceComponent}
+      {firstCard && (
+        <BaseCard
+          data-testid="CardPile-firstCard"
+          className={classes.firstItem}
+          width={width}
+          height={height}
+          frontFace={<PlayingCardFrontFace card={firstCard as PlayingCard} />}
+          backFace={<PlayingCardBackFace />}
+          disableNativeEvents
+          faceUp={isFaceUp}
+        />
+      )}
+      {secondCard && (
+        <BaseCard
+          data-testid="CardPile-secondCard"
+          className={classes.secondItem}
+          width={width}
+          height={height}
+          frontFace={<PlayingCardFrontFace card={secondCard as PlayingCard} />}
+          backFace={<PlayingCardBackFace />}
+          disableNativeEvents
+          faceUp={false}
+        />
+      )}
+      {otherCards.map((card, index) => {
+        const pos = (otherCards.length - (index + 1)) / 5;
+        return (
+          <div
+            data-testid="OtherCard"
+            // eslint-disable-next-line react/no-array-index-key
+            key={`other-card-${index}`}
+            className={classes.otherCard}
+            style={{ transform: `translate(${pos}px, ${pos}px)` }}
+          />
+        );
+      })}
     </div>
   );
 };

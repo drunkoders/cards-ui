@@ -18,7 +18,7 @@ describe('BaseCard', () => {
   it('should render the card', () => {
     const { getByTestId, getByRole } = render(<BaseCard />);
     expect(getByRole('button')).toBeInTheDocument();
-    expect(getByTestId('Draggable')).toBeInTheDocument();
+    expect(getByTestId('BaseCard')).toBeInTheDocument();
   });
 
   describe('when rendered', () => {
