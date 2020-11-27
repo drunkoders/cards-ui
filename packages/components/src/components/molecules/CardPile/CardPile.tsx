@@ -2,7 +2,7 @@
 import { CardPileMenu } from '@atoms/CardPileMenu';
 import { Overlay } from '@atoms/Overlay';
 import { BaseCard } from '@atoms/BaseCard';
-import React, { FunctionComponent, KeyboardEvent, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Card } from '@models/Card';
 import { Dimensions } from '@models/Dimensions';
@@ -10,6 +10,7 @@ import { Position } from '@models/Position';
 import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
 import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
 import { PlayingCard } from '@models/PlayingCard';
+import { Draggable } from '@templates/Draggable';
 
 /** Describes the properties for card pile */
 export interface CardPileProps {
@@ -29,6 +30,8 @@ export interface CardPileProps {
   onCardFlipped?: (isFaceUp: boolean) => void;
   /** Function called when deck is shuffled */
   onShuffle?: () => void;
+  /** Function called when card position changes with the new position of the card */
+  onPositionChanged?: (position: Position) => void;
 }
 
 const useStyles = createUseStyles({
@@ -64,8 +67,10 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
   width,
   height,
   position,
+  boundaries,
   onCardFlipped = () => {},
   onShuffle = () => {},
+  onPositionChanged = () => {},
 }) => {
   const classes = useStyles({ width, height, position });
 
@@ -75,8 +80,6 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
   const toggleSelect = () => {
     setSelect(!isSelected);
   };
-
-  const onPileKeyDown = (event: KeyboardEvent<HTMLDivElement>) => event.key === ' ' && toggleSelect();
 
   const onTurnFirstCard = () => {
     onCardFlipped(!isFaceUp);
@@ -89,13 +92,16 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
   };
 
   return (
-    <div
-      data-testid="CardPile"
-      role="button"
-      tabIndex={0}
-      onClick={toggleSelect}
-      onKeyDown={onPileKeyDown}
+    <Draggable
       className={classes.cardPile}
+      position={position}
+      height={height}
+      width={width}
+      boundaries={boundaries}
+      onDragged={onPositionChanged}
+      onClick={toggleSelect}
+      // eslint-disable-next-line react/destructuring-assignment
+      data-testid="CardPile"
     >
       {isSelected && (
         <>
@@ -141,6 +147,6 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
           />
         );
       })}
-    </div>
+    </Draggable>
   );
 };

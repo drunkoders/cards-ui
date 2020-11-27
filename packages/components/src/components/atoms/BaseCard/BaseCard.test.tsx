@@ -110,4 +110,21 @@ describe('BaseCard', () => {
       expect(cardFlipper).toHaveStyle('transform: rotateY(180deg)');
     });
   });
+
+  describe('when dragged', () => {
+    it('should call onFlipped handler', () => {
+      const onPositionChangedSpy = jest.fn();
+
+      const { getByTestId } = render(
+        <BaseCard faceUp position={{ x: 10, y: 15 }} onPositionChanged={onPositionChangedSpy} />
+      );
+      const baseCard = getByTestId('BaseCard');
+
+      fireEvent.mouseDown(baseCard, { clientX: 34, clientY: 55 });
+      fireEvent.mouseMove(baseCard, { clientX: 54, clientY: 66 });
+      fireEvent.mouseUp(baseCard);
+
+      expect(onPositionChangedSpy).toHaveBeenCalledWith({ x: 30, y: 26 });
+    });
+  });
 });

@@ -222,5 +222,35 @@ describe('Table', () => {
         type: 'table/updateCardFaceUp',
       });
     });
+
+    it('should dispatch an action to update card deck position on table when it is dragged', () => {
+      const dispatchSpy = jest.fn();
+      jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatchSpy);
+
+      const { getByTestId } = render(<Table height={400} width={600} />, {
+        initialState: {
+          table: {
+            cards: {
+              5: {
+                cards: [{ suit: PlayingCardSuit.Spades, name: PlayingCardName.Two }],
+                isFaceUp: false,
+                position: { x: 0, y: 0 },
+              },
+            },
+          },
+        },
+      });
+
+      const cardPile = getByTestId('CardPile');
+
+      fireEvent.mouseDown(cardPile, { clientX: 34, clientY: 55 });
+      fireEvent.mouseMove(cardPile, { clientX: 54, clientY: 66 });
+      fireEvent.mouseUp(cardPile);
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        payload: { cardId: '5', position: { x: 20, y: 11 } },
+        type: 'table/updateCardPosition',
+      });
+    });
   });
 });

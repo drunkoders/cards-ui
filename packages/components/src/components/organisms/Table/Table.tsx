@@ -90,6 +90,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
             isFaceUp={cardState.isFaceUp}
             onCardFlipped={(e) => handleFlippedCard(e, cardId)}
             onShuffle={() => handleShuffle(cardId)}
+            onPositionChanged={(e) => handleDraggedCard(e, cardId)}
           />
         );
       })}

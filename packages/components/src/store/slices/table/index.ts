@@ -63,7 +63,7 @@ const tableSlice = createSlice({
     },
     shuffleCardDeck: (state: TableState, action: PayloadAction<string>) => {
       const cardDeckId = action.payload;
-      const cards = state.cards[cardDeckId].cards;
+      const { cards } = state.cards[cardDeckId];
 
       const shuffledCards = shuffleArray(cards);
 

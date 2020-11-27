@@ -15,6 +15,8 @@ const isClassPatternPresent = (el: HTMLElement, pattern: RegExp) => {
 };
 
 describe('CardPile', () => {
+  afterEach(() => cleanup());
+
   describe('Empty render', () => {
     let cardPile: HTMLElement;
     beforeEach(() => {
@@ -175,5 +177,30 @@ describe('CardPile', () => {
     });
   });
 
-  afterEach(() => cleanup());
+  describe('when dragged', () => {
+    it('should call onFlipped handler', () => {
+      const onPositionChangedSpy = jest.fn();
+
+      const card: PlayingCard = { suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
+
+      render(
+        <CardPile
+          cards={[card]}
+          isFaceUp={false}
+          onPositionChanged={onPositionChangedSpy}
+          position={{ x: 5, y: 7 }}
+          width={40}
+          height={60}
+        />
+      );
+
+      const cardPile = screen.getByTestId('CardPile');
+
+      fireEvent.mouseDown(cardPile, { clientX: 34, clientY: 55 });
+      fireEvent.mouseMove(cardPile, { clientX: 54, clientY: 66 });
+      fireEvent.mouseUp(cardPile);
+
+      expect(onPositionChangedSpy).toHaveBeenCalledWith({ x: 25, y: 18 });
+    });
+  });
 });
