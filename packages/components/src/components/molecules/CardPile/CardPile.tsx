@@ -38,8 +38,15 @@ export interface CardPileProps {
   onPositionChanged?: (position: Position) => void;
 }
 
+interface CardPileStyleProps {
+  /** Width of the cards of the card deck */
+  width: number;
+  /** Height of the cards of the card deck */
+  height: number;
+}
+
 const useStyles = createUseStyles({
-  cardPile: ({ width, height }) => ({
+  cardPile: ({ width, height }: CardPileStyleProps) => ({
     width,
     height,
     margin: '0 auto',
@@ -51,7 +58,7 @@ const useStyles = createUseStyles({
     left: '-100%',
     zIndex: 3,
   },
-  otherCard: ({ width, height }) => ({
+  otherCard: ({ width, height }: CardPileStyleProps) => ({
     width,
     height,
     position: 'absolute',
@@ -74,7 +81,8 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
   onShuffle = () => {},
   onPositionChanged = () => {},
 }) => {
-  const classes = useStyles({ width, height, position });
+  const styleProps: CardPileStyleProps = { width, height };
+  const classes = useStyles(styleProps);
 
   const [isSelected, setSelect] = useState(false);
   const [firstCard, secondCard, ...otherCards] = cards;

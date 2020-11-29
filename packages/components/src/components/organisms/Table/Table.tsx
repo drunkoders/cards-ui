@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Position } from '@models/Position';
@@ -67,20 +68,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
   return (
     <div className={classes.table} data-testid="Table">
       {Object.entries(cards).map(([cardId, cardState]) => {
-        return cardState.card ? (
-          <BaseCard
-            key={cardId}
-            height={cardHeight}
-            width={cardWidth}
-            tableBoundaries={{ width, height }}
-            frontFace={<PlayingCardFrontFace card={cardState.card} />}
-            backFace={<PlayingCardBackFace />}
-            faceUp={cardState.isFaceUp}
-            position={cardState.position}
-            onPositionChanged={(e) => handleDraggedCard(e, cardId)}
-            onFlipped={(isFaceUp) => handleFlippedCard(isFaceUp, cardId)}
-          />
-        ) : (
+        return Array.isArray(cardState.cards) ? (
           <CardPile
             key={cardId}
             width={cardWidth}
@@ -94,6 +82,19 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
             onCardFlipped={(e) => handleFlippedCard(e, cardId)}
             onShuffle={() => handleShuffle(cardId)}
             onPositionChanged={(e) => handleDraggedCard(e, cardId)}
+          />
+        ) : (
+          <BaseCard
+            key={cardId}
+            height={cardHeight}
+            width={cardWidth}
+            tableBoundaries={{ width, height }}
+            frontFace={<PlayingCardFrontFace card={cardState.cards} />}
+            backFace={<PlayingCardBackFace />}
+            faceUp={cardState.isFaceUp}
+            position={cardState.position}
+            onPositionChanged={(e) => handleDraggedCard(e, cardId)}
+            onFlipped={(isFaceUp) => handleFlippedCard(isFaceUp, cardId)}
           />
         );
       })}

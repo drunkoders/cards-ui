@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { Position } from '@models/Position';
-import { PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
+import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
 import * as arrayUtils from '@utils/array-utils';
 import tableReducer, {
   addRandomCardToTable,
@@ -40,6 +40,7 @@ describe('Cards reducer', () => {
       const state = tableReducer({ cards: {}, dimensions: { width: 300, height: 140 } }, addRandomCardToTable());
       const [cardState] = Object.values(state.cards);
       const [cardId] = Object.keys(state.cards);
+      const card = cardState.cards as PlayingCard;
 
       expect([false, true]).toContain(cardState.isFaceUp);
 
@@ -47,8 +48,8 @@ describe('Cards reducer', () => {
       expect(cardState.position.y).toBeLessThanOrEqual(140);
 
       expect(cardId).toMatch(uuidRegExp);
-      expect(Object.values(PlayingCardSuit)).toContain(cardState.card.suit);
-      expect(Object.values(PlayingCardName)).toContain(cardState.card.name);
+      expect(Object.values(PlayingCardSuit)).toContain(card.suit);
+      expect(Object.values(PlayingCardName)).toContain(card.name);
     });
 
     it('should generate a random card with default position', () => {
@@ -57,6 +58,7 @@ describe('Cards reducer', () => {
       const state = tableReducer({ cards: {} }, addRandomCardToTable());
       const [cardState] = Object.values(state.cards);
       const [cardId] = Object.keys(state.cards);
+      const card = cardState.cards as PlayingCard;
 
       expect([false, true]).toContain(cardState.isFaceUp);
 
@@ -64,8 +66,8 @@ describe('Cards reducer', () => {
       expect(cardState.position.y).toEqual(0);
 
       expect(cardId).toMatch(uuidRegExp);
-      expect(Object.values(PlayingCardSuit)).toContain(cardState.card.suit);
-      expect(Object.values(PlayingCardName)).toContain(cardState.card.name);
+      expect(Object.values(PlayingCardSuit)).toContain(card.suit);
+      expect(Object.values(PlayingCardName)).toContain(card.name);
     });
   });
 
@@ -110,7 +112,7 @@ describe('Cards reducer', () => {
       const currentState = {
         cards: {
           1: {
-            card: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
             isFaceUp: false,
             position: { x: 0, y: 0 },
           },
@@ -118,7 +120,7 @@ describe('Cards reducer', () => {
       };
       const expectedState = {
         cards: {
-          1: { card: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades }, isFaceUp: false, position },
+          1: { cards: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades }, isFaceUp: false, position },
         },
       };
 
@@ -134,7 +136,7 @@ describe('Cards reducer', () => {
       const initialState = {
         cards: {
           1: {
-            card: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
             position: { x: 0, y: 0 },
             isFaceUp: false,
           },
@@ -143,7 +145,7 @@ describe('Cards reducer', () => {
       const expectedState = {
         cards: {
           1: {
-            card: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
             position: { x: 0, y: 0 },
             isFaceUp: true,
           },

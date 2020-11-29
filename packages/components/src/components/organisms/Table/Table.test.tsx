@@ -56,7 +56,7 @@ describe('Table', () => {
         table: {
           cards: {
             2: {
-              card: { suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+              cards: { id: '2', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
               isFaceUp: false,
               position: { x: 0, y: 0 },
             },
@@ -80,7 +80,7 @@ describe('Table', () => {
         table: {
           cards: {
             2: {
-              card: { suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+              cards: { id: '2', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
               isFaceUp: false,
               position: { x: 0, y: 0 },
             },
@@ -110,7 +110,7 @@ describe('Table', () => {
         table: {
           cards: {
             2: {
-              card: { suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+              cards: { id: '2', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
               isFaceUp: false,
               position: { x: 0, y: 0 },
             },
@@ -138,9 +138,9 @@ describe('Table', () => {
             cards: {
               2: {
                 cards: [
-                  { suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-                  { suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
-                  { suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
+                  { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+                  { id: '2', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
+                  { id: '4', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
                 ],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
@@ -167,9 +167,9 @@ describe('Table', () => {
             cards: {
               2: {
                 cards: [
-                  { suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-                  { suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
-                  { suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
+                  { id: '5', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+                  { id: '7', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
+                  { id: '14', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
                 ],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
@@ -200,9 +200,9 @@ describe('Table', () => {
             cards: {
               2: {
                 cards: [
-                  { suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-                  { suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
-                  { suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
+                  { id: '31', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+                  { id: '41', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
+                  { id: '61', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
                 ],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
@@ -232,7 +232,7 @@ describe('Table', () => {
           table: {
             cards: {
               5: {
-                cards: [{ suit: PlayingCardSuit.Spades, name: PlayingCardName.Two }],
+                cards: [{ id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two }],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
               },

@@ -34,6 +34,15 @@ export interface BaseCardProps {
   className?: string;
 }
 
+interface BaseCardStyleProps {
+  /** Indicates if the card is face up or face down */
+  faceUp?: boolean;
+  /** Width of the card */
+  width: number;
+  /** Height of the card */
+  height: number;
+}
+
 const useStyles = createUseStyles({
   // Generic classes
   cardFace: {
@@ -44,27 +53,27 @@ const useStyles = createUseStyles({
     transition: '0.6s',
   },
   // Style classes
-  card: ({ width, height }) => ({
+  card: ({ width, height }: BaseCardStyleProps) => ({
     width,
     height,
     position: 'absolute',
     overflow: 'hidden',
   }),
-  flipped: ({ faceUp }) => ({ transform: `rotateY(${faceUp ? 0 : 180}deg)` }),
-  cardFlipper: ({ width, height }) => ({
+  flipped: ({ faceUp }: BaseCardStyleProps) => ({ transform: `rotateY(${faceUp ? 0 : 180}deg)` }),
+  cardFlipper: ({ width, height }: BaseCardStyleProps) => ({
     width,
     height,
     transition: '0.6s',
     transformStyle: 'preserve-3d',
     position: 'relative',
   }),
-  cardFront: ({ width, height }) => ({
+  cardFront: ({ width, height }: BaseCardStyleProps) => ({
     width,
     height,
     extend: 'cardFace',
     transform: 'rotateY(0deg)',
   }),
-  cardBack: ({ width, height }) => ({
+  cardBack: ({ width, height }: BaseCardStyleProps) => ({
     width,
     height,
     extend: 'cardFace',
@@ -90,11 +99,8 @@ export const BaseCard: FunctionComponent<BaseCardProps> = ({
   onFlipped = () => {},
   ...props
 }) => {
-  const classes = useStyles({
-    width,
-    height,
-    faceUp,
-  });
+  const styleProps: BaseCardStyleProps = { width, height, faceUp };
+  const classes = useStyles(styleProps);
 
   return (
     <Draggable

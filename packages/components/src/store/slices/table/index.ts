@@ -8,8 +8,7 @@ import { generateRandomCardDeck } from '@utils/generate-card-deck';
 import { shuffleArray } from '@utils/array-utils';
 
 export interface CardState {
-  card?: PlayingCard;
-  cards?: PlayingCard[];
+  cards: PlayingCard | PlayingCard[];
   position: Position;
   isFaceUp: boolean;
 }
@@ -36,11 +35,11 @@ const tableSlice = createSlice({
       state.dimensions = action.payload;
     },
     addRandomCardToTable: (state: TableState) => {
-      const { name, suit, id } = generateRandomCard();
-      state.cards[id] = {
+      const card = generateRandomCard();
+      state.cards[card.id] = {
         isFaceUp: Math.round(Math.random() * 100) % 2 === 0,
         position: state.dimensions ? generateRandomPositionWithinBoundaries(state.dimensions) : defaultPosition,
-        card: { name, suit },
+        cards: card,
       };
     },
     addRandomCardDeckToTable: (state: TableState) => {
@@ -65,9 +64,10 @@ const tableSlice = createSlice({
       const cardDeckId = action.payload;
       const { cards } = state.cards[cardDeckId];
 
-      const shuffledCards = shuffleArray(cards);
-
-      state.cards[cardDeckId].cards = shuffledCards;
+      if (Array.isArray(cards)) {
+        const shuffledCards = shuffleArray(cards);
+        state.cards[cardDeckId].cards = shuffledCards;
+      }
     },
   },
 });
