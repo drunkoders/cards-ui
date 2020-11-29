@@ -10,6 +10,7 @@ import { BaseCard } from '@atoms/BaseCard';
 import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
 import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
 import { CardPile } from '@molecules/CardPile';
+import { PlayingCard } from '@models/PlayingCard';
 
 interface TableProps {
   /** height of the table */
@@ -71,7 +72,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
             key={cardId}
             height={cardHeight}
             width={cardWidth}
-            boundaries={{ width, height }}
+            tableBoundaries={{ width, height }}
             frontFace={<PlayingCardFrontFace card={cardState.card} />}
             backFace={<PlayingCardBackFace />}
             faceUp={cardState.isFaceUp}
@@ -84,7 +85,9 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
             key={cardId}
             width={cardWidth}
             height={cardHeight}
-            boundaries={{ width, height }}
+            tableBoundaries={{ width, height }}
+            frontFace={<PlayingCardFrontFace card={cardState.cards?.[0] as PlayingCard} />}
+            backFace={<PlayingCardBackFace />}
             cards={cardState.cards}
             position={cardState.position}
             isFaceUp={cardState.isFaceUp}

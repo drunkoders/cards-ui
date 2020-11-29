@@ -1,9 +1,9 @@
 import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
 import { v4 as uuid } from 'uuid';
-import { PlayingCardDeck } from '@models/PlayingCardDeck';
+import { Deck } from '@models/Deck';
 import { shuffleArray } from './array-utils';
 
-export const generateRandomCardDeck = (): PlayingCardDeck => {
+export const generateRandomCardDeck = (): Deck<PlayingCard> => {
   const names = Object.values(PlayingCardName);
   const suits = Object.values(PlayingCardSuit);
 

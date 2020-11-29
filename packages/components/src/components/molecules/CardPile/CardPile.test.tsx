@@ -45,7 +45,7 @@ describe('CardPile', () => {
       const card: PlayingCard = { suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
       const { getByTestId } = render(<CardPile cards={[card]} position={{ x: 0, y: 0 }} width={40} height={60} />);
       cardPile = getByTestId('CardPile');
-      faceElement = getByTestId('SvgPlayingCard-front');
+      faceElement = getByTestId('PlayingCardFrontFace');
     });
 
     it('should have exactly one PlayingCard rendered', () => {
@@ -69,6 +69,7 @@ describe('CardPile', () => {
   describe('when rendering two cards', () => {
     let cardPile: HTMLElement;
     let renderedCards: HTMLElement[];
+
     beforeEach(() => {
       const card: PlayingCard = { suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
       const otherCard: PlayingCard = { suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three };
@@ -92,7 +93,7 @@ describe('CardPile', () => {
     });
 
     it('should render back card', () => {
-      expect(screen.queryAllByTestId('CardPile-secondCard')).toHaveLength(1);
+      expect(screen.getAllByTestId('CardPile-secondCard')).toHaveLength(1);
     });
 
     it('should mark backFace as last item', () => {

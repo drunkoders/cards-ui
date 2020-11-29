@@ -7,7 +7,8 @@ export interface PlayingCardFrontFaceProps {
 }
 
 export const PlayingCardFrontFace: FC<PlayingCardFrontFaceProps> = ({ card }) => {
-  const cardString = `${card.suit.toLowerCase()}_${card.name.toLowerCase()}`;
+  const cardString = `${card?.suit?.toLowerCase()}_${card?.name?.toLowerCase()}`;
 
-  return <SvgPlayingCard card={cardString} />;
+  // eslint-disable-next-line react/destructuring-assignment
+  return <SvgPlayingCard card={cardString} data-testid="PlayingCardFrontFace" />;
 };

@@ -21,7 +21,9 @@ module.exports = {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['warn'],
     'import/prefer-default-export': 0,
-    'no-param-reassign': 0
+    'no-param-reassign': 0,
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
   },
   settings: {
     react: {

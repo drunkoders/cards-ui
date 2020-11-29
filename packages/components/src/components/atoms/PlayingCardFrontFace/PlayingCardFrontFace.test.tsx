@@ -8,24 +8,14 @@ describe('PlayingCardFrontFace', () => {
     cleanup();
   });
 
-  describe('on default render', () => {
-    let frontFace: HTMLElement;
-    let useElement: Element;
+  it('should render the front face of a given card', () => {
     const card: PlayingCard = { suit: PlayingCardSuit.Hearts, name: PlayingCardName.Five };
 
-    beforeEach(() => {
-      const { getByTestId } = render(<PlayingCardFrontFace card={card} />);
-      frontFace = getByTestId('SvgPlayingCard-front');
-      [, useElement] = Array.from(frontFace.children);
-    });
+    const { getByTestId } = render(<PlayingCardFrontFace card={card} />);
 
-    it('should render a front face', () => {
-      expect(frontFace).toBeInTheDocument();
-    });
+    const frontFace = getByTestId('PlayingCardFrontFace');
+    const [, useElement] = Array.from(frontFace.children);
 
-    it('should have a card displayed', () => {
-      render(<PlayingCardFrontFace card={card} />);
-      expect(useElement).toHaveAttribute('href', '#hearts_5');
-    });
+    expect(useElement).toHaveAttribute('href', '#hearts_5');
   });
 });

@@ -1,6 +1,5 @@
 import type { Card } from '@models/Card';
 
-// eslint-disable-next-line no-shadow
 export enum PlayingCardSuit {
   Spades = 'Spades',
   Hearts = 'Hearts',
@@ -8,7 +7,6 @@ export enum PlayingCardSuit {
   Clubs = 'Clubs',
 }
 
-// eslint-disable-next-line no-shadow
 export enum PlayingCardName {
   Ace = '1',
   Two = '2',

@@ -13,12 +13,8 @@ describe('PlayingCardBackFace', () => {
   describe('on default render', () => {
     beforeEach(() => {
       const { getByTestId } = render(<PlayingCardBackFace />);
-      backFace = getByTestId('SvgPlayingCard-back');
+      backFace = getByTestId('PlayingCardBackFace');
       [, useElement] = Array.from(backFace.children);
-    });
-
-    afterEach(() => {
-      cleanup();
     });
 
     it('should render a back face', () => {
@@ -35,13 +31,12 @@ describe('PlayingCardBackFace', () => {
   });
 
   describe('on different props', () => {
-    beforeEach(() => {
-      const { getByTestId } = render(<PlayingCardBackFace color="red" />);
-      backFace = getByTestId('SvgPlayingCard-back');
-      [, useElement] = Array.from(backFace.children);
-    });
-
     it('should have a different back fill', () => {
+      const { getByTestId } = render(<PlayingCardBackFace color="red" />);
+
+      backFace = getByTestId('PlayingCardBackFace');
+      [, useElement] = Array.from(backFace.children);
+
       expect(useElement).toHaveAttribute('fill', 'red');
     });
   });

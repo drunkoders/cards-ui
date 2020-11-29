@@ -24,8 +24,8 @@ export interface BaseCardProps {
   onFlipped?: (isFaceUp: boolean) => void;
   /** Indicates the position of the card */
   position?: Position;
-  /** Indicates the boundaries for the card position */
-  boundaries?: Dimensions;
+  /** Table boundaries, used to ensure card position stays within them */
+  tableBoundaries?: Dimensions;
   /** Element to show at card front face */
   frontFace?: JSX.Element;
   /** Element to show at card back face */
@@ -83,7 +83,7 @@ export const BaseCard: FunctionComponent<BaseCardProps> = ({
   faceUp,
   width,
   height,
-  boundaries,
+  tableBoundaries,
   disableNativeEvents,
   position = { x: 0, y: 0 },
   onPositionChanged = () => {},
@@ -102,7 +102,7 @@ export const BaseCard: FunctionComponent<BaseCardProps> = ({
       position={position}
       height={height}
       width={width}
-      boundaries={boundaries}
+      boundaries={tableBoundaries}
       onDragged={onPositionChanged}
       onClick={() => onFlipped(!faceUp)}
       disabled={disableNativeEvents}

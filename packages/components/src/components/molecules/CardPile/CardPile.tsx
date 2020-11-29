@@ -16,6 +16,10 @@ import { Draggable } from '@templates/Draggable';
 export interface CardPileProps {
   /** The deck of cards */
   cards: Card[];
+  /** Element to show at card front face */
+  frontFace?: JSX.Element;
+  /** Element to show at card back face */
+  backFace?: JSX.Element;
   /** Boolean indicating if first card of the pile is face up */
   isFaceUp?: boolean;
   /** Position of the card deck */
@@ -24,8 +28,8 @@ export interface CardPileProps {
   width: number;
   /** Height of the cards of the card deck */
   height: number;
-  /** Boundaries for the card deck position  */
-  boundaries?: Dimensions;
+  /** Table boundaries, used to ensure card pile position stays within them */
+  tableBoundaries?: Dimensions;
   /** Function called when first card of the pile flips */
   onCardFlipped?: (isFaceUp: boolean) => void;
   /** Function called when deck is shuffled */
@@ -63,11 +67,13 @@ const useStyles = createUseStyles({
 
 export const CardPile: FunctionComponent<CardPileProps> = ({
   cards,
+  frontFace = <PlayingCardFrontFace card={cards?.[0] as PlayingCard} />,
+  backFace = <PlayingCardBackFace />,
   isFaceUp = false,
   width,
   height,
   position,
-  boundaries,
+  tableBoundaries,
   onCardFlipped = () => {},
   onShuffle = () => {},
   onPositionChanged = () => {},
@@ -97,7 +103,7 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
       position={position}
       height={height}
       width={width}
-      boundaries={boundaries}
+      boundaries={tableBoundaries}
       onDragged={onPositionChanged}
       onClick={toggleSelect}
       // eslint-disable-next-line react/destructuring-assignment
@@ -117,8 +123,8 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
           className={classes.firstItem}
           width={width}
           height={height}
-          frontFace={<PlayingCardFrontFace card={firstCard as PlayingCard} />}
-          backFace={<PlayingCardBackFace />}
+          frontFace={frontFace}
+          backFace={backFace}
           disableNativeEvents
           faceUp={isFaceUp}
         />
@@ -129,8 +135,7 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
           className={classes.secondItem}
           width={width}
           height={height}
-          frontFace={<PlayingCardFrontFace card={secondCard as PlayingCard} />}
-          backFace={<PlayingCardBackFace />}
+          backFace={backFace}
           disableNativeEvents
           faceUp={false}
         />

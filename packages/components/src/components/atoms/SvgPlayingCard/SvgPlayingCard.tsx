@@ -2,27 +2,34 @@
 /* eslint-disable max-lines */
 import React, { SVGProps } from 'react';
 import { createUseStyles } from 'react-jss';
+import classNames from 'classnames';
 
 interface SvgPlayingCardProps extends SVGProps<SVGUseElement> {
   /** The url of the svg card to display */
   card: string;
+  /** The color with which to fill the card */
   fill?: string;
+  /** Additionnal style to apply to the svg */
+  className?: string;
 }
 
 const useStyles = createUseStyles({
   svgCard: {
     width: '100%',
+    userSelect: 'none',
+    position: 'absolute',
   },
 });
 
-export const SvgPlayingCard: React.FC<SvgPlayingCardProps> = ({ card, fill }) => {
+export const SvgPlayingCard: React.FC<SvgPlayingCardProps> = ({ card, fill, className, ...props }) => {
   const classes = useStyles();
 
   return (
     <svg
-      data-testid={`SvgPlayingCard-${card === 'back' ? 'back' : 'front'}`}
+      // eslint-disable-next-line react/destructuring-assignment
+      data-testid={props['data-testid'] || `SvgPlayingCard-${card === 'back' ? 'back' : 'front'}`}
       xmlns="http://www.w3.org/2000/svg"
-      className={classes.svgCard}
+      className={classNames(className, classes.svgCard)}
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 169.075 244.64"
     >
