@@ -39,14 +39,10 @@ export interface CardPileProps {
 }
 
 const useStyles = createUseStyles({
-  cardPile: ({ width, height, position }) => ({
-    outline: 'none',
+  cardPile: ({ width, height }) => ({
     width,
     height,
     margin: '0 auto',
-    position: 'absolute',
-    cursor: 'pointer',
-    transform: `translate(${position.x}px, ${position.y}px)`,
   }),
   firstItem: { zIndex: 2 },
   secondItem: { zIndex: 1 },
