@@ -110,7 +110,6 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
       boundaries={tableBoundaries}
       onDragged={onPositionChanged}
       onClick={toggleSelect}
-      // eslint-disable-next-line react/destructuring-assignment
       data-testid="CardPile"
     >
       {isSelected && (
