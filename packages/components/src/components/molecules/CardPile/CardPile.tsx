@@ -1,122 +1,160 @@
 /* eslint-disable max-lines */
 import { CardPileMenu } from '@atoms/CardPileMenu';
 import { Overlay } from '@atoms/Overlay';
-import { PlayingCard } from '@atoms/PlayingCard';
-import { PlayingCardFace } from '@atoms/PlayingCardFace';
-import { CardHandle } from '@models/CardHandle';
-import { CardProps } from '@models/CardProps';
-import { shuffleArray } from '@utils/array-utils';
-import classnames from 'classnames';
-import React, { FC, KeyboardEvent, useMemo, useRef, useState } from 'react';
+import { BaseCard } from '@atoms/BaseCard';
+import React, { FunctionComponent, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { v4 as uuid } from 'uuid';
+import { Card } from '@models/Card';
+import { Dimensions } from '@models/Dimensions';
+import { Position } from '@models/Position';
+import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
+import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
+import { PlayingCard } from '@models/PlayingCard';
+import { Draggable } from '@templates/Draggable';
 
 /** Describes the properties for card pile */
-export interface CardPileProps<T extends CardProps = CardProps> {
-  /** The cards metadata */
-  cards: T[];
-  /** The component function to be used for rendering */
-  component?: FC<T>;
-  /** The component function to be used for back face rendering */
-  backFace?: FC;
+export interface CardPileProps {
+  /** The deck of cards */
+  cards: Card[];
+  /** Element to show at card front face */
+  frontFace?: JSX.Element;
+  /** Element to show at card back face */
+  backFace?: JSX.Element;
+  /** Boolean indicating if first card of the pile is face up */
+  isFaceUp?: boolean;
+  /** Position of the card deck */
+  position: Position;
+  /** Width of the cards of the card deck */
+  width: number;
+  /** Height of the cards of the card deck */
+  height: number;
+  /** Table boundaries, used to ensure card pile position stays within them */
+  tableBoundaries?: Dimensions;
+  /** Function called when first card of the pile flips */
+  onCardFlipped?: (isFaceUp: boolean) => void;
+  /** Function called when deck is shuffled */
+  onShuffle?: () => void;
+  /** Function called when card position changes with the new position of the card */
+  onPositionChanged?: (position: Position) => void;
+}
+
+interface CardPileStyleProps {
+  /** Width of the cards of the card deck */
+  width: number;
+  /** Height of the cards of the card deck */
+  height: number;
 }
 
 const useStyles = createUseStyles({
-  cardPile: {
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    gridTemplateRows: '1fr',
-    width: 171,
+  cardPile: ({ width, height }: CardPileStyleProps) => ({
+    width,
+    height,
     margin: '0 auto',
-    position: 'relative',
-    cursor: 'pointer',
-  },
-  multiItem: {
-    '&:before': {
-      width: 90,
-      height: '97%',
-      content: '""',
-      position: 'absolute',
-      background: 'repeating-linear-gradient( to right, #a2a2a2, #808080 2px, #c5c5c5 4px, #c5c5c5 0px)',
-      right: -8,
-      border: 'solid 1px black',
-      borderRadius: '12px',
-    },
-  },
+  }),
   firstItem: { zIndex: 2 },
-  lastItem: { zIndex: 1 },
-  card: {
-    gridArea: '1 / 1 / 1 / 1',
-  },
+  secondItem: { zIndex: 1 },
   cardPileMenu: {
     position: 'absolute',
     left: '-100%',
+    zIndex: 3,
   },
+  otherCard: ({ width, height }: CardPileStyleProps) => ({
+    width,
+    height,
+    position: 'absolute',
+    background: 'white',
+    borderRadius: 5,
+    boxShadow: 'rgba(0, 0, 0, 0.05) 1px 2px 2px',
+  }),
 });
 
-// eslint-disable-next-line import/prefer-default-export
-export const CardPile: FC<CardPileProps> = ({ cards, component = PlayingCard, backFace = PlayingCardFace }) => {
-  const classes = useStyles();
-  const [pileCards, setPileCards] = useState(cards);
+export const CardPile: FunctionComponent<CardPileProps> = ({
+  cards,
+  frontFace = <PlayingCardFrontFace card={cards?.[0] as PlayingCard} />,
+  backFace = <PlayingCardBackFace />,
+  isFaceUp = false,
+  width,
+  height,
+  position,
+  tableBoundaries,
+  onCardFlipped = () => {},
+  onShuffle = () => {},
+  onPositionChanged = () => {},
+}) => {
+  const styleProps: CardPileStyleProps = { width, height };
+  const classes = useStyles(styleProps);
+
   const [isSelected, setSelect] = useState(false);
-
-  const firstCardRef = useRef<CardHandle>(null);
-
-  const thisCard: CardProps | undefined = pileCards[0];
-  const displayedCard = useMemo(() => {
-    const TagName = component;
-    const cardProps: CardProps = {
-      ...thisCard,
-      disableNativeEvents: true,
-    };
-    return !thisCard ? undefined : (
-      <div data-testid="CardPile_card" key={uuid()} className={classnames(classes.card, classes.firstItem)}>
-        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <TagName {...cardProps} ref={firstCardRef} />
-      </div>
-    );
-  }, [thisCard, classes, component]);
-
-  const backFaceComponent = useMemo(() => {
-    const BackFaceTagName = backFace;
-    return pileCards.length <= 1 ? undefined : (
-      <div data-testid="CardPile-backface" className={classnames(classes.card, classes.lastItem)}>
-        <BackFaceTagName />
-      </div>
-    );
-  }, [pileCards.length, classes, backFace]);
+  const [firstCard, secondCard, ...otherCards] = cards;
 
   const toggleSelect = () => {
     setSelect(!isSelected);
   };
-  const onPileClick = () => toggleSelect();
-  const onPileKeyDown = (event: KeyboardEvent<HTMLDivElement>) => event.keyCode === 32 && toggleSelect();
-  const onTurnFirstCard = () => firstCardRef.current?.flip();
-  const onShuffle = () => {
-    firstCardRef.current?.flip(false);
-    const newPile = shuffleArray(pileCards);
-    setPileCards(newPile);
+
+  const onTurnFirstCard = () => {
+    onCardFlipped(!isFaceUp);
+    setSelect(false);
+  };
+
+  const onShufflePile = () => {
+    onShuffle();
+    setSelect(false);
   };
 
   return (
-    <div
+    <Draggable
+      className={classes.cardPile}
+      position={position}
+      height={height}
+      width={width}
+      boundaries={tableBoundaries}
+      onDragged={onPositionChanged}
+      onClick={toggleSelect}
       data-testid="CardPile"
-      role="button"
-      tabIndex={0}
-      onClick={onPileClick}
-      onKeyDown={onPileKeyDown}
-      className={classnames(classes.cardPile, { [classes.multiItem]: pileCards.length > 1 })}
     >
       {isSelected && (
         <>
           <Overlay />
           <div className={classes.cardPileMenu}>
-            <CardPileMenu onTurnFirstCard={onTurnFirstCard} onShufflePile={onShuffle} />
+            <CardPileMenu onTurnFirstCard={onTurnFirstCard} onShufflePile={onShufflePile} />
           </div>
         </>
       )}
-      {displayedCard}
-      {backFaceComponent}
-    </div>
+      {firstCard && (
+        <BaseCard
+          data-testid="CardPile-firstCard"
+          className={classes.firstItem}
+          width={width}
+          height={height}
+          frontFace={frontFace}
+          backFace={backFace}
+          disableNativeEvents
+          faceUp={isFaceUp}
+        />
+      )}
+      {secondCard && (
+        <BaseCard
+          data-testid="CardPile-secondCard"
+          className={classes.secondItem}
+          width={width}
+          height={height}
+          backFace={backFace}
+          disableNativeEvents
+          faceUp={false}
+        />
+      )}
+      {otherCards.map((card, index) => {
+        const pos = (otherCards.length - (index + 1)) / 5;
+        return (
+          <div
+            data-testid="OtherCard"
+            // eslint-disable-next-line react/no-array-index-key
+            key={`other-card-${index}`}
+            className={classes.otherCard}
+            style={{ transform: `translate(${pos}px, ${pos}px)` }}
+          />
+        );
+      })}
+    </Draggable>
   );
 };

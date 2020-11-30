@@ -1,12 +1,17 @@
-import React, { FunctionComponent, useEffect } from 'react';
+/* eslint-disable max-lines */
+import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { Position } from '@models/Position';
-import { PlayingCard as PlayingCardComponent } from '@atoms/PlayingCard';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { initCardPositions, updateCardPosition } from '@store/slices/cards';
+import { setTableDimensions, shuffleCardDeck, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
 import { RootState } from '@store/index';
-import { PlayingCardType } from '@models/PlayingCardType';
+import { calculateCardDimensions, defaultCardDimensions } from '@utils/card-dimensions';
+import { BaseCard } from '@atoms/BaseCard';
+import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
+import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
+import { CardPile } from '@molecules/CardPile';
+import { PlayingCard } from '@models/PlayingCard';
 
 interface TableProps {
   /** height of the table */
@@ -20,37 +25,79 @@ const useStyles = createUseStyles({
     height,
     width,
     background: 'green',
+    display: 'flex',
+    position: 'relative',
+    overflow: 'hidden',
   }),
 });
 
-const cards: PlayingCardType[] = ['spades_1'];
-
-// eslint-disable-next-line import/prefer-default-export
 export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
   const classes = useStyles({ height, width });
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initCardPositions({ cards }));
-  }, [dispatch]);
+    dispatch(setTableDimensions({ width, height }));
+  }, [dispatch, height, width]);
 
-  const handleDraggedCard = (position: Position, cardId: PlayingCardType) => {
-    dispatch(updateCardPosition({ position, cardId }));
-  };
+  const handleDraggedCard = useCallback(
+    (position: Position, cardId: string) => {
+      dispatch(updateCardPosition({ position, cardId }));
+    },
+    [dispatch]
+  );
 
-  const positions = useSelector((state: RootState) => state.cards.positions);
+  const handleFlippedCard = useCallback(
+    (isFaceUp: boolean, cardId: string) => {
+      dispatch(updateCardFaceUp({ isFaceUp, cardId }));
+    },
+    [dispatch]
+  );
+
+  const handleShuffle = useCallback(
+    (cardId: string) => {
+      dispatch(shuffleCardDeck(cardId));
+    },
+    [dispatch]
+  );
+
+  const { width: cardWidth, height: cardHeight } = calculateCardDimensions(defaultCardDimensions, { width, height });
+
+  const { cards } = useSelector((state: RootState) => state.table);
 
   return (
     <div className={classes.table} data-testid="Table">
-      {cards.map((card) => (
-        <PlayingCardComponent
-          key={card}
-          position={positions[card]}
-          card={card}
-          onPositionChanged={(e) => handleDraggedCard(e, card)}
-        />
-      ))}
+      {Object.entries(cards).map(([cardId, cardState]) => {
+        return Array.isArray(cardState.cards) ? (
+          <CardPile
+            key={cardId}
+            width={cardWidth}
+            height={cardHeight}
+            tableBoundaries={{ width, height }}
+            frontFace={<PlayingCardFrontFace card={cardState.cards?.[0] as PlayingCard} />}
+            backFace={<PlayingCardBackFace />}
+            cards={cardState.cards}
+            position={cardState.position}
+            isFaceUp={cardState.isFaceUp}
+            onCardFlipped={(e) => handleFlippedCard(e, cardId)}
+            onShuffle={() => handleShuffle(cardId)}
+            onPositionChanged={(e) => handleDraggedCard(e, cardId)}
+          />
+        ) : (
+          <BaseCard
+            key={cardId}
+            height={cardHeight}
+            width={cardWidth}
+            tableBoundaries={{ width, height }}
+            frontFace={<PlayingCardFrontFace card={cardState.cards} />}
+            backFace={<PlayingCardBackFace />}
+            faceUp={cardState.isFaceUp}
+            position={cardState.position}
+            onPositionChanged={(e) => handleDraggedCard(e, cardId)}
+            onFlipped={(isFaceUp) => handleFlippedCard(isFaceUp, cardId)}
+          />
+        );
+      })}
     </div>
   );
 };

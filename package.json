@@ -11,6 +11,8 @@
     ]
   },
   "scripts": {
+    "start:app": "yarn workspace @cardz/app start",
+    "start:components": "yarn workspace @cardz/components build --watch",
     "lint": "yarn lerna run lint",
     "format": "yarn lerna run format",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -t v -s",

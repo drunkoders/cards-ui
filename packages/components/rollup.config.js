@@ -6,7 +6,6 @@ import external from 'rollup-plugin-peer-deps-external';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
-import image from '@rollup/plugin-image';
 
 const EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx', '.json'];
 const CODES = [
@@ -31,7 +30,6 @@ const discardWarning = warning => {
 const env = process.env.NODE_ENV;
 
 const commonPlugins = () => [
-  image(),
   resolve({
     browser: true,
     extensions: EXTENSIONS,

@@ -1,9 +1,6 @@
 /* eslint-disable max-lines */
-import { BaseCard } from '@atoms/BaseCard';
-import { PlayingCardProps } from '@atoms/PlayingCard';
+import { PlayingCard, PlayingCardSuit, PlayingCardName } from '@models/PlayingCard';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { shuffleArray } from '@utils/array-utils';
-import { getFaceUse } from '@utils/testing-utils';
 import React from 'react';
 import { CardPile } from './CardPile';
 
@@ -18,10 +15,12 @@ const isClassPatternPresent = (el: HTMLElement, pattern: RegExp) => {
 };
 
 describe('CardPile', () => {
+  afterEach(() => cleanup());
+
   describe('Empty render', () => {
     let cardPile: HTMLElement;
     beforeEach(() => {
-      render(<CardPile cards={[]} />);
+      render(<CardPile cards={[]} position={{ x: 0, y: 0 }} width={40} height={60} />);
       cardPile = screen.getByTestId('CardPile');
     });
 
@@ -40,18 +39,22 @@ describe('CardPile', () => {
 
   describe('when rendering one card', () => {
     let cardPile: HTMLElement;
+    let faceElement: HTMLElement;
+
     beforeEach(() => {
-      const cardProp: PlayingCardProps = { card: 'hearts_king' };
-      const { getByTestId } = render(<CardPile cards={[cardProp]} />);
+      const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
+      const { getByTestId } = render(<CardPile cards={[card]} position={{ x: 0, y: 0 }} width={40} height={60} />);
       cardPile = getByTestId('CardPile');
+      faceElement = getByTestId('PlayingCardFrontFace');
     });
 
     it('should have exactly one PlayingCard rendered', () => {
-      expect(getFaceUse()).toBeInTheDocument();
+      expect(faceElement).toBeInTheDocument();
     });
 
     it('should pass down the props to card', () => {
-      expect(getFaceUse(true)).toHaveAttribute('xlink:href', expect.stringMatching(/#hearts_king$/i));
+      const [, useElement] = Array.from(faceElement.children);
+      expect(useElement).toHaveAttribute('href', '#spades_1');
     });
 
     it('pile should not have multi-item', () => {
@@ -59,21 +62,26 @@ describe('CardPile', () => {
     });
 
     it('should not render back card', () => {
-      expect(screen.queryAllByTestId('CardPile-backface')).toHaveLength(0);
+      expect(screen.queryAllByTestId('CardPile-secondCard')).toHaveLength(0);
     });
   });
 
   describe('when rendering two cards', () => {
     let cardPile: HTMLElement;
     let renderedCards: HTMLElement[];
+
     beforeEach(() => {
-      const { getAllByTestId, getByTestId } = render(<CardPile cards={[{}, {}]} />);
-      renderedCards = getAllByTestId('CardPile_card');
+      const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
+      const otherCard: PlayingCard = { id: '1', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three };
+      const { getAllByTestId, getByTestId } = render(
+        <CardPile cards={[card, otherCard]} position={{ x: 0, y: 0 }} width={40} height={60} />
+      );
+      renderedCards = getAllByTestId('CardPile-firstCard');
       cardPile = getByTestId('CardPile');
     });
 
-    it('pile should have multi-item style', () => {
-      expect(isClassPatternPresent(cardPile, /^multiItem/i)).toBeTruthy();
+    it('pile should have card pile style', () => {
+      expect(isClassPatternPresent(cardPile, /^cardPile/i)).toBeTruthy();
     });
 
     it('should have exactly one rendered cards', () => {
@@ -85,24 +93,32 @@ describe('CardPile', () => {
     });
 
     it('should render back card', () => {
-      expect(screen.queryAllByTestId('CardPile-backface')).toHaveLength(1);
+      expect(screen.getAllByTestId('CardPile-secondCard')).toHaveLength(1);
     });
 
     it('should mark backFace as last item', () => {
-      expect(screen.getByTestId('CardPile-backface')).toHaveStyle('z-index: 1');
+      expect(screen.getByTestId('CardPile-secondCard')).toHaveStyle('z-index: 1');
     });
   });
 
-  describe('when rendering other cards', () => {
+  describe('when rendering more than two cards', () => {
     it('should render the custom cards', () => {
-      const { getByTestId } = render(<CardPile cards={[{}]} component={BaseCard} />);
-      expect(getByTestId('BaseCard')).toBeInTheDocument();
+      const cards: PlayingCard[] = [
+        { id: '2', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace },
+        { id: '4', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Ace },
+        { id: '6', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Ace },
+        { id: '8', suit: PlayingCardSuit.Clubs, name: PlayingCardName.Ace },
+      ];
+
+      const { getAllByTestId } = render(<CardPile cards={cards} position={{ x: 0, y: 0 }} width={40} height={60} />);
+
+      expect(getAllByTestId('OtherCard')).toHaveLength(2);
     });
   });
 
   describe('about the menu and overlay', () => {
     beforeEach(() => {
-      render(<CardPile cards={[]} />);
+      render(<CardPile cards={[]} position={{ x: 0, y: 0 }} width={40} height={60} />);
     });
 
     it('should not display the overlay+menu', () => {
@@ -117,19 +133,33 @@ describe('CardPile', () => {
     });
 
     it('should display the overlay+menu when keydown', async () => {
-      fireEvent.keyDown(screen.getByTestId('CardPile'), { key: 'Space', code: 'Space', keyCode: 32, charCode: 32 });
+      fireEvent.keyDown(screen.getByTestId('CardPile'), { key: ' ', code: 'Space', keyCode: 32, charCode: 32 });
       expect(screen.getByTestId('Overlay')).toBeInTheDocument();
       expect(screen.getByRole('list')).toBeInTheDocument();
     });
   });
 
   describe('when working with the card pile menu', () => {
-    let mockedShuffleArray: jest.Mock<typeof shuffleArray>;
-    beforeEach(() => {
-      mockedShuffleArray = (shuffleArray as unknown) as jest.Mock<typeof shuffleArray>;
-      mockedShuffleArray.mockImplementation((arr) => arr);
+    let onCardFlippedSpy: jest.SpyInstance;
+    let onShuffleSpy: jest.SpyInstance;
 
-      render(<CardPile cards={[{}]} />);
+    beforeEach(() => {
+      onCardFlippedSpy = jest.fn();
+      onShuffleSpy = jest.fn();
+
+      const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
+
+      render(
+        <CardPile
+          cards={[card]}
+          isFaceUp={false}
+          onCardFlipped={(onCardFlippedSpy as unknown) as (isFaceUp: boolean) => void}
+          onShuffle={(onShuffleSpy as unknown) as () => void}
+          position={{ x: 0, y: 0 }}
+          width={40}
+          height={60}
+        />
+      );
       fireEvent.click(screen.getByTestId('CardPile'));
     });
 
@@ -137,17 +167,41 @@ describe('CardPile', () => {
       expect(screen.getByTestId('BaseCard-flipper')).toHaveStyle('transform: rotateY(180deg)');
     });
 
-    it('should turn the first card  when option is clicked', () => {
+    it('should call onCardFlipped when option is clicked', () => {
       fireEvent.click(screen.getByText('Turn first card'));
-      expect(screen.getByTestId('BaseCard-flipper')).not.toHaveStyle('transform: rotateY(180deg)');
-      expect(screen.getByTestId('Overlay')).toBeInTheDocument();
+      expect(onCardFlippedSpy).toHaveBeenCalledWith(true);
     });
 
-    it('should call shuffleArray when Shuffle pile option is clicked', () => {
+    it('should call onShuffle when Shuffle pile option is clicked', () => {
       fireEvent.click(screen.getByText('Shuffle pile'));
-      expect(mockedShuffleArray).toHaveBeenCalled();
+      expect(onShuffleSpy).toHaveBeenCalled();
     });
   });
 
-  afterEach(() => cleanup());
+  describe('when dragged', () => {
+    it('should call onFlipped handler', () => {
+      const onPositionChangedSpy = jest.fn();
+
+      const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
+
+      render(
+        <CardPile
+          cards={[card]}
+          isFaceUp={false}
+          onPositionChanged={onPositionChangedSpy}
+          position={{ x: 5, y: 7 }}
+          width={40}
+          height={60}
+        />
+      );
+
+      const cardPile = screen.getByTestId('CardPile');
+
+      fireEvent.mouseDown(cardPile, { clientX: 34, clientY: 55 });
+      fireEvent.mouseMove(cardPile, { clientX: 54, clientY: 66 });
+      fireEvent.mouseUp(cardPile);
+
+      expect(onPositionChangedSpy).toHaveBeenCalledWith({ x: 25, y: 18 });
+    });
+  });
 });
