@@ -1,10 +1,13 @@
 import React, { ReactElement } from 'react';
 import { HomePage } from './HomePage';
-import { createStore } from '@cardz/components';
-import type { RenderResult, RenderOptions } from '@testing-library/react';
+import * as cards from '@cardz/components';
+import { RenderResult, RenderOptions, fireEvent } from '@testing-library/react';
 import { render as reactTestingLibraryRender } from '@testing-library/react';
 import type { Store } from '@reduxjs/toolkit';
-import { Provider } from 'react-redux';
+import * as reactRedux from 'react-redux';
+
+const { Provider } = reactRedux;
+const { createStore } = cards;
 
 interface CustomRenderOptions extends RenderOptions {
   initialState?: any;
@@ -29,11 +32,52 @@ export const render = (
 };
 
 describe('HomePage', () => {
-  it('should render home page', () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it('should render home page with buttons', () => {
     const { getByText } = render(<HomePage />, {
-      initialState: { cards: { positions: {} } },
+      initialState: { table: { cards: {} } },
     });
-    const divElement = getByText(/Card UI/i);
-    expect(divElement).not.toBe(undefined);
+    const addCardButton = getByText(/Add random card to table/i);
+    const addCardDeckButton = getByText(/Add random card deck to table/i);
+
+    expect(addCardButton).toBeDefined();
+    expect(addCardDeckButton).toBeDefined();
+  });
+
+  it('should dispatch an action to add a random card when clicking on the button to add a random card', () => {
+    const fakeAction = 'fake-add-random-card-action';
+    const dispatchSpy = jest.fn();
+
+    jest.spyOn(cards, 'addRandomCardToTable').mockReturnValue(fakeAction);
+    jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatchSpy);
+
+    const { getByText } = render(<HomePage />, {
+      initialState: { table: { cards: {} } },
+    });
+    const addCardButton = getByText(/Add random card to table/i);
+
+    fireEvent.click(addCardButton);
+
+    expect(dispatchSpy).toHaveBeenLastCalledWith('fake-add-random-card-action');
+  });
+
+  it('should dispatch an action to add a random card deck when clicking on the button to add a random card deck', () => {
+    const fakeAction = 'fake-add-random-card-deck-action';
+    const dispatchSpy = jest.fn();
+
+    jest.spyOn(cards, 'addRandomCardDeckToTable').mockReturnValue(fakeAction);
+    jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatchSpy);
+
+    const { getByText } = render(<HomePage />, {
+      initialState: { table: { cards: {} } },
+    });
+    const addCardDeckButton = getByText(/Add random card deck to table/i);
+
+    fireEvent.click(addCardDeckButton);
+
+    expect(dispatchSpy).toHaveBeenLastCalledWith('fake-add-random-card-deck-action');
   });
 });

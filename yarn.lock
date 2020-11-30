@@ -2823,9 +2823,9 @@
     uuid "8.3.1"
 
 "@nestjs/graphql@^7.8.2":
-  version "7.9.0"
-  resolved "https://registry.yarnpkg.com/@nestjs/graphql/-/graphql-7.9.0.tgz#d06fb9661bdca6fce698cf0ac923d2e7043ddeb5"
-  integrity sha512-z1WdBxlKwn31Eh6+c0K20zuGZcwECB+cxJewyPeN9DVhqjYXDmqg+pE3nOjzd3TABYORJyUPJFM8ybIuzBWP2g==
+  version "7.9.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/graphql/-/graphql-7.9.1.tgz#eb97f5fdfefe24142463e2f142bbafd2b0a0e397"
+  integrity sha512-r1SwcOIvmSXm6n28VkzXMOW3VkF7szBdJLo9aZfYo1XiostFDwiRIisaQtIpDgijeSHOwIINEJve+ZRuLex4Yg==
   dependencies:
     "@graphql-tools/merge" "6.2.5"
     "@graphql-tools/schema" "6.2.4"
@@ -10628,7 +10628,7 @@ jest-circus@26.6.0:
     stack-utils "^2.0.2"
     throat "^5.0.0"
 
-jest-cli@^26.6.0, jest-cli@^26.6.3:
+jest-cli@^26.6.0:
   version "26.6.3"
   resolved "https://registry.yarnpkg.com/jest-cli/-/jest-cli-26.6.3.tgz#43117cfef24bc4cd691a174a8796a532e135e92a"
   integrity sha512-GF9noBSa9t08pSyl3CY4frMrqp+aQXFGFkf5hEPbh/pIUFYWMK6ZLTfbmadxJVcJrdRoChlWQsA2VkJcDFK8hg==
@@ -11031,15 +11031,6 @@ jest@26.6.0:
     "@jest/core" "^26.6.0"
     import-local "^3.0.2"
     jest-cli "^26.6.0"
-
-jest@26.6.3, jest@^26.6.3:
-  version "26.6.3"
-  resolved "https://registry.yarnpkg.com/jest/-/jest-26.6.3.tgz#40e8fdbe48f00dfa1f0ce8121ca74b88ac9148ef"
-  integrity sha512-lGS5PXGAzR4RF7V5+XObhqz2KZIDUA1yD0DG6pBVmy10eh0ZIXQImRuzocsI/N2XZ1GrLFwTS27In2i2jlpq1Q==
-  dependencies:
-    "@jest/core" "^26.6.3"
-    import-local "^3.0.2"
-    jest-cli "^26.6.3"
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
