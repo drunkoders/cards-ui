@@ -4,7 +4,10 @@ import React from 'react';
 import * as cardDimensionsUtils from '@utils/card-dimensions';
 import { fireEvent, screen } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
-import { PlayingCardSuit, PlayingCardName } from '@models/PlayingCard';
+import { PlayingCardSuit, PlayingCardName, PlayingCard } from '@models/PlayingCard';
+import { UnoCard } from '@models/UnoCard';
+import { UnoCardFace } from '@atoms/UnoCardFace';
+import { Card } from '@models/Card';
 import { Table } from '.';
 
 describe('Table', () => {
@@ -49,14 +52,55 @@ describe('Table', () => {
     });
   });
 
-  it('should render cards with dimensions depending on table dimensions', () => {
+  describe('on Rendering Playing cards', () => {
+    let getByTestId;
+    beforeEach(() => {
+      jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
+
+      const playingCard: PlayingCard = {
+        id: '2',
+        type: 'PlayingCard',
+        suit: PlayingCardSuit.Spades,
+        name: PlayingCardName.Two,
+      };
+      const renderRoot = render(<Table height={400} width={600} />, {
+        initialState: {
+          table: {
+            cards: {
+              2: {
+                cards: playingCard,
+                isFaceUp: false,
+                position: { x: 0, y: 0 },
+              },
+            },
+          },
+        },
+      });
+      getByTestId = renderRoot.getByTestId;
+    });
+
+    it('should render cards with dimensions depending on table dimensions', () => {
+      const card = getByTestId('BaseCard');
+      expect(card).toHaveStyle('width: 53px');
+      expect(card).toHaveStyle('height: 86px');
+    });
+
+    it('should render PlayingCardFace', () => {
+      const card = getByTestId('PlayingCardFrontFace');
+      expect(card).toBeInTheDocument();
+    });
+  });
+
+  it('should render UNO cards', () => {
     jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
+
+    const unoCard: UnoCard = { id: '1', type: 'UnoCard', value: '0', color: 'green' };
     const { getByTestId } = render(<Table height={400} width={600} />, {
       initialState: {
         table: {
           cards: {
             2: {
-              cards: { id: '2', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+              cards: unoCard,
               isFaceUp: false,
               position: { x: 0, y: 0 },
             },
@@ -65,10 +109,8 @@ describe('Table', () => {
       },
     });
 
-    const card = getByTestId('BaseCard');
-
-    expect(card).toHaveStyle('width: 53px');
-    expect(card).toHaveStyle('height: 86px');
+    const card = getByTestId('UnoCard-Backface');
+    expect(card).toBeInTheDocument();
   });
 
   it('should update card position on table when it is dragged', () => {
@@ -80,7 +122,7 @@ describe('Table', () => {
         table: {
           cards: {
             2: {
-              cards: { id: '2', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+              cards: { id: '2', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
               isFaceUp: false,
               position: { x: 0, y: 0 },
             },
@@ -110,7 +152,7 @@ describe('Table', () => {
         table: {
           cards: {
             2: {
-              cards: { id: '2', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+              cards: { id: '2', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
               isFaceUp: false,
               position: { x: 0, y: 0 },
             },
@@ -130,18 +172,58 @@ describe('Table', () => {
   });
 
   describe('card pile', () => {
-    it('should render a card pile', () => {
-      jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
-      const { getByTestId } = render(<Table height={400} width={600} />, {
+    const pileBorderFnSpy = jest.fn((radius) => radius);
+    describe('on rendering PlayingCards', () => {
+      let getByTestId;
+      let getAllByTestId;
+      const cards: PlayingCard[] = [
+        { id: '1', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+      ];
+      beforeEach(() => {
+        pileBorderFnSpy.mockReset();
+        jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
+        const rootRender = render(<Table height={400} width={600} customPileBorderFn={pileBorderFnSpy} />, {
+          initialState: {
+            table: {
+              cards: {
+                2: {
+                  cards,
+                  isFaceUp: false,
+                  position: { x: 0, y: 0 },
+                },
+              },
+            },
+          },
+        });
+        getByTestId = rootRender.getByTestId;
+        getAllByTestId = rootRender.getAllByTestId;
+      });
+
+      it('should render a card pile', () => {
+        const cardPile = getByTestId('CardPile');
+        expect(cardPile).toBeInTheDocument();
+        expect(cardPile).toHaveStyle('width: 53px');
+        expect(cardPile).toHaveStyle('height: 86px');
+      });
+
+      it('should render PlayingCards', () => {
+        const playingCards = getAllByTestId('PlayingCardFrontFace');
+        expect(playingCards).not.toHaveLength(0);
+      });
+
+      it('should call customPileBorderFn with the cards', () => {
+        expect(pileBorderFnSpy.mock.calls[0]).toContain(cards);
+      });
+    });
+
+    it('should render UNO card pile', () => {
+      const cards: UnoCard[] = [{ id: '1', type: 'UnoCard', value: '0', color: 'blue' }];
+      const { getAllByTestId } = render(<Table height={400} width={600} />, {
         initialState: {
           table: {
             cards: {
               2: {
-                cards: [
-                  { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-                  { id: '2', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
-                  { id: '4', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
-                ],
+                cards,
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
               },
@@ -149,12 +231,8 @@ describe('Table', () => {
           },
         },
       });
-
-      const cardPile = getByTestId('CardPile');
-
-      expect(cardPile).toBeInTheDocument();
-      expect(cardPile).toHaveStyle('width: 53px');
-      expect(cardPile).toHaveStyle('height: 86px');
+      const unoCards = getAllByTestId('UnoCard-Backface');
+      expect(unoCards).not.toHaveLength(0);
     });
 
     it('should dispatch an action to shuffle the cards when onShuffle is triggered', () => {
@@ -167,9 +245,9 @@ describe('Table', () => {
             cards: {
               2: {
                 cards: [
-                  { id: '5', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-                  { id: '7', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
-                  { id: '14', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
+                  { id: '5', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+                  { id: '7', type: 'PlayingCard', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
+                  { id: '14', type: 'PlayingCard', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
                 ],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
@@ -200,9 +278,9 @@ describe('Table', () => {
             cards: {
               2: {
                 cards: [
-                  { id: '31', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-                  { id: '41', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
-                  { id: '61', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
+                  { id: '31', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+                  { id: '41', type: 'PlayingCard', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
+                  { id: '61', type: 'PlayingCard', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
                 ],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
@@ -232,7 +310,7 @@ describe('Table', () => {
           table: {
             cards: {
               5: {
-                cards: [{ id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two }],
+                cards: [{ id: '1', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two }],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
               },
@@ -251,6 +329,46 @@ describe('Table', () => {
         payload: { cardId: '5', position: { x: 20, y: 11 } },
         type: 'table/updateCardPosition',
       });
+    });
+  });
+
+  describe('when using customRenderers', () => {
+    const customRenderFnSpy = jest.fn((_a: { card: Card; isBack?: boolean; currentElement?: JSX.Element }) => (
+      <div data-testid="SPY-FACE" />
+    ));
+    const cards: PlayingCard[] = [
+      { id: '1', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+    ];
+    let getAllByTestId;
+
+    beforeEach(() => {
+      jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
+      customRenderFnSpy.mockReset();
+      customRenderFnSpy.mockReturnValue(<div data-testid="SPY-FACE" />);
+      const rootRender = render(<Table height={400} width={600} customRender={customRenderFnSpy} />, {
+        initialState: {
+          table: {
+            cards: {
+              2: {
+                cards,
+                isFaceUp: false,
+                position: { x: 0, y: 0 },
+              },
+            },
+          },
+        },
+      });
+      getAllByTestId = rootRender.getAllByTestId;
+    });
+
+    it('should call custom renderer with correct parameters', () => {
+      const firstCall = customRenderFnSpy.mock.calls[0];
+      expect(firstCall[0].card).toBe(cards[0]);
+      expect(firstCall[0].currentElement).toBeDefined();
+    });
+
+    it('should render return from customRenderer', () => {
+      expect(getAllByTestId('SPY-FACE')).not.toHaveLength(0);
     });
   });
 });

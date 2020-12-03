@@ -23,7 +23,11 @@ export enum PlayingCardName {
   King = 'King',
 }
 
+const PLAYING_CARD_TYPE = 'PlayingCard' as const;
 export interface PlayingCard extends Card {
+  type: typeof PLAYING_CARD_TYPE;
   name: PlayingCardName;
   suit: PlayingCardSuit;
 }
+
+export const isPlayingCard = (card: Card): card is PlayingCard => card.type === PLAYING_CARD_TYPE;

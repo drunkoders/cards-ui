@@ -42,7 +42,12 @@ describe('CardPile', () => {
     let faceElement: HTMLElement;
 
     beforeEach(() => {
-      const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
+      const card: PlayingCard = {
+        id: '1',
+        type: 'PlayingCard',
+        suit: PlayingCardSuit.Spades,
+        name: PlayingCardName.Ace,
+      };
       const { getByTestId } = render(<CardPile cards={[card]} position={{ x: 0, y: 0 }} width={40} height={60} />);
       cardPile = getByTestId('CardPile');
       faceElement = getByTestId('PlayingCardFrontFace');
@@ -71,8 +76,18 @@ describe('CardPile', () => {
     let renderedCards: HTMLElement[];
 
     beforeEach(() => {
-      const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
-      const otherCard: PlayingCard = { id: '1', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three };
+      const card: PlayingCard = {
+        id: '1',
+        type: 'PlayingCard',
+        suit: PlayingCardSuit.Spades,
+        name: PlayingCardName.Ace,
+      };
+      const otherCard: PlayingCard = {
+        id: '1',
+        type: 'PlayingCard',
+        suit: PlayingCardSuit.Hearts,
+        name: PlayingCardName.Three,
+      };
       const { getAllByTestId, getByTestId } = render(
         <CardPile cards={[card, otherCard]} position={{ x: 0, y: 0 }} width={40} height={60} />
       );
@@ -104,10 +119,10 @@ describe('CardPile', () => {
   describe('when rendering more than two cards', () => {
     it('should render the custom cards', () => {
       const cards: PlayingCard[] = [
-        { id: '2', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace },
-        { id: '4', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Ace },
-        { id: '6', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Ace },
-        { id: '8', suit: PlayingCardSuit.Clubs, name: PlayingCardName.Ace },
+        { id: '2', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace },
+        { id: '4', type: 'PlayingCard', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Ace },
+        { id: '6', type: 'PlayingCard', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Ace },
+        { id: '8', type: 'PlayingCard', suit: PlayingCardSuit.Clubs, name: PlayingCardName.Ace },
       ];
 
       const { getAllByTestId } = render(<CardPile cards={cards} position={{ x: 0, y: 0 }} width={40} height={60} />);
@@ -147,7 +162,12 @@ describe('CardPile', () => {
       onCardFlippedSpy = jest.fn();
       onShuffleSpy = jest.fn();
 
-      const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
+      const card: PlayingCard = {
+        id: '1',
+        type: 'PlayingCard',
+        suit: PlayingCardSuit.Spades,
+        name: PlayingCardName.Ace,
+      };
 
       render(
         <CardPile
@@ -182,7 +202,12 @@ describe('CardPile', () => {
     it('should call onFlipped handler', () => {
       const onPositionChangedSpy = jest.fn();
 
-      const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace };
+      const card: PlayingCard = {
+        id: '1',
+        type: 'PlayingCard',
+        suit: PlayingCardSuit.Spades,
+        name: PlayingCardName.Ace,
+      };
 
       render(
         <CardPile

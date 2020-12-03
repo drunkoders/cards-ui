@@ -11,13 +11,21 @@ import { BaseCard } from '@atoms/BaseCard';
 import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
 import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
 import { CardPile } from '@molecules/CardPile';
-import { PlayingCard } from '@models/PlayingCard';
+import { isPlayingCard, PlayingCard } from '@models/PlayingCard';
+import { CardRenderer } from '@models/CardRenderer';
+import { Card } from '@models/Card';
+import { isUnoCard, UnoCard } from '@models/UnoCard';
+import { UnoCardFace } from '@atoms/UnoCardFace';
 
 interface TableProps {
   /** height of the table */
   height: number;
   /** width of the table */
   width: number;
+  /** custom renderers for card types */
+  customRender?: CardRenderer;
+  /** customer border per card type */
+  customPileBorderFn?: (card: Card[]) => number | undefined;
 }
 
 const useStyles = createUseStyles({
@@ -31,7 +39,7 @@ const useStyles = createUseStyles({
   }),
 });
 
-export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
+export const Table: FunctionComponent<TableProps> = ({ height, width, customRender, customPileBorderFn }) => {
   const classes = useStyles({ height, width });
 
   const dispatch = useDispatch();
@@ -65,6 +73,32 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
 
   const { cards } = useSelector((state: RootState) => state.table);
 
+  const cardRenderer: CardRenderer = useCallback(
+    (data) => {
+      let elem: JSX.Element;
+      if (isUnoCard(data.card)) {
+        elem = data.isBack ? <UnoCardFace /> : <UnoCardFace card={data.card} />;
+      } else if (isPlayingCard(data.card)) {
+        elem = data.isBack ? <PlayingCardBackFace /> : <PlayingCardFrontFace card={data.card} />;
+      }
+
+      if (customRender) {
+        elem = customRender({ ...data, currentElement: elem });
+      }
+
+      return elem;
+    },
+    [customRender]
+  );
+
+  const pileBorderFn = (cardsList: Card[]) => {
+    let border: number | undefined;
+    if (cardsList.length > 0 && isUnoCard(cardsList[0])) {
+      border = 12;
+    }
+    return customPileBorderFn ? customPileBorderFn(cardsList) : border;
+  };
+
   return (
     <div className={classes.table} data-testid="Table">
       {Object.entries(cards).map(([cardId, cardState]) => {
@@ -73,9 +107,10 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
             key={cardId}
             width={cardWidth}
             height={cardHeight}
+            borderRadius={pileBorderFn(cardState.cards)}
             tableBoundaries={{ width, height }}
-            frontFace={<PlayingCardFrontFace card={cardState.cards?.[0] as PlayingCard} />}
-            backFace={<PlayingCardBackFace />}
+            frontFace={cardRenderer({ card: cardState.cards?.[0] })}
+            backFace={cardRenderer({ card: cardState.cards?.[0], isBack: true })}
             cards={cardState.cards}
             position={cardState.position}
             isFaceUp={cardState.isFaceUp}
@@ -89,8 +124,8 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
             height={cardHeight}
             width={cardWidth}
             tableBoundaries={{ width, height }}
-            frontFace={<PlayingCardFrontFace card={cardState.cards} />}
-            backFace={<PlayingCardBackFace />}
+            frontFace={cardRenderer({ card: cardState.cards })}
+            backFace={cardRenderer({ card: cardState.cards, isBack: true })}
             faceUp={cardState.isFaceUp}
             position={cardState.position}
             onPositionChanged={(e) => handleDraggedCard(e, cardId)}

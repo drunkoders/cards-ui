@@ -1,4 +1,5 @@
 export interface Card {
   id: string;
-  name: string;
+  type: string;
+  [propName: string]: any;
 }
