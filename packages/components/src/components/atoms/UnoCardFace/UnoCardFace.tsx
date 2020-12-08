@@ -3,6 +3,12 @@ import { UnoCard, UnoCardColor, UnoCardValue } from '@models/UnoCard';
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
+import { Dimensions } from '@models/Dimensions';
+
+export const UNO_CARD_DIMENSIONS: Dimensions = {
+  width: 242.107,
+  height: 362.769,
+};
 
 interface UnoCardFaceProps {
   /** Card to be displayed. If not given, displays the back face of card */

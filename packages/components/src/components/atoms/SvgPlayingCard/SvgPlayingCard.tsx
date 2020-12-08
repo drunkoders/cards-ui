@@ -3,6 +3,12 @@
 import React, { SVGProps } from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
+import { Dimensions } from '@models/Dimensions';
+
+export const PLAYING_CARD_DIMENSIONS: Dimensions = {
+  width: 169.075,
+  height: 244.64,
+};
 
 interface SvgPlayingCardProps extends SVGProps<SVGUseElement> {
   /** The url of the svg card to display */
