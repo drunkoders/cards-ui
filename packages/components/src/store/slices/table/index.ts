@@ -6,6 +6,7 @@ import { generateRandomPositionWithinBoundaries } from '@utils/position-utils';
 import { generateRandomPlayingCardDeck, generateRandomUnoCardDeck } from '@utils/generate-card-deck';
 import { shuffleArray } from '@utils/array-utils';
 import { Card } from '@models/Card';
+import { create } from 'domain';
 
 export interface CardState {
   cards: Card | Card[];
@@ -27,7 +28,7 @@ const initialState: TableState = {
 
 const defaultPosition: Position = { x: 0, y: 0 };
 
-const createCardState = (cards, dimensions, randomFace) => ({
+const createInitialCardState = (cards, dimensions, randomFace): CardState => ({
   isFaceUp: randomFace && Math.round(Math.random() * 100) % 2 === 0,
   position: dimensions ? generateRandomPositionWithinBoundaries(dimensions) : defaultPosition,
   cards,
@@ -42,19 +43,19 @@ const tableSlice = createSlice({
     },
     addRandomPlayingCard: (state: TableState) => {
       const card = generateRandomPlayingCard();
-      state.cards[card.id] = createCardState(card, state.dimensions, true);
+      state.cards[card.id] = createInitialCardState(card, state.dimensions, true);
     },
     addRandomPlayingCardDeck: (state: TableState) => {
       const { cards, id } = generateRandomPlayingCardDeck();
-      state.cards[id] = createCardState(cards, state.dimensions, false);
+      state.cards[id] = createInitialCardState(cards, state.dimensions, false);
     },
     addRandomUnoCard: (state: TableState) => {
       const card = generateRandomUnoCard();
-      state.cards[card.id] = createCardState(card, state.dimensions, true);
+      state.cards[card.id] = createInitialCardState(card, state.dimensions, true);
     },
     addRandomUnoCardDeck: (state: TableState) => {
       const { cards, id } = generateRandomUnoCardDeck();
-      state.cards[id] = createCardState(cards, state.dimensions, false);
+      state.cards[id] = createInitialCardState(cards, state.dimensions, false);
     },
     updateCardPosition: (state, action: PayloadAction<{ cardId: string; position: Position }>) => {
       const { cardId, position } = action.payload;
