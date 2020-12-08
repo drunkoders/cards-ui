@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import createStore from '@store/index';
 
 export { createStore };

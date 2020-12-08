@@ -19,7 +19,7 @@ import { UnoCardFace, UNO_CARD_DIMENSIONS } from '@atoms/UnoCardFace';
 import { PLAYING_CARD_DIMENSIONS } from '@atoms/SvgPlayingCard';
 import { Dimensions } from '@models/Dimensions';
 
-interface CardTypeStyle {
+export interface CardTypeStyle {
   /** Default card height - used to calculate card ratio */
   dimensions: Dimensions;
   /** Card border radius */

@@ -7,7 +7,7 @@ import * as reactRedux from 'react-redux';
 import { PlayingCardSuit, PlayingCardName, PlayingCard } from '@models/PlayingCard';
 import { UnoCard } from '@models/UnoCard';
 import { Card } from '@models/Card';
-import { Table } from '.';
+import { Table, CardTypeStyle } from './Table';
 
 describe('Table', () => {
   afterEach(() => {
@@ -171,7 +171,7 @@ describe('Table', () => {
   });
 
   describe('card pile', () => {
-    const pileBorderFnSpy = jest.fn((radius) => radius);
+    const customCardStyleFn = jest.fn((a: Card, b?: CardTypeStyle) => b as CardTypeStyle);
     describe('on rendering PlayingCards', () => {
       let getByTestId;
       let getAllByTestId;
@@ -179,9 +179,12 @@ describe('Table', () => {
         { id: '1', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
       ];
       beforeEach(() => {
-        pileBorderFnSpy.mockReset();
+        customCardStyleFn.mockReset();
+        customCardStyleFn.mockReturnValue({
+          dimensions: { width: 2, height: 2 },
+        });
         jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
-        const rootRender = render(<Table height={400} width={600} customPileBorderFn={pileBorderFnSpy} />, {
+        const rootRender = render(<Table height={400} width={600} customCardStyle={customCardStyleFn} />, {
           initialState: {
             table: {
               cards: {
@@ -210,8 +213,8 @@ describe('Table', () => {
         expect(playingCards).not.toHaveLength(0);
       });
 
-      it('should call customPileBorderFn with the cards', () => {
-        expect(pileBorderFnSpy.mock.calls[0]).toContain(cards);
+      it('should call customCardStyle with the cards', () => {
+        expect(customCardStyleFn.mock.calls[0]).toContain(cards[0]);
       });
     });
 
@@ -344,7 +347,7 @@ describe('Table', () => {
       jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
       customRenderFnSpy.mockReset();
       customRenderFnSpy.mockReturnValue(<div data-testid="SPY-FACE" />);
-      const rootRender = render(<Table height={400} width={600} customRender={customRenderFnSpy} />, {
+      const rootRender = render(<Table height={400} width={600} customCardRenderer={customRenderFnSpy} />, {
         initialState: {
           table: {
             cards: {
