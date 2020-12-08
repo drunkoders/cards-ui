@@ -1,7 +1,7 @@
 import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
 import { v4 as uuid } from 'uuid';
 import { Deck } from '@models/Deck';
-import { ALL_UNO_COLORS, ALL_UNO_VALUES, UnoCard, UnoCardColor, UnoCardValue } from '@models/UnoCard';
+import { ALL_UNO_COLORS, ALL_UNO_VALUES, UnoCard, UnoCardColor } from '@models/UnoCard';
 import { shuffleArray } from './array-utils';
 
 export const generateRandomPlayingCardDeck = (): Deck<PlayingCard> => {

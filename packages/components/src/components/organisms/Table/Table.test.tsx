@@ -6,7 +6,6 @@ import { fireEvent, screen } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
 import { PlayingCardSuit, PlayingCardName, PlayingCard } from '@models/PlayingCard';
 import { UnoCard } from '@models/UnoCard';
-import { UnoCardFace } from '@atoms/UnoCardFace';
 import { Card } from '@models/Card';
 import { Table } from '.';
 
