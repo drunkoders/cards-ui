@@ -12,7 +12,7 @@ describe('UnoCardFace', () => {
   });
 
   it('should display back face', () => {
-    const { getByTestId } = render(<UnoCardFace />);
+    const { getByTestId } = render(<UnoCardFace card={card} />);
     expect(getByTestId('UnoCard-Backface')).toBeInTheDocument();
   });
 
