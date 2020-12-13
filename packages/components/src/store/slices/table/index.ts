@@ -6,7 +6,6 @@ import { generateRandomPositionWithinBoundaries } from '@utils/position-utils';
 import { generateRandomPlayingCardDeck, generateRandomUnoCardDeck } from '@utils/generate-card-deck';
 import { shuffleArray } from '@utils/array-utils';
 import { Card } from '@models/Card';
-import { create } from 'domain';
 
 export interface CardState {
   cards: Card | Card[];

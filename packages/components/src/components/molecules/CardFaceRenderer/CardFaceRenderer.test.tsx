@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { UnoCard } from '@models/UnoCard';
 import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
-import { Card } from '@models/Card';
 import { CardRenderer } from '@models/CardRenderer';
 import { CardFaceRenderer } from './CardFaceRenderer';
 
