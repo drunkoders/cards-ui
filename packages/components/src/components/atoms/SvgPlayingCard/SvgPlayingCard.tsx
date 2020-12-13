@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { Dimensions } from '@models/Dimensions';
 
-export const PLAYING_CARD_DIMENSIONS: Dimensions = {
+export const PlayingCardDimensions: Dimensions = {
   width: 169.075,
   height: 244.64,
 };

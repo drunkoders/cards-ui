@@ -1,28 +1,16 @@
 /* eslint-disable max-lines */
 import { BaseCard } from '@atoms/BaseCard';
-import { PLAYING_CARD_DIMENSIONS } from '@atoms/SvgPlayingCard';
-import { UNO_CARD_DIMENSIONS } from '@atoms/UnoCardFace';
 import { Card } from '@models/Card';
 import { CardRenderer } from '@models/CardRenderer';
-import { Dimensions } from '@models/Dimensions';
-import { isPlayingCard } from '@models/PlayingCard';
 import { Position } from '@models/Position';
-import { isUnoCard } from '@models/UnoCard';
 import { CardFaceRenderer } from '@molecules/CardFaceRenderer';
 import { CardPile } from '@molecules/CardPile';
 import { RootState } from '@store/index';
 import { setTableDimensions, shuffleCardDeck, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
-import { calculateCardDimensions } from '@utils/card-dimensions';
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
-
-export interface CardTypeStyle {
-  /** Default card height - used to calculate card ratio */
-  dimensions: Dimensions;
-  /** Card border radius */
-  borderRadius?: number;
-}
+import { CustomCardSytleFn, CardTypeStyle, getCardStyleFn } from '@utils/card-style';
 
 interface TableProps {
   /** height of the table */
@@ -32,7 +20,7 @@ interface TableProps {
   /** custom renderers for card types */
   customCardRenderer?: CardRenderer;
   /** custom style per card type */
-  customCardStyle?: (card: Card, currentStyle?: CardTypeStyle) => CardTypeStyle;
+  customCardStyle?: CustomCardSytleFn;
 }
 
 const useStyles = createUseStyles({
@@ -76,32 +64,8 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
     [dispatch]
   );
 
-  // TODO: Move that to utils
   const getCardStyle = useCallback(
-    (cards: Card | Card[]): CardTypeStyle => {
-      const thisCard: Card = Array.isArray(cards) ? cards[0] : cards;
-
-      let cardStyle: CardTypeStyle;
-      if (isPlayingCard(thisCard)) {
-        cardStyle = {
-          dimensions: PLAYING_CARD_DIMENSIONS,
-        };
-      } else if (isUnoCard(thisCard)) {
-        cardStyle = {
-          dimensions: UNO_CARD_DIMENSIONS,
-          borderRadius: 16,
-        };
-      }
-
-      if (customCardStyle) {
-        cardStyle = customCardStyle(thisCard, cardStyle);
-      }
-
-      return {
-        ...cardStyle,
-        dimensions: calculateCardDimensions(cardStyle.dimensions, { width, height }),
-      };
-    },
+    (cards: Card | Card[]): CardTypeStyle => getCardStyleFn(cards, { width, height }, customCardStyle),
     [customCardStyle, width, height]
   );
 

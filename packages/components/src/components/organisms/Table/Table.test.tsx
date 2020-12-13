@@ -1,13 +1,14 @@
 /* eslint-disable max-lines */
 import { render } from '@utils/testing-utils';
 import React from 'react';
-import * as cardDimensionsUtils from '@utils/card-dimensions';
+import * as cardStyleUtils from '@utils/card-style';
 import { fireEvent, screen } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
 import { PlayingCardSuit, PlayingCardName, PlayingCard } from '@models/PlayingCard';
 import { UnoCard } from '@models/UnoCard';
 import { Card } from '@models/Card';
-import { Table, CardTypeStyle } from './Table';
+import { CardTypeStyle } from '@utils/card-style';
+import { Table } from './Table';
 
 describe('Table', () => {
   afterEach(() => {
@@ -54,7 +55,7 @@ describe('Table', () => {
   describe('on Rendering Playing cards', () => {
     let getByTestId;
     beforeEach(() => {
-      jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
+      jest.spyOn(cardStyleUtils, 'getCardStyleFn').mockReturnValue({ dimensions: { width: 53, height: 86 } });
 
       const playingCard: PlayingCard = {
         id: '2',
@@ -91,7 +92,7 @@ describe('Table', () => {
   });
 
   it('should render UNO cards', () => {
-    jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
+    jest.spyOn(cardStyleUtils, 'getCardStyleFn').mockReturnValue({ dimensions: { width: 53, height: 86 } });
 
     const unoCard: UnoCard = { id: '1', type: 'UnoCard', value: '0', color: 'green' };
     const { getByTestId } = render(<Table height={400} width={600} />, {
@@ -183,7 +184,7 @@ describe('Table', () => {
         customCardStyleFn.mockReturnValue({
           dimensions: { width: 2, height: 2 },
         });
-        jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
+        jest.spyOn(cardStyleUtils, 'getCardStyleFn').mockReturnValue({ dimensions: { width: 53, height: 86 } });
         const rootRender = render(<Table height={400} width={600} customCardStyle={customCardStyleFn} />, {
           initialState: {
             table: {
@@ -211,10 +212,6 @@ describe('Table', () => {
       it('should render PlayingCards', () => {
         const playingCards = getAllByTestId('PlayingCardFrontFace');
         expect(playingCards).not.toHaveLength(0);
-      });
-
-      it('should call customCardStyle with the cards', () => {
-        expect(customCardStyleFn.mock.calls[0]).toContain(cards[0]);
       });
     });
 
@@ -344,7 +341,7 @@ describe('Table', () => {
     let getAllByTestId;
 
     beforeEach(() => {
-      jest.spyOn(cardDimensionsUtils, 'calculateCardDimensions').mockReturnValue({ width: 53, height: 86 });
+      jest.spyOn(cardStyleUtils, 'getCardStyleFn').mockReturnValue({ dimensions: { width: 53, height: 86 } });
       customRenderFnSpy.mockReset();
       customRenderFnSpy.mockReturnValue(<div data-testid="SPY-FACE" />);
       const rootRender = render(<Table height={400} width={600} customCardRenderer={customRenderFnSpy} />, {

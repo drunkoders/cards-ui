@@ -21,7 +21,7 @@ import { UnoFacePlus2 } from './faces/UnoFacePlus2';
 import { UnoFaceJoker } from './faces/UnoFaceJoker';
 import { UnoFacePlus4 } from './faces/UnoFacePlus4';
 
-export const UNO_CARD_DIMENSIONS: Dimensions = {
+export const UnoCardDimensions: Dimensions = {
   width: 242.107,
   height: 362.769,
 };
