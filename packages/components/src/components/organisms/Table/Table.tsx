@@ -1,23 +1,21 @@
 /* eslint-disable max-lines */
+import { BaseCard } from '@atoms/BaseCard';
+import { PLAYING_CARD_DIMENSIONS } from '@atoms/SvgPlayingCard';
+import { UNO_CARD_DIMENSIONS } from '@atoms/UnoCardFace';
+import { Card } from '@models/Card';
+import { CardRenderer } from '@models/CardRenderer';
+import { Dimensions } from '@models/Dimensions';
+import { isPlayingCard } from '@models/PlayingCard';
+import { Position } from '@models/Position';
+import { isUnoCard } from '@models/UnoCard';
+import { CardFaceRenderer } from '@molecules/CardFaceRenderer';
+import { CardPile } from '@molecules/CardPile';
+import { RootState } from '@store/index';
+import { setTableDimensions, shuffleCardDeck, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
+import { calculateCardDimensions } from '@utils/card-dimensions';
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Position } from '@models/Position';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { setTableDimensions, shuffleCardDeck, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
-import { RootState } from '@store/index';
-import { calculateCardDimensions } from '@utils/card-dimensions';
-import { BaseCard } from '@atoms/BaseCard';
-import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
-import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
-import { CardPile } from '@molecules/CardPile';
-import { isPlayingCard } from '@models/PlayingCard';
-import { CardRenderer } from '@models/CardRenderer';
-import { Card } from '@models/Card';
-import { isUnoCard } from '@models/UnoCard';
-import { UnoCardFace, UNO_CARD_DIMENSIONS } from '@atoms/UnoCardFace';
-import { PLAYING_CARD_DIMENSIONS } from '@atoms/SvgPlayingCard';
-import { Dimensions } from '@models/Dimensions';
 
 export interface CardTypeStyle {
   /** Default card height - used to calculate card ratio */
@@ -78,6 +76,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
     [dispatch]
   );
 
+  // TODO: Move that to utils
   const getCardStyle = useCallback(
     (cards: Card | Card[]): CardTypeStyle => {
       const thisCard: Card = Array.isArray(cards) ? cards[0] : cards;
@@ -90,7 +89,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
       } else if (isUnoCard(thisCard)) {
         cardStyle = {
           dimensions: UNO_CARD_DIMENSIONS,
-          borderRadius: 12,
+          borderRadius: 16,
         };
       }
 
@@ -108,24 +107,6 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
 
   const { cards } = useSelector((state: RootState) => state.table);
 
-  const cardRenderer: CardRenderer = useCallback(
-    (data) => {
-      let elem: JSX.Element;
-      if (isUnoCard(data.card)) {
-        elem = data.isBack ? <UnoCardFace /> : <UnoCardFace card={data.card} />;
-      } else if (isPlayingCard(data.card)) {
-        elem = data.isBack ? <PlayingCardBackFace /> : <PlayingCardFrontFace card={data.card} />;
-      }
-
-      if (customCardRenderer) {
-        elem = customCardRenderer({ ...data, currentElement: elem });
-      }
-
-      return elem;
-    },
-    [customCardRenderer]
-  );
-
   return (
     <div className={classes.table} data-testid="Table">
       {Object.entries(cards)
@@ -140,8 +121,8 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
               height={cardStyle.dimensions.height}
               borderRadius={cardStyle.borderRadius}
               tableBoundaries={{ width, height }}
-              frontFace={cardRenderer({ card: cardState.cards?.[0] })}
-              backFace={cardRenderer({ card: cardState.cards?.[0], isBack: true })}
+              frontFace={<CardFaceRenderer card={cardState.cards?.[0]} customCardRenderer={customCardRenderer} />}
+              backFace={<CardFaceRenderer card={cardState.cards?.[0]} isBack customCardRenderer={customCardRenderer} />}
               cards={cardState.cards as Card[]}
               position={cardState.position}
               isFaceUp={cardState.isFaceUp}
@@ -155,8 +136,8 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
               height={cardStyle.dimensions.height}
               width={cardStyle.dimensions.width}
               tableBoundaries={{ width, height }}
-              frontFace={cardRenderer({ card: cardState.cards })}
-              backFace={cardRenderer({ card: cardState.cards, isBack: true })}
+              frontFace={<CardFaceRenderer card={cardState.cards} customCardRenderer={customCardRenderer} />}
+              backFace={<CardFaceRenderer card={cardState.cards} isBack customCardRenderer={customCardRenderer} />}
               faceUp={cardState.isFaceUp}
               position={cardState.position}
               onPositionChanged={(e) => handleDraggedCard(e, cardId)}
