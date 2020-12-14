@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Position } from '@models/Position';
-import { PlayingCard } from '@models/PlayingCard';
 import { Dimensions } from '@models/Dimensions';
-import { generateRandomCard } from '@utils/generate-card';
+import { generateRandomPlayingCard, generateRandomUnoCard } from '@utils/generate-card';
 import { generateRandomPositionWithinBoundaries } from '@utils/position-utils';
-import { generateRandomCardDeck } from '@utils/generate-card-deck';
+import { generateRandomPlayingCardDeck, generateRandomUnoCardDeck } from '@utils/generate-card-deck';
 import { shuffleArray } from '@utils/array-utils';
+import { Card } from '@models/Card';
 
 export interface CardState {
-  cards: PlayingCard | PlayingCard[];
+  cards: Card | Card[];
   position: Position;
   isFaceUp: boolean;
 }
@@ -27,6 +27,12 @@ const initialState: TableState = {
 
 const defaultPosition: Position = { x: 0, y: 0 };
 
+const createInitialCardState = (cards, dimensions, randomFace): CardState => ({
+  isFaceUp: randomFace && Math.round(Math.random() * 100) % 2 === 0,
+  position: dimensions ? generateRandomPositionWithinBoundaries(dimensions) : defaultPosition,
+  cards,
+});
+
 const tableSlice = createSlice({
   name: 'table',
   initialState,
@@ -34,21 +40,21 @@ const tableSlice = createSlice({
     setTableDimensions: (state: TableState, action: PayloadAction<Dimensions>) => {
       state.dimensions = action.payload;
     },
-    addRandomCardToTable: (state: TableState) => {
-      const card = generateRandomCard();
-      state.cards[card.id] = {
-        isFaceUp: Math.round(Math.random() * 100) % 2 === 0,
-        position: state.dimensions ? generateRandomPositionWithinBoundaries(state.dimensions) : defaultPosition,
-        cards: card,
-      };
+    addRandomPlayingCard: (state: TableState) => {
+      const card = generateRandomPlayingCard();
+      state.cards[card.id] = createInitialCardState(card, state.dimensions, true);
     },
-    addRandomCardDeckToTable: (state: TableState) => {
-      const { cards, id } = generateRandomCardDeck();
-      state.cards[id] = {
-        isFaceUp: false,
-        position: state.dimensions ? generateRandomPositionWithinBoundaries(state.dimensions) : defaultPosition,
-        cards,
-      };
+    addRandomPlayingCardDeck: (state: TableState) => {
+      const { cards, id } = generateRandomPlayingCardDeck();
+      state.cards[id] = createInitialCardState(cards, state.dimensions, false);
+    },
+    addRandomUnoCard: (state: TableState) => {
+      const card = generateRandomUnoCard();
+      state.cards[card.id] = createInitialCardState(card, state.dimensions, true);
+    },
+    addRandomUnoCardDeck: (state: TableState) => {
+      const { cards, id } = generateRandomUnoCardDeck();
+      state.cards[id] = createInitialCardState(cards, state.dimensions, false);
     },
     updateCardPosition: (state, action: PayloadAction<{ cardId: string; position: Position }>) => {
       const { cardId, position } = action.payload;
@@ -74,8 +80,10 @@ const tableSlice = createSlice({
 
 export const {
   setTableDimensions,
-  addRandomCardToTable,
-  addRandomCardDeckToTable,
+  addRandomPlayingCard,
+  addRandomUnoCard,
+  addRandomPlayingCardDeck,
+  addRandomUnoCardDeck,
   updateCardPosition,
   updateCardFaceUp,
   shuffleCardDeck,

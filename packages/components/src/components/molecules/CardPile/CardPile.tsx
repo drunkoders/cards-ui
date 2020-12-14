@@ -28,6 +28,8 @@ export interface CardPileProps {
   width: number;
   /** Height of the cards of the card deck */
   height: number;
+  /** Border radius for non-rectangle cards */
+  borderRadius?: number;
   /** Table boundaries, used to ensure card pile position stays within them */
   tableBoundaries?: Dimensions;
   /** Function called when first card of the pile flips */
@@ -43,6 +45,8 @@ interface CardPileStyleProps {
   width: number;
   /** Height of the cards of the card deck */
   height: number;
+  /** Border radius for non-rectangle cards */
+  borderRadius?: number;
 }
 
 const useStyles = createUseStyles({
@@ -58,12 +62,12 @@ const useStyles = createUseStyles({
     left: '-100%',
     zIndex: 3,
   },
-  otherCard: ({ width, height }: CardPileStyleProps) => ({
+  otherCard: ({ width, height, borderRadius = 5 }: CardPileStyleProps) => ({
     width,
     height,
     position: 'absolute',
     background: 'white',
-    borderRadius: 5,
+    borderRadius,
     boxShadow: 'rgba(0, 0, 0, 0.05) 1px 2px 2px',
   }),
 });
@@ -76,12 +80,13 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
   width,
   height,
   position,
+  borderRadius,
   tableBoundaries,
   onCardFlipped = () => {},
   onShuffle = () => {},
   onPositionChanged = () => {},
 }) => {
-  const styleProps: CardPileStyleProps = { width, height };
+  const styleProps: CardPileStyleProps = { width, height, borderRadius };
   const classes = useStyles(styleProps);
 
   const [isSelected, setSelect] = useState(false);
@@ -114,7 +119,7 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
     >
       {isSelected && (
         <>
-          <Overlay />
+          <Overlay borderRadius={borderRadius} />
           <div className={classes.cardPileMenu}>
             <CardPileMenu onTurnFirstCard={onTurnFirstCard} onShufflePile={onShufflePile} />
           </div>

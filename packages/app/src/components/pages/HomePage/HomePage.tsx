@@ -1,6 +1,6 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { Table, addRandomCardToTable, addRandomCardDeckToTable } from '@cardz/components';
+import { Table, addRandomPlayingCard, addRandomPlayingCardDeck, addRandomUnoCard, addRandomUnoCardDeck } from '@cardz/components';
 import { useDispatch } from 'react-redux';
 
 const useStyles = createUseStyles({
@@ -23,21 +23,35 @@ export const HomePage: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const onAddCardToTable = () => {
-    dispatch(addRandomCardToTable())
+  const onAddPlayingCard = () => {
+    dispatch(addRandomPlayingCard())
   };
 
-  const onAddCardDeckToTable = () => {
-    dispatch(addRandomCardDeckToTable())
+  const onAddUnoCard = () => {
+    dispatch(addRandomUnoCard())
+  };
+
+  const onAddPlayingCardDeck = () => {
+    dispatch(addRandomPlayingCardDeck())
+  };
+
+  const onAddUnoCardDeck = () => {
+    dispatch(addRandomUnoCardDeck())
   };
 
   return (
     <div className={classes.homePage}>
-      <button className={classes.button} type="button" onClick={onAddCardToTable} >
-        Add random card to table
+      <button className={classes.button} type="button" onClick={onAddPlayingCard} >
+        Add random playing card to table
       </button>
-      <button className={classes.button} type="button" onClick={onAddCardDeckToTable} >
-        Add random card deck to table
+      <button className={classes.button} type="button" onClick={onAddUnoCard} >
+        Add random uno card to table
+      </button>
+      <button className={classes.button} type="button" onClick={onAddPlayingCardDeck} >
+        Add random playing card deck to table
+      </button>
+      <button className={classes.button} type="button" onClick={onAddUnoCardDeck} >
+        Add random uno card deck to table
       </button>
       <Table width={900} height={600} />
     </div>

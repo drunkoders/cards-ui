@@ -1,10 +1,5 @@
 import { Dimensions } from '@models/Dimensions';
 
-export const defaultCardDimensions: Dimensions = {
-  width: 169.075,
-  height: 244.64,
-};
-
 /**
  * Calculate card dimensions according to its container's dimensions and the given ratio
  *

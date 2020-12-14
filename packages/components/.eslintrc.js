@@ -24,6 +24,7 @@ module.exports = {
     'no-param-reassign': 0,
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+    '@typescript-eslint/no-unused-vars': ['warn', { "argsIgnorePattern": "^_" }]
   },
   settings: {
     react: {

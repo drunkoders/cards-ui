@@ -40,43 +40,81 @@ describe('HomePage', () => {
     const { getByText } = render(<HomePage />, {
       initialState: { table: { cards: {} } },
     });
-    const addCardButton = getByText(/Add random card to table/i);
-    const addCardDeckButton = getByText(/Add random card deck to table/i);
+    const addPlayingCardButton = getByText(/Add random playing card to table/i);
+    const addPlayingCardDeckButton = getByText(/Add random playing card deck to table/i);
+    const addUnoCardButton = getByText(/Add random uno card to table/i);
+    const addUnoCardDeckButton = getByText(/Add random uno card deck to table/i);
 
-    expect(addCardButton).toBeDefined();
-    expect(addCardDeckButton).toBeDefined();
+    expect(addPlayingCardButton).toBeDefined();
+    expect(addPlayingCardDeckButton).toBeDefined();
+    expect(addUnoCardButton).toBeDefined();
+    expect(addUnoCardDeckButton).toBeDefined();
   });
 
-  it('should dispatch an action to add a random card when clicking on the button to add a random card', () => {
+  it('should dispatch an action to add a random Playing card when clicking on the button to add a random card', () => {
     const fakeAction = 'fake-add-random-card-action';
     const dispatchSpy = jest.fn();
 
-    jest.spyOn(cards, 'addRandomCardToTable').mockReturnValue(fakeAction);
+    jest.spyOn(cards, 'addRandomPlayingCard').mockReturnValue(fakeAction);
     jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatchSpy);
 
     const { getByText } = render(<HomePage />, {
       initialState: { table: { cards: {} } },
     });
-    const addCardButton = getByText(/Add random card to table/i);
+    const addPlayingCardButton = getByText(/Add random playing card to table/i);
 
-    fireEvent.click(addCardButton);
+    fireEvent.click(addPlayingCardButton);
 
     expect(dispatchSpy).toHaveBeenLastCalledWith('fake-add-random-card-action');
   });
 
-  it('should dispatch an action to add a random card deck when clicking on the button to add a random card deck', () => {
+  it('should dispatch an action to add a random Playing card deck when clicking on the button to add a random card deck', () => {
     const fakeAction = 'fake-add-random-card-deck-action';
     const dispatchSpy = jest.fn();
 
-    jest.spyOn(cards, 'addRandomCardDeckToTable').mockReturnValue(fakeAction);
+    jest.spyOn(cards, 'addRandomPlayingCardDeck').mockReturnValue(fakeAction);
     jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatchSpy);
 
     const { getByText } = render(<HomePage />, {
       initialState: { table: { cards: {} } },
     });
-    const addCardDeckButton = getByText(/Add random card deck to table/i);
+    const addPlayingCardDeckButton = getByText(/Add random playing card deck to table/i);
 
-    fireEvent.click(addCardDeckButton);
+    fireEvent.click(addPlayingCardDeckButton);
+
+    expect(dispatchSpy).toHaveBeenLastCalledWith('fake-add-random-card-deck-action');
+  });
+
+  it('should dispatch an action to add a random Uno card when clicking on the button to add a random card', () => {
+    const fakeAction = 'fake-add-random-card-action';
+    const dispatchSpy = jest.fn();
+
+    jest.spyOn(cards, 'addRandomUnoCard').mockReturnValue(fakeAction);
+    jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatchSpy);
+
+    const { getByText } = render(<HomePage />, {
+      initialState: { table: { cards: {} } },
+    });
+    const addUnoCardButton = getByText(/Add random uno card to table/i);
+
+    fireEvent.click(addUnoCardButton);
+
+    expect(dispatchSpy).toHaveBeenLastCalledWith('fake-add-random-card-action');
+  });
+
+  it('should dispatch an action to add a random uno card deck when clicking on the button to add a random card deck', () => {
+    const fakeAction = 'fake-add-random-card-deck-action';
+    const dispatchSpy = jest.fn();
+
+    jest.spyOn(cards, 'addRandomUnoCardDeck').mockReturnValue(fakeAction);
+    jest.spyOn(reactRedux, 'useDispatch').mockReturnValue(dispatchSpy);
+
+    const { getByText } = render(<HomePage />, {
+      initialState: { table: { cards: {} } },
+    });
+    const addUnoCardDeckButton = getByText(/Add random uno card deck to table/i);
+
+    fireEvent.click(addUnoCardDeckButton);
 
     expect(dispatchSpy).toHaveBeenLastCalledWith('fake-add-random-card-deck-action');
   });

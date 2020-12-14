@@ -3,8 +3,8 @@ import { Position } from '@models/Position';
 import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
 import * as arrayUtils from '@utils/array-utils';
 import tableReducer, {
-  addRandomCardToTable,
-  addRandomCardDeckToTable,
+  addRandomPlayingCard,
+  addRandomPlayingCardDeck,
   setTableDimensions,
   updateCardFaceUp,
   updateCardPosition,
@@ -33,11 +33,11 @@ describe('Cards reducer', () => {
     });
   });
 
-  describe('addRandomCardToTable', () => {
+  describe('addRandomPlayingCard', () => {
     it('should generate a random card and add it to the table', () => {
       const uuidRegExp = new RegExp(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
 
-      const state = tableReducer({ cards: {}, dimensions: { width: 300, height: 140 } }, addRandomCardToTable());
+      const state = tableReducer({ cards: {}, dimensions: { width: 300, height: 140 } }, addRandomPlayingCard());
       const [cardState] = Object.values(state.cards);
       const [cardId] = Object.keys(state.cards);
       const card = cardState.cards as PlayingCard;
@@ -55,7 +55,7 @@ describe('Cards reducer', () => {
     it('should generate a random card with default position', () => {
       const uuidRegExp = new RegExp(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
 
-      const state = tableReducer({ cards: {} }, addRandomCardToTable());
+      const state = tableReducer({ cards: {} }, addRandomPlayingCard());
       const [cardState] = Object.values(state.cards);
       const [cardId] = Object.keys(state.cards);
       const card = cardState.cards as PlayingCard;
@@ -71,11 +71,11 @@ describe('Cards reducer', () => {
     });
   });
 
-  describe('addRandomCardDeckToTable', () => {
+  describe('addRandomPlayingCardDeck', () => {
     it('should generate a random card deck and add it to the table', () => {
       const uuidRegExp = new RegExp(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
 
-      const state = tableReducer({ cards: {}, dimensions: { width: 300, height: 140 } }, addRandomCardDeckToTable());
+      const state = tableReducer({ cards: {}, dimensions: { width: 300, height: 140 } }, addRandomPlayingCardDeck());
       const [cardId] = Object.keys(state.cards);
       const [cardState] = Object.values(state.cards);
 
@@ -91,7 +91,7 @@ describe('Cards reducer', () => {
     it('should generate a random card with default position', () => {
       const uuidRegExp = new RegExp(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
 
-      const state = tableReducer({ cards: {} }, addRandomCardDeckToTable());
+      const state = tableReducer({ cards: {} }, addRandomPlayingCardDeck());
       const [cardId] = Object.keys(state.cards);
       const [cardState] = Object.values(state.cards);
 
@@ -112,7 +112,7 @@ describe('Cards reducer', () => {
       const currentState = {
         cards: {
           1: {
-            cards: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
             isFaceUp: false,
             position: { x: 0, y: 0 },
           },
@@ -120,7 +120,11 @@ describe('Cards reducer', () => {
       };
       const expectedState = {
         cards: {
-          1: { cards: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades }, isFaceUp: false, position },
+          1: {
+            cards: { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            isFaceUp: false,
+            position,
+          },
         },
       };
 
@@ -136,7 +140,7 @@ describe('Cards reducer', () => {
       const initialState = {
         cards: {
           1: {
-            cards: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
             position: { x: 0, y: 0 },
             isFaceUp: false,
           },
@@ -145,7 +149,7 @@ describe('Cards reducer', () => {
       const expectedState = {
         cards: {
           1: {
-            cards: { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
             position: { x: 0, y: 0 },
             isFaceUp: true,
           },
@@ -161,8 +165,8 @@ describe('Cards reducer', () => {
   describe('shuffleCardDeck', () => {
     it('should shuffle cards', () => {
       const shuffledCards = [
-        { id: '3', name: PlayingCardName.Three, suit: PlayingCardSuit.Spades },
-        { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+        { id: '3', type: 'PlayingCard', name: PlayingCardName.Three, suit: PlayingCardSuit.Spades },
+        { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
       ];
       jest.spyOn(arrayUtils, 'shuffleArray').mockReturnValue(shuffledCards);
 
@@ -172,8 +176,8 @@ describe('Cards reducer', () => {
         cards: {
           1: {
             cards: [
-              { id: '1', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
-              { id: '3', name: PlayingCardName.Three, suit: PlayingCardSuit.Spades },
+              { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+              { id: '3', type: 'PlayingCard', name: PlayingCardName.Three, suit: PlayingCardSuit.Spades },
             ],
             position: { x: 0, y: 0 },
             isFaceUp: false,

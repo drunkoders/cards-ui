@@ -38,7 +38,9 @@ const commonPlugins = () => [
   external({
     includeDependencies: true,
   }),
-  typescript(),
+  typescript({
+    tsconfig: path.join(__dirname, 'tsconfig.build.json')
+  }),
   babel({
     babelrc: false,
     presets: [['@babel/preset-env', { modules: false }], '@babel/preset-react'],

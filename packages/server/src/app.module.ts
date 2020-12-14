@@ -13,22 +13,22 @@ import { GameGatewayModule } from './gateways/game/game.module';
     ConfigModule.forRoot({
       envFilePath:
         process.env.ENV_FILE || path.join(__dirname, '../../../.env'),
-      expandVariables: true
+      expandVariables: true,
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('DB_URL')
+        uri: configService.get<string>('DB_URL'),
       }),
       inject: [ConfigService],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
       debug: true,
-      playground: true
+      playground: true,
     }),
     GameModule,
-    GameGatewayModule
+    GameGatewayModule,
   ],
   controllers: [AppController],
   providers: [AppService],

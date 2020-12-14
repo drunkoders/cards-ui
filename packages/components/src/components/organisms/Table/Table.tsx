@@ -1,23 +1,26 @@
 /* eslint-disable max-lines */
+import { BaseCard } from '@atoms/BaseCard';
+import { Card } from '@models/Card';
+import { CardRenderer } from '@models/CardRenderer';
+import { Position } from '@models/Position';
+import { CardFaceRenderer } from '@molecules/CardFaceRenderer';
+import { CardPile } from '@molecules/CardPile';
+import { RootState } from '@store/index';
+import { setTableDimensions, shuffleCardDeck, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Position } from '@models/Position';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { setTableDimensions, shuffleCardDeck, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
-import { RootState } from '@store/index';
-import { calculateCardDimensions, defaultCardDimensions } from '@utils/card-dimensions';
-import { BaseCard } from '@atoms/BaseCard';
-import { PlayingCardFrontFace } from '@atoms/PlayingCardFrontFace';
-import { PlayingCardBackFace } from '@atoms/PlayingCardBackFace';
-import { CardPile } from '@molecules/CardPile';
-import { PlayingCard } from '@models/PlayingCard';
+import { CustomCardStyleFactory, CardTypeStyle, defaultCardStyleFactory } from '@utils/card-style';
 
 interface TableProps {
   /** height of the table */
   height: number;
   /** width of the table */
   width: number;
+  /** custom renderers for card types */
+  customCardRenderer?: CardRenderer;
+  /** custom style per card type */
+  customCardStyle?: CustomCardStyleFactory;
 }
 
 const useStyles = createUseStyles({
@@ -31,7 +34,7 @@ const useStyles = createUseStyles({
   }),
 });
 
-export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
+export const Table: FunctionComponent<TableProps> = ({ height, width, customCardRenderer, customCardStyle }) => {
   const classes = useStyles({ height, width });
 
   const dispatch = useDispatch();
@@ -61,43 +64,51 @@ export const Table: FunctionComponent<TableProps> = ({ height, width }) => {
     [dispatch]
   );
 
-  const { width: cardWidth, height: cardHeight } = calculateCardDimensions(defaultCardDimensions, { width, height });
+  const getCardStyle = useCallback(
+    (cards: Card | Card[]): CardTypeStyle => defaultCardStyleFactory(cards, { width, height }, customCardStyle),
+    [customCardStyle, width, height]
+  );
 
   const { cards } = useSelector((state: RootState) => state.table);
 
   return (
     <div className={classes.table} data-testid="Table">
-      {Object.entries(cards).map(([cardId, cardState]) => {
-        return Array.isArray(cardState.cards) ? (
-          <CardPile
-            key={cardId}
-            width={cardWidth}
-            height={cardHeight}
-            tableBoundaries={{ width, height }}
-            frontFace={<PlayingCardFrontFace card={cardState.cards?.[0] as PlayingCard} />}
-            backFace={<PlayingCardBackFace />}
-            cards={cardState.cards}
-            position={cardState.position}
-            isFaceUp={cardState.isFaceUp}
-            onCardFlipped={(e) => handleFlippedCard(e, cardId)}
-            onShuffle={() => handleShuffle(cardId)}
-            onPositionChanged={(e) => handleDraggedCard(e, cardId)}
-          />
-        ) : (
-          <BaseCard
-            key={cardId}
-            height={cardHeight}
-            width={cardWidth}
-            tableBoundaries={{ width, height }}
-            frontFace={<PlayingCardFrontFace card={cardState.cards} />}
-            backFace={<PlayingCardBackFace />}
-            faceUp={cardState.isFaceUp}
-            position={cardState.position}
-            onPositionChanged={(e) => handleDraggedCard(e, cardId)}
-            onFlipped={(isFaceUp) => handleFlippedCard(isFaceUp, cardId)}
-          />
-        );
-      })}
+      {Object.entries(cards)
+        .filter(([_, cardState]) => !Array.isArray(cardState.cards) || cardState.cards.length > 0)
+        .map(([cardId, cardState]) => {
+          const cardStyle = getCardStyle(cardState.cards);
+
+          return Array.isArray(cardState.cards) ? (
+            <CardPile
+              key={cardId}
+              width={cardStyle.dimensions.width}
+              height={cardStyle.dimensions.height}
+              borderRadius={cardStyle.borderRadius}
+              tableBoundaries={{ width, height }}
+              frontFace={<CardFaceRenderer card={cardState.cards?.[0]} customCardRenderer={customCardRenderer} />}
+              backFace={<CardFaceRenderer card={cardState.cards?.[0]} isBack customCardRenderer={customCardRenderer} />}
+              cards={cardState.cards as Card[]}
+              position={cardState.position}
+              isFaceUp={cardState.isFaceUp}
+              onCardFlipped={(e) => handleFlippedCard(e, cardId)}
+              onShuffle={() => handleShuffle(cardId)}
+              onPositionChanged={(e) => handleDraggedCard(e, cardId)}
+            />
+          ) : (
+            <BaseCard
+              key={cardId}
+              height={cardStyle.dimensions.height}
+              width={cardStyle.dimensions.width}
+              tableBoundaries={{ width, height }}
+              frontFace={<CardFaceRenderer card={cardState.cards} customCardRenderer={customCardRenderer} />}
+              backFace={<CardFaceRenderer card={cardState.cards} isBack customCardRenderer={customCardRenderer} />}
+              faceUp={cardState.isFaceUp}
+              position={cardState.position}
+              onPositionChanged={(e) => handleDraggedCard(e, cardId)}
+              onFlipped={(isFaceUp) => handleFlippedCard(isFaceUp, cardId)}
+            />
+          );
+        })}
     </div>
   );
 };

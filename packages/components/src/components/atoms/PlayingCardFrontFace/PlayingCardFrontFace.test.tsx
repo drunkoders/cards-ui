@@ -9,7 +9,12 @@ describe('PlayingCardFrontFace', () => {
   });
 
   it('should render the front face of a given card', () => {
-    const card: PlayingCard = { id: '1', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Five };
+    const card: PlayingCard = {
+      id: '1',
+      type: 'PlayingCard',
+      suit: PlayingCardSuit.Hearts,
+      name: PlayingCardName.Five,
+    };
 
     const { getByTestId } = render(<PlayingCardFrontFace card={card} />);
 
