@@ -10,7 +10,7 @@ import { setTableDimensions, shuffleCardDeck, updateCardFaceUp, updateCardPositi
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
-import { CustomCardSytleFn, CardTypeStyle, getCardStyleFn } from '@utils/card-style';
+import { CustomCardStyleFactory, CardTypeStyle, defaultCardStyleFactory } from '@utils/card-style';
 
 interface TableProps {
   /** height of the table */
@@ -20,7 +20,7 @@ interface TableProps {
   /** custom renderers for card types */
   customCardRenderer?: CardRenderer;
   /** custom style per card type */
-  customCardStyle?: CustomCardSytleFn;
+  customCardStyle?: CustomCardStyleFactory;
 }
 
 const useStyles = createUseStyles({
@@ -65,7 +65,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
   );
 
   const getCardStyle = useCallback(
-    (cards: Card | Card[]): CardTypeStyle => getCardStyleFn(cards, { width, height }, customCardStyle),
+    (cards: Card | Card[]): CardTypeStyle => defaultCardStyleFactory(cards, { width, height }, customCardStyle),
     [customCardStyle, width, height]
   );
 

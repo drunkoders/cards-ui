@@ -55,7 +55,7 @@ describe('Table', () => {
   describe('on Rendering Playing cards', () => {
     let getByTestId;
     beforeEach(() => {
-      jest.spyOn(cardStyleUtils, 'getCardStyleFn').mockReturnValue({ dimensions: { width: 53, height: 86 } });
+      jest.spyOn(cardStyleUtils, 'defaultCardStyleFactory').mockReturnValue({ dimensions: { width: 53, height: 86 } });
 
       const playingCard: PlayingCard = {
         id: '2',
@@ -92,7 +92,7 @@ describe('Table', () => {
   });
 
   it('should render UNO cards', () => {
-    jest.spyOn(cardStyleUtils, 'getCardStyleFn').mockReturnValue({ dimensions: { width: 53, height: 86 } });
+    jest.spyOn(cardStyleUtils, 'defaultCardStyleFactory').mockReturnValue({ dimensions: { width: 53, height: 86 } });
 
     const unoCard: UnoCard = { id: '1', type: 'UnoCard', value: '0', color: 'green' };
     const { getByTestId } = render(<Table height={400} width={600} />, {
@@ -184,7 +184,9 @@ describe('Table', () => {
         customCardStyleFn.mockReturnValue({
           dimensions: { width: 2, height: 2 },
         });
-        jest.spyOn(cardStyleUtils, 'getCardStyleFn').mockReturnValue({ dimensions: { width: 53, height: 86 } });
+        jest
+          .spyOn(cardStyleUtils, 'defaultCardStyleFactory')
+          .mockReturnValue({ dimensions: { width: 53, height: 86 } });
         const rootRender = render(<Table height={400} width={600} customCardStyle={customCardStyleFn} />, {
           initialState: {
             table: {
@@ -341,7 +343,7 @@ describe('Table', () => {
     let getAllByTestId;
 
     beforeEach(() => {
-      jest.spyOn(cardStyleUtils, 'getCardStyleFn').mockReturnValue({ dimensions: { width: 53, height: 86 } });
+      jest.spyOn(cardStyleUtils, 'defaultCardStyleFactory').mockReturnValue({ dimensions: { width: 53, height: 86 } });
       customRenderFnSpy.mockReset();
       customRenderFnSpy.mockReturnValue(<div data-testid="SPY-FACE" />);
       const rootRender = render(<Table height={400} width={600} customCardRenderer={customRenderFnSpy} />, {

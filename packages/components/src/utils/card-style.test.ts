@@ -4,9 +4,9 @@ import { Dimensions } from '@models/Dimensions';
 import { UnoCardDimensions } from '@atoms/UnoCardFace';
 import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
 import { PlayingCardDimensions } from '@atoms/SvgPlayingCard';
-import { getCardStyleFn, CustomCardSytleFn } from './card-style';
+import { defaultCardStyleFactory, CustomCardStyleFactory } from './card-style';
 
-describe('getCardStyleFn', () => {
+describe('defaultCardStyleFactory', () => {
   const unoCard: UnoCard = {
     type: 'UnoCard',
     id: '1',
@@ -28,7 +28,7 @@ describe('getCardStyleFn', () => {
   });
 
   it('should get style for UnoCard', () => {
-    const result = getCardStyleFn(unoCard, tableDimensions);
+    const result = defaultCardStyleFactory(unoCard, tableDimensions);
     expect(result).toEqual({
       borderRadius: 16,
       dimensions: mockDimensions,
@@ -36,26 +36,29 @@ describe('getCardStyleFn', () => {
   });
 
   it('should call the calculate with the correct dimensions', () => {
-    getCardStyleFn(unoCard, tableDimensions);
+    defaultCardStyleFactory(unoCard, tableDimensions);
     expect(spy).toHaveBeenCalledWith(UnoCardDimensions, tableDimensions);
   });
 
   it('should get style for UnoCard', () => {
-    const result = getCardStyleFn(playingCard, tableDimensions);
+    const result = defaultCardStyleFactory(playingCard, tableDimensions);
     expect(result).toEqual({
       dimensions: mockDimensions,
     });
   });
 
   it('should call the calculate with the correct dimensions', () => {
-    getCardStyleFn(playingCard, tableDimensions);
+    defaultCardStyleFactory(playingCard, tableDimensions);
     expect(spy).toHaveBeenCalledWith(PlayingCardDimensions, tableDimensions);
   });
 
   it('should call the custom style fn', () => {
-    const customStyleFn: CustomCardSytleFn = (_c, _s) => ({ dimensions: { width: 0, height: 1 }, borderRadius: 100 });
+    const customStyleFn: CustomCardStyleFactory = (_c, _s) => ({
+      dimensions: { width: 0, height: 1 },
+      borderRadius: 100,
+    });
     const fnSpy = jest.fn(customStyleFn);
-    getCardStyleFn(playingCard, tableDimensions, fnSpy);
+    defaultCardStyleFactory(playingCard, tableDimensions, fnSpy);
 
     expect(fnSpy).toHaveBeenCalledWith(playingCard, { dimensions: PlayingCardDimensions });
     expect(spy).toHaveBeenCalledWith({ width: 0, height: 1 }, tableDimensions);

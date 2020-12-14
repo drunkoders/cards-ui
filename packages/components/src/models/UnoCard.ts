@@ -1,9 +1,9 @@
 import type { Card } from '@models/Card';
 
-export const ALL_UNO_COLORS = ['red', 'blue', 'green', 'yellow'] as const;
-export type UnoCardColor = typeof ALL_UNO_COLORS[number];
+export const AllUnoColors = ['red', 'blue', 'green', 'yellow'] as const;
+export type UnoCardColor = typeof AllUnoColors[number];
 
-export const ALL_UNO_VALUES = [
+export const AllUnoValues = [
   '0',
   '1',
   '2',
@@ -20,7 +20,7 @@ export const ALL_UNO_VALUES = [
   'reverse',
   'joker',
 ] as const;
-export type UnoCardValue = typeof ALL_UNO_VALUES[number];
+export type UnoCardValue = typeof AllUnoValues[number];
 
 const UNO_CARD_TYPE = 'UnoCard' as const;
 export interface UnoCard extends Card {

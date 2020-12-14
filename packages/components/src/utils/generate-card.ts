@@ -1,5 +1,5 @@
 import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
-import { ALL_UNO_COLORS, ALL_UNO_VALUES, UnoCard } from '@models/UnoCard';
+import { AllUnoColors, AllUnoValues, UnoCard } from '@models/UnoCard';
 import { v4 as uuid } from 'uuid';
 
 export const generateRandomPlayingCard = (): PlayingCard => {
@@ -16,11 +16,11 @@ export const generateRandomPlayingCard = (): PlayingCard => {
 };
 
 export const generateRandomUnoCard = (): UnoCard => {
-  const randomValueIndex = Math.round(Math.random() * 100) % ALL_UNO_VALUES.length;
-  const randomColorsIndex = Math.round(Math.random() * 100) % ALL_UNO_COLORS.length;
+  const randomValueIndex = Math.round(Math.random() * 100) % AllUnoValues.length;
+  const randomColorsIndex = Math.round(Math.random() * 100) % AllUnoColors.length;
 
-  const value = ALL_UNO_VALUES[randomValueIndex];
-  const color = ALL_UNO_COLORS[randomColorsIndex];
+  const value = AllUnoValues[randomValueIndex];
+  const color = AllUnoColors[randomColorsIndex];
 
   return { type: 'UnoCard', value, color, id: uuid() };
 };

@@ -13,7 +13,7 @@ export interface CardTypeStyle {
   borderRadius?: number;
 }
 
-export type CustomCardSytleFn = (card: Card, currentStyle?: CardTypeStyle) => CardTypeStyle;
+export type CustomCardStyleFactory = (card: Card, currentStyle?: CardTypeStyle) => CardTypeStyle;
 
 /**
  * Returns the style for a given card type
@@ -21,10 +21,10 @@ export type CustomCardSytleFn = (card: Card, currentStyle?: CardTypeStyle) => Ca
  * @param tableDimentions the dimensions of the table
  * @param customCardStyle a custom fn for style
  */
-export const getCardStyleFn = (
+export const defaultCardStyleFactory = (
   cards: Card | Card[],
   tableDimentions: Dimensions,
-  customCardStyle?: CustomCardSytleFn
+  customCardStyle?: CustomCardStyleFactory
 ): CardTypeStyle => {
   const thisCard: Card = Array.isArray(cards) ? cards[0] : cards;
 

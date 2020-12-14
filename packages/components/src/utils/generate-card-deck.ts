@@ -1,7 +1,7 @@
 import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
 import { v4 as uuid } from 'uuid';
 import { Deck } from '@models/Deck';
-import { ALL_UNO_COLORS, ALL_UNO_VALUES, UnoCard, UnoCardColor } from '@models/UnoCard';
+import { AllUnoColors, AllUnoValues, UnoCard, UnoCardColor } from '@models/UnoCard';
 import { shuffleArray } from './array-utils';
 
 export const generateRandomPlayingCardDeck = (): Deck<PlayingCard> => {
@@ -18,8 +18,8 @@ export const generateRandomPlayingCardDeck = (): Deck<PlayingCard> => {
 };
 
 export const generateRandomUnoCardDeck = (): Deck<UnoCard> => {
-  const cardDeck: UnoCard[] = ALL_UNO_COLORS.flatMap((color: UnoCardColor) => {
-    return ALL_UNO_VALUES.map((value) => {
+  const cardDeck: UnoCard[] = AllUnoColors.flatMap((color: UnoCardColor) => {
+    return AllUnoValues.map((value) => {
       return { type: 'UnoCard', value, color, id: uuid() };
     });
   });
