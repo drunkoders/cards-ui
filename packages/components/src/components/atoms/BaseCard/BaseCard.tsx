@@ -95,8 +95,8 @@ export const BaseCard: FunctionComponent<BaseCardProps> = ({
   tableBoundaries,
   disableNativeEvents,
   position = { x: 0, y: 0 },
-  onPositionChanged = () => {},
-  onFlipped = () => {},
+  onPositionChanged,
+  onFlipped,
   ...props
 }) => {
   const styleProps: BaseCardStyleProps = { width, height, faceUp };
@@ -110,7 +110,7 @@ export const BaseCard: FunctionComponent<BaseCardProps> = ({
       width={width}
       boundaries={tableBoundaries}
       onDragged={onPositionChanged}
-      onClick={() => onFlipped(!faceUp)}
+      onClick={() => onFlipped && onFlipped(!faceUp)}
       disabled={disableNativeEvents}
       // eslint-disable-next-line react/destructuring-assignment
       data-testid={props['data-testid'] || 'BaseCard'}

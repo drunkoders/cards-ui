@@ -10,6 +10,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "strictBindCallApply": true,
     "baseUrl": "./",
     "paths": {
       "@atoms/*": ["src/components/atoms/*"],

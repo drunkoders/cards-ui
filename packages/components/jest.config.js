@@ -26,6 +26,7 @@ module.exports = {
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
     "!<rootDir>/node_modules/",
+    "!src/**/stories/**"
   ],
   coverageReporters: ["text", "lcov"]
 };

@@ -24,7 +24,9 @@ module.exports = {
     'no-param-reassign': 0,
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
-    '@typescript-eslint/no-unused-vars': ['warn', { "argsIgnorePattern": "^_" }]
+    '@typescript-eslint/no-unused-vars': ['warn', { "argsIgnorePattern": "^_" }],
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/stories/**", "**/*.test.tsx"]}],
+    "react/jsx-props-no-spreading": ['error', {"custom": "ignore"}]
   },
   settings: {
     react: {

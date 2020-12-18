@@ -10,6 +10,9 @@
       "**/@types/mocha"
     ]
   },
+  "resolutions": {
+    "babel-loader": "8.1.0"
+  },
   "scripts": {
     "start:app": "yarn workspace @cardz/app start",
     "start:components": "yarn workspace @cardz/components build --watch",
