@@ -2,7 +2,7 @@ import * as cardDimensionsUtils from '@utils/card-dimensions';
 import { UnoCard } from '@models/UnoCard';
 import { Dimensions } from '@models/Dimensions';
 import { UnoCardDimensions } from '@atoms/UnoCardFace';
-import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
+import { PlayingCard } from '@models/PlayingCard';
 import { PlayingCardDimensions } from '@atoms/SvgPlayingCard';
 import { defaultCardStyleFactory, CustomCardStyleFactory } from './card-style';
 
@@ -16,8 +16,8 @@ describe('defaultCardStyleFactory', () => {
   const playingCard: PlayingCard = {
     type: 'PlayingCard',
     id: '1',
-    name: PlayingCardName.Ace,
-    suit: PlayingCardSuit.Clubs,
+    name: '1',
+    suit: 'clubs',
   };
   const tableDimensions: Dimensions = { width: 1, height: 2 };
   const mockDimensions: Dimensions = { width: 100, height: 200 };

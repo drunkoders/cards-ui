@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { UnoCard } from '@models/UnoCard';
-import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
+import { PlayingCard } from '@models/PlayingCard';
 import { CardRenderer } from '@models/CardRenderer';
 import { CardFaceRenderer } from './CardFaceRenderer';
 
@@ -15,8 +15,8 @@ describe('CardFaceRenderer', () => {
   const playingCard: PlayingCard = {
     id: '2',
     type: 'PlayingCard',
-    name: PlayingCardName.Ace,
-    suit: PlayingCardSuit.Clubs,
+    name: '1',
+    suit: 'clubs',
   };
   it('should display an UnoCardFace', () => {
     const { getByTestId } = render(<CardFaceRenderer card={unoCard} />);

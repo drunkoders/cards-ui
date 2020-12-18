@@ -1,15 +1,12 @@
-import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
+import { allPlayingCardNames, allPlayingCardSuits, PlayingCard } from '@models/PlayingCard';
 import { v4 as uuid } from 'uuid';
 import { Deck } from '@models/Deck';
 import { AllUnoColors, AllUnoValues, UnoCard, UnoCardColor } from '@models/UnoCard';
 import { shuffleArray } from './array-utils';
 
 export const generateRandomPlayingCardDeck = (): Deck<PlayingCard> => {
-  const names = Object.values(PlayingCardName);
-  const suits = Object.values(PlayingCardSuit);
-
-  const cardDeck: PlayingCard[] = suits.flatMap((suit) => {
-    return names.map((name) => {
+  const cardDeck: PlayingCard[] = allPlayingCardSuits.flatMap((suit) => {
+    return allPlayingCardNames.map((name) => {
       return { type: 'PlayingCard', name, suit, id: uuid() };
     });
   });

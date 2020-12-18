@@ -1,27 +1,24 @@
 import type { Card } from '@models/Card';
 
-export enum PlayingCardSuit {
-  Spades = 'Spades',
-  Hearts = 'Hearts',
-  Diamonds = 'Diamonds',
-  Clubs = 'Clubs',
-}
+export const allPlayingCardSuits = ['spades', 'hearts', 'diamonds', 'clubs'] as const;
+export type PlayingCardSuit = typeof allPlayingCardSuits[number];
 
-export enum PlayingCardName {
-  Ace = '1',
-  Two = '2',
-  Three = '3',
-  Four = '4',
-  Five = '5',
-  Six = '6',
-  Seven = '7',
-  Eight = '8',
-  Nine = '9',
-  Ten = '10',
-  Jack = 'Jack',
-  Queen = 'Queen',
-  King = 'King',
-}
+export const allPlayingCardNames = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  'jack',
+  'queen',
+  'king',
+] as const;
+export type PlayingCardName = typeof allPlayingCardNames[number];
 
 const PLAYING_CARD_TYPE = 'PlayingCard' as const;
 export interface PlayingCard extends Card {

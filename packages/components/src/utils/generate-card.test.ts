@@ -1,4 +1,4 @@
-import { PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
+import { allPlayingCardNames, allPlayingCardSuits } from '@models/PlayingCard';
 import { AllUnoColors, AllUnoValues } from '@models/UnoCard';
 import { generateRandomPlayingCard, generateRandomUnoCard } from './generate-card';
 
@@ -7,8 +7,8 @@ describe('generateRandomPlayingCard', () => {
     const randomCard = generateRandomPlayingCard();
     const uuidRegExp = new RegExp(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
 
-    expect(Object.values(PlayingCardName)).toContain(randomCard.name);
-    expect(Object.values(PlayingCardSuit)).toContain(randomCard.suit);
+    expect(allPlayingCardNames).toContain(randomCard.name);
+    expect(allPlayingCardSuits).toContain(randomCard.suit);
     expect(randomCard.id).toMatch(uuidRegExp);
   });
 });
