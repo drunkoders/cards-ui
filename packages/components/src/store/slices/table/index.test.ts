@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { Position } from '@models/Position';
-import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
+import { allPlayingCardNames, allPlayingCardSuits, PlayingCard } from '@models/PlayingCard';
 import * as arrayUtils from '@utils/array-utils';
 import tableReducer, {
   addRandomPlayingCard,
@@ -48,8 +48,8 @@ describe('Cards reducer', () => {
       expect(cardState.position.y).toBeLessThanOrEqual(140);
 
       expect(cardId).toMatch(uuidRegExp);
-      expect(Object.values(PlayingCardSuit)).toContain(card.suit);
-      expect(Object.values(PlayingCardName)).toContain(card.name);
+      expect(allPlayingCardSuits).toContain(card.suit);
+      expect(allPlayingCardNames).toContain(card.name);
     });
 
     it('should generate a random card with default position', () => {
@@ -66,8 +66,8 @@ describe('Cards reducer', () => {
       expect(cardState.position.y).toEqual(0);
 
       expect(cardId).toMatch(uuidRegExp);
-      expect(Object.values(PlayingCardSuit)).toContain(card.suit);
-      expect(Object.values(PlayingCardName)).toContain(card.name);
+      expect(allPlayingCardSuits).toContain(card.suit);
+      expect(allPlayingCardNames).toContain(card.name);
     });
   });
 
@@ -112,7 +112,7 @@ describe('Cards reducer', () => {
       const currentState = {
         cards: {
           1: {
-            cards: { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', type: 'PlayingCard', name: '2', suit: 'spades' },
             isFaceUp: false,
             position: { x: 0, y: 0 },
           },
@@ -121,7 +121,7 @@ describe('Cards reducer', () => {
       const expectedState = {
         cards: {
           1: {
-            cards: { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', type: 'PlayingCard', name: '2', suit: 'spades' },
             isFaceUp: false,
             position,
           },
@@ -140,7 +140,7 @@ describe('Cards reducer', () => {
       const initialState = {
         cards: {
           1: {
-            cards: { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', type: 'PlayingCard', name: '2', suit: 'spades' },
             position: { x: 0, y: 0 },
             isFaceUp: false,
           },
@@ -149,7 +149,7 @@ describe('Cards reducer', () => {
       const expectedState = {
         cards: {
           1: {
-            cards: { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+            cards: { id: '1', type: 'PlayingCard', name: '2', suit: 'spades' },
             position: { x: 0, y: 0 },
             isFaceUp: true,
           },
@@ -165,8 +165,8 @@ describe('Cards reducer', () => {
   describe('shuffleCardDeck', () => {
     it('should shuffle cards', () => {
       const shuffledCards = [
-        { id: '3', type: 'PlayingCard', name: PlayingCardName.Three, suit: PlayingCardSuit.Spades },
-        { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
+        { id: '3', type: 'PlayingCard', name: '3', suit: 'spades' },
+        { id: '1', type: 'PlayingCard', name: '2', suit: 'spades' },
       ];
       jest.spyOn(arrayUtils, 'shuffleArray').mockReturnValue(shuffledCards);
 
@@ -176,8 +176,8 @@ describe('Cards reducer', () => {
         cards: {
           1: {
             cards: [
-              { id: '1', type: 'PlayingCard', name: PlayingCardName.Two, suit: PlayingCardSuit.Spades },
-              { id: '3', type: 'PlayingCard', name: PlayingCardName.Three, suit: PlayingCardSuit.Spades },
+              { id: '1', type: 'PlayingCard', name: '2', suit: 'spades' },
+              { id: '3', type: 'PlayingCard', name: '3', suit: 'spades' },
             ],
             position: { x: 0, y: 0 },
             isFaceUp: false,

@@ -1,6 +1,6 @@
 import { cleanup, render } from '@testing-library/react';
 import React from 'react';
-import { PlayingCard, PlayingCardSuit, PlayingCardName } from '@models/PlayingCard';
+import { PlayingCard } from '@models/PlayingCard';
 import { PlayingCardFrontFace } from './PlayingCardFrontFace';
 
 describe('PlayingCardFrontFace', () => {
@@ -12,8 +12,8 @@ describe('PlayingCardFrontFace', () => {
     const card: PlayingCard = {
       id: '1',
       type: 'PlayingCard',
-      suit: PlayingCardSuit.Hearts,
-      name: PlayingCardName.Five,
+      suit: 'hearts',
+      name: '5',
     };
 
     const { getByTestId } = render(<PlayingCardFrontFace card={card} />);

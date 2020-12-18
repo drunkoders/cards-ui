@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { PlayingCard, PlayingCardSuit, PlayingCardName } from '@models/PlayingCard';
+import { PlayingCard } from '@models/PlayingCard';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import { CardPile } from './CardPile';
@@ -45,8 +45,8 @@ describe('CardPile', () => {
       const card: PlayingCard = {
         id: '1',
         type: 'PlayingCard',
-        suit: PlayingCardSuit.Spades,
-        name: PlayingCardName.Ace,
+        suit: 'spades',
+        name: '1',
       };
       const { getByTestId } = render(<CardPile cards={[card]} position={{ x: 0, y: 0 }} width={40} height={60} />);
       cardPile = getByTestId('CardPile');
@@ -79,14 +79,14 @@ describe('CardPile', () => {
       const card: PlayingCard = {
         id: '1',
         type: 'PlayingCard',
-        suit: PlayingCardSuit.Spades,
-        name: PlayingCardName.Ace,
+        suit: 'spades',
+        name: '1',
       };
       const otherCard: PlayingCard = {
         id: '1',
         type: 'PlayingCard',
-        suit: PlayingCardSuit.Hearts,
-        name: PlayingCardName.Three,
+        suit: 'hearts',
+        name: '3',
       };
       const { getAllByTestId, getByTestId } = render(
         <CardPile cards={[card, otherCard]} position={{ x: 0, y: 0 }} width={40} height={60} />
@@ -119,10 +119,10 @@ describe('CardPile', () => {
   describe('when rendering more than two cards', () => {
     it('should render the custom cards', () => {
       const cards: PlayingCard[] = [
-        { id: '2', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Ace },
-        { id: '4', type: 'PlayingCard', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Ace },
-        { id: '6', type: 'PlayingCard', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Ace },
-        { id: '8', type: 'PlayingCard', suit: PlayingCardSuit.Clubs, name: PlayingCardName.Ace },
+        { id: '2', type: 'PlayingCard', suit: 'spades', name: '1' },
+        { id: '4', type: 'PlayingCard', suit: 'hearts', name: '1' },
+        { id: '6', type: 'PlayingCard', suit: 'diamonds', name: '1' },
+        { id: '8', type: 'PlayingCard', suit: 'clubs', name: '1' },
       ];
 
       const { getAllByTestId } = render(<CardPile cards={cards} position={{ x: 0, y: 0 }} width={40} height={60} />);
@@ -165,8 +165,8 @@ describe('CardPile', () => {
       const card: PlayingCard = {
         id: '1',
         type: 'PlayingCard',
-        suit: PlayingCardSuit.Spades,
-        name: PlayingCardName.Ace,
+        suit: 'spades',
+        name: '1',
       };
 
       render(
@@ -205,8 +205,8 @@ describe('CardPile', () => {
       const card: PlayingCard = {
         id: '1',
         type: 'PlayingCard',
-        suit: PlayingCardSuit.Spades,
-        name: PlayingCardName.Ace,
+        suit: 'spades',
+        name: '1',
       };
 
       render(

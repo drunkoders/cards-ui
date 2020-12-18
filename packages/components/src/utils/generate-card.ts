@@ -1,16 +1,13 @@
-import { PlayingCard, PlayingCardName, PlayingCardSuit } from '@models/PlayingCard';
+import { allPlayingCardNames, allPlayingCardSuits, PlayingCard } from '@models/PlayingCard';
 import { AllUnoColors, AllUnoValues, UnoCard } from '@models/UnoCard';
 import { v4 as uuid } from 'uuid';
 
 export const generateRandomPlayingCard = (): PlayingCard => {
-  const names = Object.values(PlayingCardName);
-  const randomNameIndex = Math.round(Math.random() * 100) % names.length;
+  const randomNameIndex = Math.round(Math.random() * 100) % allPlayingCardNames.length;
+  const randomSuitIndex = Math.round(Math.random() * 100) % allPlayingCardSuits.length;
 
-  const suits = Object.values(PlayingCardSuit);
-  const randomSuitIndex = Math.round(Math.random() * 100) % suits.length;
-
-  const name = names[randomNameIndex];
-  const suit = suits[randomSuitIndex];
+  const name = allPlayingCardNames[randomNameIndex];
+  const suit = allPlayingCardSuits[randomSuitIndex];
 
   return { type: 'PlayingCard', name, suit, id: uuid() };
 };

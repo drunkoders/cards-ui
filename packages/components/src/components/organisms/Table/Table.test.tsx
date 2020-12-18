@@ -4,7 +4,7 @@ import React from 'react';
 import * as cardStyleUtils from '@utils/card-style';
 import { fireEvent, screen } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
-import { PlayingCardSuit, PlayingCardName, PlayingCard } from '@models/PlayingCard';
+import { PlayingCard } from '@models/PlayingCard';
 import { UnoCard } from '@models/UnoCard';
 import { Card } from '@models/Card';
 import { CardTypeStyle } from '@utils/card-style';
@@ -60,8 +60,8 @@ describe('Table', () => {
       const playingCard: PlayingCard = {
         id: '2',
         type: 'PlayingCard',
-        suit: PlayingCardSuit.Spades,
-        name: PlayingCardName.Two,
+        suit: 'spades',
+        name: '2',
       };
       const renderRoot = render(<Table height={400} width={600} />, {
         initialState: {
@@ -122,7 +122,7 @@ describe('Table', () => {
         table: {
           cards: {
             2: {
-              cards: { id: '2', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+              cards: { id: '2', type: 'PlayingCard', suit: 'spades', name: '2' },
               isFaceUp: false,
               position: { x: 0, y: 0 },
             },
@@ -152,7 +152,7 @@ describe('Table', () => {
         table: {
           cards: {
             2: {
-              cards: { id: '2', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
+              cards: { id: '2', type: 'PlayingCard', suit: 'spades', name: '2' },
               isFaceUp: false,
               position: { x: 0, y: 0 },
             },
@@ -176,9 +176,7 @@ describe('Table', () => {
     describe('on rendering PlayingCards', () => {
       let getByTestId;
       let getAllByTestId;
-      const cards: PlayingCard[] = [
-        { id: '1', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-      ];
+      const cards: PlayingCard[] = [{ id: '1', type: 'PlayingCard', suit: 'spades', name: '2' }];
       beforeEach(() => {
         customCardStyleFn.mockReset();
         customCardStyleFn.mockReturnValue({
@@ -246,9 +244,9 @@ describe('Table', () => {
             cards: {
               2: {
                 cards: [
-                  { id: '5', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-                  { id: '7', type: 'PlayingCard', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
-                  { id: '14', type: 'PlayingCard', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
+                  { id: '5', type: 'PlayingCard', suit: 'spades', name: '2' },
+                  { id: '7', type: 'PlayingCard', suit: 'hearts', name: '3' },
+                  { id: '14', type: 'PlayingCard', suit: 'diamonds', name: '4' },
                 ],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
@@ -279,9 +277,9 @@ describe('Table', () => {
             cards: {
               2: {
                 cards: [
-                  { id: '31', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-                  { id: '41', type: 'PlayingCard', suit: PlayingCardSuit.Hearts, name: PlayingCardName.Three },
-                  { id: '61', type: 'PlayingCard', suit: PlayingCardSuit.Diamonds, name: PlayingCardName.Four },
+                  { id: '31', type: 'PlayingCard', suit: 'spades', name: '2' },
+                  { id: '41', type: 'PlayingCard', suit: 'hearts', name: '3' },
+                  { id: '61', type: 'PlayingCard', suit: 'diamonds', name: '4' },
                 ],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
@@ -311,7 +309,7 @@ describe('Table', () => {
           table: {
             cards: {
               5: {
-                cards: [{ id: '1', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two }],
+                cards: [{ id: '1', type: 'PlayingCard', suit: 'spades', name: '2' }],
                 isFaceUp: false,
                 position: { x: 0, y: 0 },
               },
@@ -337,9 +335,7 @@ describe('Table', () => {
     const customRenderFnSpy = jest.fn((_a: { card: Card; isBack?: boolean; currentElement?: JSX.Element }) => (
       <div data-testid="SPY-FACE" />
     ));
-    const cards: PlayingCard[] = [
-      { id: '1', type: 'PlayingCard', suit: PlayingCardSuit.Spades, name: PlayingCardName.Two },
-    ];
+    const cards: PlayingCard[] = [{ id: '1', type: 'PlayingCard', suit: 'spades', name: '2' }];
     let getAllByTestId;
 
     beforeEach(() => {
