@@ -7,6 +7,11 @@ export interface CardPileMenuProps {
   onTurnFirstCard?: () => void;
   /** Event handler when shuffle pile is triggered */
   onShufflePile?: () => void;
+  /**
+   * Event handler when removing the first card triggered
+   * @param cardIndex the index the card to be removed starting on zero. If negative, the count is backwards (e.g. -1 corresponds to the last card).
+   * */
+  onRemoveCard?: (cardIndex: number) => void;
 }
 
 const useStyles = createUseStyles({
@@ -15,7 +20,7 @@ const useStyles = createUseStyles({
   },
 });
 
-export const CardPileMenu: FC<CardPileMenuProps> = ({ onTurnFirstCard, onShufflePile }) => {
+export const CardPileMenu: FC<CardPileMenuProps> = ({ onTurnFirstCard, onShufflePile, onRemoveCard }) => {
   const { menu } = useStyles();
 
   const onTurnFirstCardEvent = (e: MouseEvent | KeyboardEvent) => {
@@ -32,6 +37,20 @@ export const CardPileMenu: FC<CardPileMenuProps> = ({ onTurnFirstCard, onShuffle
     }
   };
 
+  const onRemoveFirstCardEvent = (e: MouseEvent | KeyboardEvent) => {
+    e.stopPropagation();
+    if (onRemoveCard) {
+      onRemoveCard(0);
+    }
+  };
+
+  const onRemoveLastCardEvent = (e: MouseEvent | KeyboardEvent) => {
+    e.stopPropagation();
+    if (onRemoveCard) {
+      onRemoveCard(-1);
+    }
+  };
+
   return (
     <ul className={menu}>
       <li>
@@ -42,6 +61,16 @@ export const CardPileMenu: FC<CardPileMenuProps> = ({ onTurnFirstCard, onShuffle
       <li>
         <button type="button" onClick={onShufflePileEvent} onKeyDown={onShufflePileEvent}>
           Shuffle pile
+        </button>
+      </li>
+      <li>
+        <button type="button" onClick={onRemoveFirstCardEvent} onKeyDown={onRemoveFirstCardEvent}>
+          Remove first card
+        </button>
+      </li>
+      <li>
+        <button type="button" onClick={onRemoveLastCardEvent} onKeyDown={onRemoveLastCardEvent}>
+          Remove last card
         </button>
       </li>
     </ul>

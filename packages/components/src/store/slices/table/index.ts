@@ -1,10 +1,11 @@
+/* eslint-disable max-lines */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Position } from '@models/Position';
 import { Dimensions } from '@models/Dimensions';
 import { generateRandomPlayingCard, generateRandomUnoCard } from '@utils/generate-card';
-import { generateRandomPositionWithinBoundaries } from '@utils/position-utils';
+import { generateRandomPositionWithinBoundaries, shiftPositionRandom } from '@utils/position-utils';
 import { generateRandomPlayingCardDeck, generateRandomUnoCardDeck } from '@utils/generate-card-deck';
-import { shuffleArray } from '@utils/array-utils';
+import { removeFromArray, shuffleArray } from '@utils/array-utils';
 import { Card } from '@models/Card';
 
 export interface CardState {
@@ -75,6 +76,30 @@ const tableSlice = createSlice({
         state.cards[cardDeckId].cards = shuffledCards;
       }
     },
+    removeCardFromDeck: (state: TableState, action: PayloadAction<{ cardDeckId: string; cardIndex: number }>) => {
+      // TODO: Write tests
+      const { cardDeckId, cardIndex } = action.payload;
+      const { cards } = state.cards[cardDeckId];
+      if (Array.isArray(cards)) {
+        const { item, rest } = removeFromArray(cards, cardIndex);
+
+        if (item) {
+          state.cards[item.id] = {
+            cards: item,
+            isFaceUp: state.cards[cardDeckId].isFaceUp,
+            position: shiftPositionRandom(state.cards[cardDeckId].position),
+          };
+        }
+
+        if (rest.length === 0) {
+          // If nothing left, remove the whole pile
+          delete state.cards[cardDeckId];
+        } else {
+          // Otherwise, update the list now without the item removed
+          state.cards[cardDeckId].cards = rest;
+        }
+      }
+    },
   },
 });
 
@@ -87,6 +112,7 @@ export const {
   updateCardPosition,
   updateCardFaceUp,
   shuffleCardDeck,
+  removeCardFromDeck,
 } = tableSlice.actions;
 
 export default tableSlice.reducer;

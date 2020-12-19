@@ -6,7 +6,13 @@ import { Position } from '@models/Position';
 import { CardFaceRenderer } from '@molecules/CardFaceRenderer';
 import { CardPile } from '@molecules/CardPile';
 import { RootState } from '@store/index';
-import { setTableDimensions, shuffleCardDeck, updateCardFaceUp, updateCardPosition } from '@store/slices/table';
+import {
+  removeCardFromDeck,
+  setTableDimensions,
+  shuffleCardDeck,
+  updateCardFaceUp,
+  updateCardPosition,
+} from '@store/slices/table';
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,6 +70,14 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
     [dispatch]
   );
 
+  // TODO: Improve tests coverage
+  const handleCardRemoval = useCallback(
+    (deckId: string, index: number) => {
+      dispatch(removeCardFromDeck({ cardDeckId: deckId, cardIndex: index }));
+    },
+    [dispatch]
+  );
+
   const getCardStyle = useCallback(
     (cards: Card | Card[]): CardTypeStyle => defaultCardStyleFactory(cards, { width, height }, customCardStyle),
     [customCardStyle, width, height]
@@ -93,6 +107,7 @@ export const Table: FunctionComponent<TableProps> = ({ height, width, customCard
               onCardFlipped={(e) => handleFlippedCard(e, cardId)}
               onShuffle={() => handleShuffle(cardId)}
               onPositionChanged={(e) => handleDraggedCard(e, cardId)}
+              onCardRemoved={(e) => handleCardRemoval(cardId, e)}
             />
           ) : (
             <BaseCard
