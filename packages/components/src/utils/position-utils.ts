@@ -46,3 +46,35 @@ export const generateRandomPositionWithinBoundaries = (boundaries: Dimensions): 
 
   return { x, y };
 };
+
+const shiftDirections = ['top', 'bottom', 'left', 'right'] as const;
+// TODO: Write documentation
+// TODO: Write tests
+export const shiftPosition = (position: Position, axis: typeof shiftDirections[number], shift: number): Position => {
+  let { x, y } = position;
+  switch (axis) {
+    case 'top':
+      y += shift;
+      break;
+    case 'bottom':
+      y -= shift;
+      break;
+    case 'left':
+      x -= shift;
+      break;
+    case 'right':
+      x += shift;
+      break;
+    default:
+      break;
+  }
+  return { x, y };
+};
+
+// TODO: Write documentation
+// TODO: Write tests
+export const shiftPositionRandom = (position: Position): Position => {
+  const shift = Math.random();
+  const direction = shiftDirections[Math.round(shift * shiftDirections.length)];
+  return shiftPosition(position, direction, shift * 50);
+};

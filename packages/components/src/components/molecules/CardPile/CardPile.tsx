@@ -38,6 +38,8 @@ export interface CardPileProps {
   onShuffle?: () => void;
   /** Function called when card position changes with the new position of the card */
   onPositionChanged?: (position: Position) => void;
+  /** Functionall called when card is removal */
+  onCardRemoved?: (index: number) => void;
 }
 
 interface CardPileStyleProps {
@@ -85,6 +87,7 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
   onCardFlipped = () => {},
   onShuffle = () => {},
   onPositionChanged = () => {},
+  onCardRemoved,
 }) => {
   const styleProps: CardPileStyleProps = { width, height, borderRadius };
   const classes = useStyles(styleProps);
@@ -106,6 +109,14 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
     setSelect(false);
   };
 
+  // TODO: Write tests for it
+  const onCardRemoval = (index: number) => {
+    if (onCardRemoved) {
+      onCardRemoved(index);
+    }
+    setSelect(false);
+  };
+
   return (
     <Draggable
       className={classes.cardPile}
@@ -121,7 +132,11 @@ export const CardPile: FunctionComponent<CardPileProps> = ({
         <>
           <Overlay borderRadius={borderRadius} />
           <div className={classes.cardPileMenu}>
-            <CardPileMenu onTurnFirstCard={onTurnFirstCard} onShufflePile={onShufflePile} />
+            <CardPileMenu
+              onTurnFirstCard={onTurnFirstCard}
+              onShufflePile={onShufflePile}
+              onRemoveCard={onCardRemoval}
+            />
           </div>
         </>
       )}
